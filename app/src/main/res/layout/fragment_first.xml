@@ -38,7 +38,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:gravity="center">
+        android:gravity="center"
+        android:layout_marginBottom="32dp">
 
         <androidx.cardview.widget.CardView
             android:layout_width="12dp"
@@ -56,5 +57,13 @@
             app:cardElevation="0dp" />
 
     </LinearLayout>
+
+    <Button
+        android:id="@+id/button_first"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/next"
+        android:backgroundTint="#9C27B0"
+        android:textColor="#FFFFFF"/>
 
 </LinearLayout>

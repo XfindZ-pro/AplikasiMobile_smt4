@@ -6,4 +6,8 @@
     </style>
 
     <style name="Theme.AplikasiProjekSMT4" parent="Base.Theme.AplikasiProjekSMT4" />
+
+    <style name="Theme.AplikasiProjekSMT4.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.AplikasiProjekSMT4.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

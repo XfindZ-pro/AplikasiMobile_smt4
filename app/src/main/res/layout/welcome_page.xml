@@ -4,19 +4,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FCF5F0" > <TextView
-    android:id="@+id/tvWelcomeText"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginStart="24dp"
-    android:layout_marginTop="48dp"
-    android:text="SELAMAT DATANG di"
-    android:textAllCaps="true"
-    android:textColor="#A020F0"
-    android:textSize="12sp"
-    android:letterSpacing="0.05"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent" />
+    android:background="#FCF5F0" >
+
+    <TextView
+        android:id="@+id/tvWelcomeText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="48dp"
+        android:letterSpacing="0.05"
+        android:text="SELAMAT DATANG di"
+        android:textAlignment="center"
+        android:textAllCaps="true"
+        android:textColor="#A020F0"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tvTitle"
@@ -31,16 +34,17 @@
         android:textSize="34sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteY="413dp" />
+        tools:layout_editor_absoluteY="411dp" />
 
     <TextView
         android:id="@+id/tvDescription"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="24dp"
         android:lineSpacingExtra="5dp"
         android:text="Salurkan kepedulianmu langsung kepada mereka yang membutuhkan. Setiap donasi tercatat, terverifikasi, dan bisa kamu pantau secara real-time."
@@ -81,7 +85,7 @@
         android:layout_height="wrap_content"
         app:srcCompat="@drawable/bg_welcomepage"
         tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="-16dp"
-        tools:layout_editor_absoluteY="-138dp" />
+        tools:layout_editor_absoluteX="-24dp"
+        tools:layout_editor_absoluteY="-64dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
