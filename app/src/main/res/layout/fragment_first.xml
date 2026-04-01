@@ -1,36 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FirstFragment">
+    android:orientation="vertical"
+    android:background="@drawable/bg_gradasi"
+    android:gravity="center"
+    android:padding="24dp">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="16dp">
+    <ImageView
+        android:id="@+id/logo_aplikasi"
+        android:layout_width="160dp"
+        android:layout_height="160dp"
+        android:src="@drawable/logo_donasi"
+        android:layout_marginBottom="24dp" />
 
-        <Button
-            android:id="@+id/button_first"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/next"
-            app:layout_constraintBottom_toTopOf="@id/textview_first"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="DonasiKu"
+        android:textColor="#FFFFFF"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        android:fontFamily="serif"
+        android:layout_marginBottom="16dp"/>
 
-        <TextView
-            android:id="@+id/textview_first"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="@string/lorem_ipsum"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.299"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/button_first" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</androidx.core.widget.NestedScrollView>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Transparansi dan Kepedulian\ndalam Genggaman"
+        android:textColor="#CCFFFFFF"
+        android:textSize="16sp"
+        android:textAlignment="center"
+        android:layout_marginBottom="60dp"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            app:cardCornerRadius="6dp"
+            app:cardBackgroundColor="#9C27B0"
+            app:cardElevation="0dp"
+            android:layout_marginEnd="8dp"/>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            app:cardCornerRadius="6dp"
+            app:cardBackgroundColor="#E0E0E0"
+            app:cardElevation="0dp" />
+
+    </LinearLayout>
+
+</LinearLayout>
