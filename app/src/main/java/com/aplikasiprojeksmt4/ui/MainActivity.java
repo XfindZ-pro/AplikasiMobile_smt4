@@ -13,7 +13,6 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.aplikasiprojeksmt4.R;
 import com.aplikasiprojeksmt4.databinding.ActivityMainBinding;
-import com.google.android.material.snackbar.Snackbar;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -33,12 +32,11 @@ public class MainActivity extends AppCompatActivity {
         appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
 
+        // BAGIAN INI: Mengarahkan tombol FAB ke Welcome Page
         binding.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Halo dari folder UI!", Snackbar.LENGTH_LONG)
-                        .setAnchorView(R.id.fab)
-                        .setAction("Action", null).show();
+                navController.navigate(R.id.WelcomeFragment);
             }
         });
     }
