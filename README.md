@@ -189,11 +189,24 @@ screenshots/
 
 ## 👨‍💻 Kontributor
 
-<a href="https://github.com/XfindZ-pro">
-  <img src="https://github.com/XfindZ-pro.png" width="64" style="border-radius:50%"/>
-</a>
-
-**XfindZ-pro** — Developer Utama
+<table>
+  <tr>
+    <td align="center">
+      <a href="https://github.com/XfindZ-pro">
+        <img src="https://github.com/XfindZ-pro.png" width="80" style="border-radius:50%"/><br/>
+        <sub><b>XfindZ-pro</b></sub>
+      </a><br/>
+      <img src="https://img.shields.io/badge/👑%20Developer%20Utama-3DDC84?style=flat-square"/>
+    </td>
+    <td align="center">
+      <a href="https://github.com/daerov">
+        <img src="https://github.com/daerov.png" width="80" style="border-radius:50%"/><br/>
+        <sub><b>daerov</b></sub>
+      </a><br/>
+      <img src="https://img.shields.io/badge/🛠️%20Developer-ED8B00?style=flat-square"/>
+    </td>
+  </tr>
+</table>
 
 ---
 
