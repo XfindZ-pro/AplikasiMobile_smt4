@@ -13,6 +13,10 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.aplikasiprojeksmt4.R;
 import com.aplikasiprojeksmt4.databinding.ActivityMainBinding;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -21,6 +25,25 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        // 1. Memanggil alat pengantar paket Firebase
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+// 2. Membungkus isi suratnya
+        Map<String, Object> suratTest = new HashMap<>();
+        suratTest.put("pesan", "Halo Firebase, ini DonasiKu!");
+        suratTest.put("pengirim", "Firzanta");
+
+// 3. Mengirim suratnya ke ruangan bernama "testing" di gudang Firebase
+        db.collection("testing")
+                .add(suratTest)
+                .addOnSuccessListener(documentReference -> {
+                    System.out.println("HORE! Surat berhasil terkirim ke Firebase!");
+                })
+                .addOnFailureListener(e -> {
+                    System.out.println("YAH! Suratnya gagal terkirim...");
+                });
+
         super.onCreate(savedInstanceState);
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
