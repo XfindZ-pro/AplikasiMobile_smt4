@@ -8,29 +8,49 @@
     <fragment
         android:id="@+id/FirstFragment"
         android:name="com.aplikasiprojeksmt4.ui.FirstFragment"
-        android:label="@string/first_fragment_label"
+        android:label="DonasiKu"
         tools:layout="@layout/fragment_first">
-
-        <action
-            android:id="@+id/action_FirstFragment_to_SecondFragment"
-            app:destination="@id/SecondFragment" />
         <action
             android:id="@+id/action_FirstFragment_to_WelcomeFragment"
             app:destination="@id/WelcomeFragment" />
+        <action
+            android:id="@+id/action_FirstFragment_to_SecondFragment"
+            app:destination="@id/SecondFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/SecondFragment"
         android:name="com.aplikasiprojeksmt4.ui.SecondFragment"
-        android:label="@string/second_fragment_label"
+        android:label="Second Fragment"
         tools:layout="@layout/fragment_second">
-
         <action
             android:id="@+id/action_SecondFragment_to_FirstFragment"
             app:destination="@id/FirstFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/WelcomeFragment"
         android:name="com.aplikasiprojeksmt4.ui.WelcomeFragment"
         android:label="Welcome"
-        tools:layout="@layout/welcome_page" />
+        tools:layout="@layout/welcome_page">
+        <action
+            android:id="@+id/action_WelcomeFragment_to_LoginFragment"
+            app:destination="@id/LoginFragment" />
+        <action
+            android:id="@+id/action_WelcomeFragment_to_RegisterFragment"
+            app:destination="@id/RegisterFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/LoginFragment"
+        android:name="com.aplikasiprojeksmt4.ui.LoginFragment"
+        android:label="Login"
+        tools:layout="@layout/fragment_login" />
+
+    <fragment
+        android:id="@+id/RegisterFragment"
+        android:name="com.aplikasiprojeksmt4.ui.RegisterFragment"
+        android:label="Register"
+        tools:layout="@layout/fragment_register" />
+
 </navigation>
