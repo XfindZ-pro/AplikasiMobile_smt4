@@ -51,6 +51,12 @@
         android:id="@+id/RegisterFragment"
         android:name="com.aplikasiprojeksmt4.ui.RegisterFragment"
         android:label="Register"
-        tools:layout="@layout/fragment_register" />
+        tools:layout="@layout/fragment_register">
+        <action
+            android:id="@+id/action_RegisterFragment_to_WelcomeFragment"
+            app:destination="@id/WelcomeFragment"
+            app:popUpTo="@id/WelcomeFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
 
 </navigation>
