@@ -45,7 +45,11 @@
         android:id="@+id/LoginFragment"
         android:name="com.aplikasiprojeksmt4.ui.LoginFragment"
         android:label="Login"
-        tools:layout="@layout/fragment_login" />
+        tools:layout="@layout/fragment_login">
+        <action
+            android:id="@+id/action_LoginFragment_to_RegisterFragment"
+            app:destination="@id/RegisterFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/RegisterFragment"
