@@ -31,7 +31,7 @@ jobs:
       run: flutter build apk --release --no-pub
 
     - name: Build iOS (No Codesign)
-      run: flutter build ios --no-codesign --release --no-pub
+      run: flutter build ios --no-codesign --release 
 
     - name: Upload APK
       uses: actions/upload-artifact@v4
