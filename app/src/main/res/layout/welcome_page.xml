@@ -4,119 +4,88 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FCF5F0">
+    android:background="#FCF5F0" >
 
     <TextView
         android:id="@+id/tvWelcomeText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="48dp"
         android:letterSpacing="0.05"
-        android:text="SELAMAT DATANG DI"
+        android:text="SELAMAT DATANG di"
         android:textAlignment="center"
         android:textAllCaps="true"
         android:textColor="#A020F0"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="220dp"
-        android:layout_height="220dp"
-        android:layout_marginTop="24dp"
-        android:scaleType="centerInside"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvWelcomeText"
-        app:srcCompat="@drawable/bg_welcomepage" />
 
     <TextView
         android:id="@+id/tvTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
         android:layout_marginEnd="24dp"
         android:fontFamily="serif"
         android:text="Donasi yang Nyata\ndan Terpercaya"
         android:textAlignment="center"
         android:textColor="#1A1A1A"
-        android:textSize="26sp"
+        android:textSize="34sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/imageView" />
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteY="411dp" />
 
     <TextView
         android:id="@+id/tvDescription"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="32dp"
-        android:text="Salurkan kepedulianmu langsung kepada mereka yang membutuhkan secara real-time."
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="24dp"
+        android:lineSpacingExtra="5dp"
+        android:text="Salurkan kepedulianmu langsung kepada mereka yang membutuhkan. Setiap donasi tercatat, terverifikasi, dan bisa kamu pantau secara real-time."
         android:textAlignment="center"
         android:textColor="#4A4A4A"
-        android:textSize="14sp"
+        android:textSize="17sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvTitle" />
 
-    <!-- Tombol Login -->
-    <Button
-        android:id="@+id/btnLogin"
-        android:layout_width="0dp"
-        android:layout_height="55dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="16dp"
-        android:backgroundTint="#A020F0"
-        android:text="LOGIN"
-        android:textColor="@android:color/white"
-        app:cornerRadius="12dp"
-        app:layout_constraintBottom_toTopOf="@+id/btnRegister"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <!-- Tombol Register -->
-    <Button
-        android:id="@+id/btnRegister"
-        android:layout_width="0dp"
-        android:layout_height="55dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="40dp"
-        android:backgroundTint="#FFFFFF"
-        android:text="REGISTER"
-        android:textColor="#A020F0"
-        app:cornerRadius="12dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
-
-    <!-- Indikator Sederhana (Ganti ke warna solid) -->
     <LinearLayout
+        android:id="@+id/llPageIndicators"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="48dp"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/btnLogin"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
+
         <View
-            android:layout_width="8dp"
-            android:layout_height="8dp"
-            android:layout_margin="4dp"
-            android:background="#D1D1D1" />
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/bg_welcomepage" />
+
         <View
-            android:layout_width="8dp"
-            android:layout_height="8dp"
-            android:layout_margin="4dp"
-            android:background="#A020F0" />
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:background="@drawable/bg_welcomepage" />
+
     </LinearLayout>
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/bg_welcomepage"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="-24dp"
+        tools:layout_editor_absoluteY="-64dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
