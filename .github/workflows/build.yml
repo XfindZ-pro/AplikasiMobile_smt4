@@ -30,7 +30,7 @@ jobs:
     - name: Build Android APK
       run: flutter build apk --release --no-pub
 
-    - name: Build iOS (No Codesign)
+    - name: Build iOS APK (No Codesign)
       run: flutter build ios --no-codesign --release 
 
     - name: Upload APK
