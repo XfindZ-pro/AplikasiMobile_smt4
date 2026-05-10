@@ -64,6 +64,9 @@
         <action
             android:id="@+id/action_RegisterFragment_to_WelcomeFragment"
             app:destination="@id/WelcomeFragment" />
+        <action
+            android:id="@+id/action_RegisterFragment_to_LoginFragment"
+            app:destination="@id/LoginFragment" />
     </fragment>
 
 </navigation>

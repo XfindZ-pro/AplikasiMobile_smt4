@@ -25,16 +25,10 @@ public class WelcomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        // Navigasi ke Halaman Login
-        binding.btnLogin.setOnClickListener(v -> 
+        // Navigasi ke Halaman Login saat tombol panah (btnNext) diklik
+        binding.btnNext.setOnClickListener(v -> 
             NavHostFragment.findNavController(this)
                 .navigate(R.id.action_WelcomeFragment_to_LoginFragment)
-        );
-
-        // Navigasi ke Halaman Register
-        binding.btnRegister.setOnClickListener(v -> 
-            NavHostFragment.findNavController(this)
-                .navigate(R.id.action_WelcomeFragment_to_RegisterFragment)
         );
     }
 

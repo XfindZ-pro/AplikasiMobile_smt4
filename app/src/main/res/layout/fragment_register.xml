@@ -1,120 +1,169 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FCF5F0"
+    android:background="@drawable/bg_gradasi"
     android:padding="24dp">
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+    <!-- Header Logo -->
+    <LinearLayout
+        android:id="@+id/llHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingBottom="32dp">
-
-            <TextView
-                android:id="@+id/tvRegisterTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:text="Daftar Akun Baru"
-                android:textColor="#A020F0"
-                android:textSize="28sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+        <androidx.cardview.widget.CardView
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            app:cardBackgroundColor="#9C27B0"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="0dp">
 
             <ImageView
-                android:id="@+id/ivRegProfile"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:layout_marginTop="24dp"
-                android:background="@android:drawable/dialog_holo_light_frame"
-                android:scaleType="centerCrop"
-                android:src="@android:drawable/ic_menu_camera"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvRegisterTitle" />
-
-            <TextView
-                android:id="@+id/tvLabelPhoto"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="Klik untuk pilih foto profil"
-                android:textColor="#757575"
-                android:textSize="12sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/ivRegProfile" />
+                android:layout_gravity="center"
+                android:padding="8dp"
+                android:src="@drawable/group_2"
+                android:contentDescription="Logo Icon" />
+        </androidx.cardview.widget.CardView>
 
-            <EditText
-                android:id="@+id/etRegNama"
-                android:layout_width="0dp"
-                android:layout_height="55dp"
-                android:layout_marginTop="32dp"
-                android:background="@android:drawable/editbox_background"
-                android:hint="Nama Lengkap"
-                android:inputType="textPersonName"
-                android:padding="12dp"
-                android:textColor="#000000"
-                android:textColorHint="#757575"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvLabelPhoto" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:fontFamily="serif"
+            android:text="DonasiKu"
+            android:textColor="#FFFFFF"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+    </LinearLayout>
 
-            <EditText
-                android:id="@+id/etRegEmail"
-                android:layout_width="0dp"
-                android:layout_height="55dp"
-                android:layout_marginTop="16dp"
-                android:background="@android:drawable/editbox_background"
-                android:hint="Email"
-                android:inputType="textEmailAddress"
-                android:padding="12dp"
-                android:textColor="#000000"
-                android:textColorHint="#757575"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/etRegNama" />
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:text="Daftarkan Akunmu"
+        android:textColor="#FFFFFF"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/llHeader" />
 
-            <EditText
-                android:id="@+id/etRegPassword"
-                android:layout_width="0dp"
-                android:layout_height="55dp"
-                android:layout_marginTop="16dp"
-                android:background="@android:drawable/editbox_background"
-                android:hint="Password"
-                android:inputType="textPassword"
-                android:padding="12dp"
-                android:textColor="#000000"
-                android:textColorHint="#757575"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/etRegEmail" />
+    <TextView
+        android:id="@+id/tvSubtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Bergabung &amp; mulai berbagi kebaikan hari ini"
+        android:textColor="#E0E0E0"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvTitle" />
 
-            <Button
-                android:id="@+id/btnRegisterSubmit"
-                android:layout_width="0dp"
-                android:layout_height="55dp"
-                android:layout_marginTop="32dp"
-                android:backgroundTint="#A020F0"
-                android:text="DAFTAR SEKARANG"
-                android:textColor="@android:color/white"
-                app:cornerRadius="12dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/etRegPassword" />
+    <!-- Email Field -->
+    <TextView
+        android:id="@+id/tvEmailLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="Email"
+        android:textColor="#000000"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvSubtitle" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
+    <EditText
+        android:id="@+id/etRegEmail"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/bg_edittext"
+        android:hint="sapiingiha@gmail.com"
+        android:inputType="textEmailAddress"
+        android:paddingHorizontal="20dp"
+        android:textColor="#000000"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvEmailLabel" />
+
+    <!-- Password Field -->
+    <TextView
+        android:id="@+id/tvPasswordLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Kata Sandi"
+        android:textColor="#000000"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/etRegEmail" />
+
+    <FrameLayout
+        android:id="@+id/flPassword"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvPasswordLabel">
+
+        <EditText
+            android:id="@+id/etRegPassword"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_edittext"
+            android:hint="Masukkan kata sandi"
+            android:inputType="textPassword"
+            android:paddingHorizontal="20dp"
+            android:textColor="#000000"
+            android:textSize="14sp" />
+
+        <ImageView
+            android:id="@+id/ivPasswordToggle"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="end|center_vertical"
+            android:layout_marginEnd="16dp"
+            android:src="@android:drawable/ic_menu_view"
+            android:contentDescription="Toggle Password Visibility"
+            app:tint="#444444" />
+    </FrameLayout>
+
+    <Button
+        android:id="@+id/btnRegisterSubmit"
+        android:layout_width="0dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="48dp"
+        android:backgroundTint="#9C27B0"
+        android:text="Masuk"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:cornerRadius="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/flPassword" />
+
+    <TextView
+        android:id="@+id/tvToLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Sudah punya akun? Masuk Sekarang"
+        android:textColor="#FFFFFF"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnRegisterSubmit" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

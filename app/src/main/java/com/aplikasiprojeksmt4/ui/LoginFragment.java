@@ -1,6 +1,7 @@
 package com.aplikasiprojeksmt4.ui;
 
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,7 +11,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.aplikasiprojeksmt4.R;
@@ -21,6 +21,7 @@ public class LoginFragment extends Fragment {
 
     private FragmentLoginBinding binding;
     private FirebaseFirestore db;
+    private boolean isPasswordVisible = false;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -35,13 +36,25 @@ public class LoginFragment extends Fragment {
         try {
             db = FirebaseFirestore.getInstance();
         } catch (Exception e) {
-            Toast.makeText(getContext(), "Firebase Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+            e.printStackTrace();
         }
 
-        binding.tvToRegister.setOnClickListener(v -> {
-            if (isAdded()) {
-                NavHostFragment.findNavController(this).navigate(R.id.action_LoginFragment_to_RegisterFragment);
+        // Toggle Password Visibility
+        binding.ivPasswordToggle.setOnClickListener(v -> {
+            if (isPasswordVisible) {
+                binding.etPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                binding.ivPasswordToggle.setImageResource(android.R.drawable.ic_menu_view);
+            } else {
+                binding.etPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                binding.ivPasswordToggle.setImageResource(android.R.drawable.ic_menu_close_clear_cancel);
             }
+            isPasswordVisible = !isPasswordVisible;
+            binding.etPassword.setSelection(binding.etPassword.getText().length());
+        });
+
+        // Navigasi ke Register
+        binding.tvToRegister.setOnClickListener(v -> {
+            NavHostFragment.findNavController(this).navigate(R.id.action_LoginFragment_to_RegisterFragment);
         });
 
         binding.btnLoginSubmit.setOnClickListener(v -> loginUser());
@@ -53,11 +66,8 @@ public class LoginFragment extends Fragment {
         String email = binding.etEmail.getText().toString().trim();
         String password = binding.etPassword.getText().toString().trim();
 
-        if (email.isEmpty()) {
-            binding.etEmail.setError("Email tidak boleh kosong");
-            return;
-        } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            binding.etEmail.setError("Format email tidak valid");
+        if (email.isEmpty() || !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            binding.etEmail.setError("Email tidak valid");
             return;
         }
 
@@ -66,37 +76,29 @@ public class LoginFragment extends Fragment {
             return;
         }
 
-        binding.btnLoginSubmit.setEnabled(false);
-        binding.btnLoginSubmit.setText("Masuk...");
-
         if (db == null) {
-            Toast.makeText(getContext(), "Database tidak siap", Toast.LENGTH_SHORT).show();
-            binding.btnLoginSubmit.setEnabled(true);
-            binding.btnLoginSubmit.setText("MASUK");
+            Toast.makeText(getContext(), "Database Error", Toast.LENGTH_SHORT).show();
             return;
         }
+
+        binding.btnLoginSubmit.setEnabled(false);
+        binding.btnLoginSubmit.setText("Loading...");
 
         db.collection("users")
                 .whereEqualTo("email", email)
                 .whereEqualTo("password", password)
                 .get()
                 .addOnCompleteListener(task -> {
-                    if (!isAdded() || binding == null) return;
+                    if (binding == null) return;
+                    binding.btnLoginSubmit.setEnabled(true);
+                    binding.btnLoginSubmit.setText("Masuk");
 
                     if (task.isSuccessful() && task.getResult() != null && !task.getResult().isEmpty()) {
-                        Toast.makeText(getContext(), "Login Berhasil!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "Login Berhasil", Toast.LENGTH_SHORT).show();
                         NavHostFragment.findNavController(this).navigate(R.id.action_LoginFragment_to_FirstFragment);
                     } else {
-                        binding.btnLoginSubmit.setEnabled(true);
-                        binding.btnLoginSubmit.setText("MASUK");
-                        Toast.makeText(getContext(), "Email atau password salah!", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(), "Email atau Password Salah", Toast.LENGTH_SHORT).show();
                     }
-                })
-                .addOnFailureListener(e -> {
-                    if (!isAdded() || binding == null) return;
-                    binding.btnLoginSubmit.setEnabled(true);
-                    binding.btnLoginSubmit.setText("MASUK");
-                    Toast.makeText(getContext(), "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                 });
     }
 
