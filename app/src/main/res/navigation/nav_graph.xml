@@ -9,7 +9,7 @@
         android:id="@+id/FirstFragment"
         android:name="com.aplikasiprojeksmt4.ui.FirstFragment"
         android:label="DonasiKu"
-        tools:layout="@layout/fragment_first">
+        tools:layout="@layout/first_page">
         <action
             android:id="@+id/action_FirstFragment_to_WelcomeFragment"
             app:destination="@id/WelcomeFragment" />
