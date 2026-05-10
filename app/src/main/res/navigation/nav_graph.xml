@@ -49,6 +49,11 @@
         <action
             android:id="@+id/action_LoginFragment_to_RegisterFragment"
             app:destination="@id/RegisterFragment" />
+        <action
+            android:id="@+id/action_LoginFragment_to_FirstFragment"
+            app:destination="@id/FirstFragment"
+            app:popUpTo="@id/nav_graph"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment
@@ -58,9 +63,7 @@
         tools:layout="@layout/fragment_register">
         <action
             android:id="@+id/action_RegisterFragment_to_WelcomeFragment"
-            app:destination="@id/WelcomeFragment"
-            app:popUpTo="@id/WelcomeFragment"
-            app:popUpToInclusive="true" />
+            app:destination="@id/WelcomeFragment" />
     </fragment>
 
 </navigation>
