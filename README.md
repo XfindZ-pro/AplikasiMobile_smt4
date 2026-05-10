@@ -1,6 +1,6 @@
 # projek
 
-A new Flutter project.
+Ini projek akhir pemrograman mobile semester 4
 
 ## Getting Started
 
