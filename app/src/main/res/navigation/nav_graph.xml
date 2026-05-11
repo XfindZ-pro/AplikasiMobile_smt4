@@ -13,19 +13,6 @@
         <action
             android:id="@+id/action_FirstFragment_to_WelcomeFragment"
             app:destination="@id/WelcomeFragment" />
-        <action
-            android:id="@+id/action_FirstFragment_to_SecondFragment"
-            app:destination="@id/SecondFragment" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/SecondFragment"
-        android:name="com.aplikasiprojeksmt4.ui.SecondFragment"
-        android:label="Second Fragment"
-        tools:layout="@layout/fragment_second">
-        <action
-            android:id="@+id/action_SecondFragment_to_FirstFragment"
-            app:destination="@id/FirstFragment" />
     </fragment>
 
     <fragment
@@ -47,13 +34,13 @@
         android:label="Login"
         tools:layout="@layout/fragment_login">
         <action
-            android:id="@+id/action_LoginFragment_to_RegisterFragment"
-            app:destination="@id/RegisterFragment" />
-        <action
-            android:id="@+id/action_LoginFragment_to_FirstFragment"
-            app:destination="@id/FirstFragment"
+            android:id="@+id/action_LoginFragment_to_HomeFragment"
+            app:destination="@id/HomeFragment"
             app:popUpTo="@id/nav_graph"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_LoginFragment_to_RegisterFragment"
+            app:destination="@id/RegisterFragment" />
     </fragment>
 
     <fragment
@@ -62,11 +49,42 @@
         android:label="Register"
         tools:layout="@layout/fragment_register">
         <action
-            android:id="@+id/action_RegisterFragment_to_WelcomeFragment"
-            app:destination="@id/WelcomeFragment" />
-        <action
             android:id="@+id/action_RegisterFragment_to_LoginFragment"
             app:destination="@id/LoginFragment" />
     </fragment>
+
+    <fragment
+        android:id="@+id/SecondFragment"
+        android:name="com.aplikasiprojeksmt4.ui.SecondFragment"
+        android:label="Second Fragment"
+        tools:layout="@layout/fragment_second">
+        <action
+            android:id="@+id/action_SecondFragment_to_FirstFragment"
+            app:destination="@id/FirstFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/HomeFragment"
+        android:name="com.aplikasiprojeksmt4.ui.HomeFragment"
+        android:label="Homepage"
+        tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/MapsFragment"
+        android:name="com.aplikasiprojeksmt4.ui.MapsFragment"
+        android:label="Peta"
+        tools:layout="@layout/fragment_maps" />
+
+    <fragment
+        android:id="@+id/HistoryFragment"
+        android:name="com.aplikasiprojeksmt4.ui.HistoryFragment"
+        android:label="Riwayat"
+        tools:layout="@layout/fragment_history" />
+
+    <fragment
+        android:id="@+id/ProfileFragment"
+        android:name="com.aplikasiprojeksmt4.ui.ProfileFragment"
+        android:label="Profil"
+        tools:layout="@layout/fragment_profile" />
 
 </navigation>

@@ -15,17 +15,21 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.aplikasiprojeksmt4.R;
 import com.aplikasiprojeksmt4.databinding.FragmentLoginBinding;
+import com.aplikasiprojeksmt4.utils.SessionManager;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class LoginFragment extends Fragment {
 
     private FragmentLoginBinding binding;
     private FirebaseFirestore db;
+    private SessionManager sessionManager;
     private boolean isPasswordVisible = false;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentLoginBinding.inflate(inflater, container, false);
+        sessionManager = new SessionManager(requireContext());
         return binding.getRoot();
     }
 
@@ -94,8 +98,16 @@ public class LoginFragment extends Fragment {
                     binding.btnLoginSubmit.setText("Masuk");
 
                     if (task.isSuccessful() && task.getResult() != null && !task.getResult().isEmpty()) {
+                        DocumentSnapshot userDoc = task.getResult().getDocuments().get(0);
+                        String username = userDoc.getString("username");
+                        if (username == null) username = "User";
+
+                        // Simpan ke SessionManager agar tetap ada meskipun pindah tab
+                        sessionManager.saveUsername(username);
+
                         Toast.makeText(getContext(), "Login Berhasil", Toast.LENGTH_SHORT).show();
-                        NavHostFragment.findNavController(this).navigate(R.id.action_LoginFragment_to_FirstFragment);
+
+                        NavHostFragment.findNavController(this).navigate(R.id.action_LoginFragment_to_HomeFragment);
                     } else {
                         Toast.makeText(getContext(), "Email atau Password Salah", Toast.LENGTH_SHORT).show();
                     }

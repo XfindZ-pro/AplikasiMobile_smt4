@@ -67,8 +67,14 @@ public class RegisterFragment extends Fragment {
     private void registerUser() {
         if (binding == null) return;
 
+        String username = binding.etRegUsername.getText().toString().trim();
         String email = binding.etRegEmail.getText().toString().trim();
         String password = binding.etRegPassword.getText().toString().trim();
+
+        if (username.isEmpty()) {
+            binding.etRegUsername.setError("Username tidak boleh kosong");
+            return;
+        }
 
         if (email.isEmpty() || !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             binding.etRegEmail.setError("Email tidak valid");
@@ -91,6 +97,7 @@ public class RegisterFragment extends Fragment {
         String userId = UUID.randomUUID().toString();
         Map<String, Object> user = new HashMap<>();
         user.put("id", userId);
+        user.put("username", username);
         user.put("email", email);
         user.put("password", password);
 
@@ -103,7 +110,7 @@ public class RegisterFragment extends Fragment {
                 .addOnFailureListener(e -> {
                     if (binding == null) return;
                     binding.btnRegisterSubmit.setEnabled(true);
-                    binding.btnRegisterSubmit.setText("Masuk");
+                    binding.btnRegisterSubmit.setText("Daftar");
                     Toast.makeText(getContext(), "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                 });
     }
