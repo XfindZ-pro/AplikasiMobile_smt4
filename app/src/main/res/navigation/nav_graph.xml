@@ -9,7 +9,7 @@
         android:id="@+id/FirstFragment"
         android:name="com.aplikasiprojeksmt4.ui.FirstFragment"
         android:label="DonasiKu"
-        tools:layout="@layout/first_page">
+        tools:layout="@layout/fragment_first">
         <action
             android:id="@+id/action_FirstFragment_to_WelcomeFragment"
             app:destination="@id/WelcomeFragment" />
@@ -32,7 +32,7 @@
         android:id="@+id/WelcomeFragment"
         android:name="com.aplikasiprojeksmt4.ui.WelcomeFragment"
         android:label="Welcome"
-        tools:layout="@layout/welcome_page">
+        tools:layout="@layout/fragment_welcome">
         <action
             android:id="@+id/action_WelcomeFragment_to_LoginFragment"
             app:destination="@id/LoginFragment" />

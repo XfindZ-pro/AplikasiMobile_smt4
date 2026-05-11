@@ -9,15 +9,15 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 import com.aplikasiprojeksmt4.R;
-import com.aplikasiprojeksmt4.databinding.WelcomePageBinding;
+import com.aplikasiprojeksmt4.databinding.FragmentWelcomeBinding;
 
 public class WelcomeFragment extends Fragment {
 
-    private WelcomePageBinding binding;
+    private FragmentWelcomeBinding binding;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        binding = WelcomePageBinding.inflate(inflater, container, false);
+        binding = FragmentWelcomeBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
 
