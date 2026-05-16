@@ -99,10 +99,11 @@ public class LoginFragment extends Fragment {
 
                     if (task.isSuccessful() && task.getResult() != null && !task.getResult().isEmpty()) {
                         DocumentSnapshot userDoc = task.getResult().getDocuments().get(0);
-                        String username = userDoc.getString("username");
+                        // Mengambil field "nama" sesuai struktur database yang baru
+                        String username = userDoc.getString("nama");
                         if (username == null) username = "User";
 
-                        // Simpan ke SessionManager agar tetap ada meskipun pindah tab
+                        // Simpan ke SessionManager agar tidak hilang saat pindah tab
                         sessionManager.saveUsername(username);
 
                         Toast.makeText(getContext(), "Login Berhasil", Toast.LENGTH_SHORT).show();

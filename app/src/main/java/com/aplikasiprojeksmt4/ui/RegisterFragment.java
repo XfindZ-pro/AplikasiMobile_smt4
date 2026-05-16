@@ -97,7 +97,7 @@ public class RegisterFragment extends Fragment {
         String userId = UUID.randomUUID().toString();
         Map<String, Object> user = new HashMap<>();
         user.put("id", userId);
-        user.put("username", username);
+        user.put("nama", username); // Menggunakan kolom "nama" sesuai permintaan
         user.put("email", email);
         user.put("password", password);
 
