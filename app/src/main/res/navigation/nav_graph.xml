@@ -85,6 +85,16 @@
         android:id="@+id/ProfileFragment"
         android:name="com.aplikasiprojeksmt4.ui.ProfileFragment"
         android:label="Profil"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile">
+        <action
+            android:id="@+id/action_ProfileFragment_to_DataDiriFragment"
+            app:destination="@id/DataDiriFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/DataDiriFragment"
+        android:name="com.aplikasiprojeksmt4.ui.DataDiriFragment"
+        android:label="Data Diri"
+        tools:layout="@layout/fragment_data_diri" />
 
 </navigation>

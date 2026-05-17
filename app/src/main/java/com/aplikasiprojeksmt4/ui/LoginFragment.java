@@ -43,7 +43,6 @@ public class LoginFragment extends Fragment {
             e.printStackTrace();
         }
 
-        // Toggle Password Visibility
         binding.ivPasswordToggle.setOnClickListener(v -> {
             if (isPasswordVisible) {
                 binding.etPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
@@ -56,7 +55,6 @@ public class LoginFragment extends Fragment {
             binding.etPassword.setSelection(binding.etPassword.getText().length());
         });
 
-        // Navigasi ke Register
         binding.tvToRegister.setOnClickListener(v -> {
             NavHostFragment.findNavController(this).navigate(R.id.action_LoginFragment_to_RegisterFragment);
         });
@@ -99,12 +97,15 @@ public class LoginFragment extends Fragment {
 
                     if (task.isSuccessful() && task.getResult() != null && !task.getResult().isEmpty()) {
                         DocumentSnapshot userDoc = task.getResult().getDocuments().get(0);
-                        // Mengambil field "nama" sesuai struktur database yang baru
+                        String userId = userDoc.getId();
                         String username = userDoc.getString("nama");
+                        String userEmail = userDoc.getString("email");
+                        
                         if (username == null) username = "User";
+                        if (userEmail == null) userEmail = email;
 
-                        // Simpan ke SessionManager agar tidak hilang saat pindah tab
-                        sessionManager.saveUsername(username);
+                        // Simpan userId, username, dan email ke SessionManager
+                        sessionManager.saveUser(userId, username, userEmail);
 
                         Toast.makeText(getContext(), "Login Berhasil", Toast.LENGTH_SHORT).show();
 
