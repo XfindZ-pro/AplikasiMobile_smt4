@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,6 +18,9 @@ import com.aplikasiprojeksmt4.utils.SessionManager;
 import com.bumptech.glide.Glide;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.ListenerRegistration;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class ProfileFragment extends Fragment {
 
@@ -44,6 +48,10 @@ public class ProfileFragment extends Fragment {
             Navigation.findNavController(v).navigate(R.id.action_ProfileFragment_to_DataDiriFragment)
         );
 
+        binding.llAdministrator.setOnClickListener(v -> {
+            Toast.makeText(getContext(), "Halaman Administrator", Toast.LENGTH_SHORT).show();
+        });
+
         binding.btnLogout.setOnClickListener(v -> {
             sessionManager.logout();
             Intent intent = new Intent(requireActivity(), SplashActivity.class);
@@ -64,16 +72,33 @@ public class ProfileFragment extends Fragment {
         }
 
         userListener = db.collection("users").document(userId).addSnapshotListener((value, error) -> {
-            // Cek apakah fragment masih aktif dan binding tidak null
             if (binding == null || !isAdded()) return;
 
             if (value != null && value.exists()) {
                 String nama = value.getString("nama");
                 String email = value.getString("email");
                 String photoUrl = value.getString("profile_photo");
+                String role = value.getString("role");
+
+                // AUTO-REPAIR: Jika kolom role belum ada (untuk akun lama), tambahkan default "user"
+                if (role == null) {
+                    Map<String, Object> updateRole = new HashMap<>();
+                    updateRole.put("role", "user");
+                    db.collection("users").document(userId).update(updateRole);
+                    role = "user"; // Set sementara agar UI update
+                }
 
                 binding.tvProfileName.setText(nama != null ? nama : "User");
                 binding.tvProfileEmail.setText(email != null ? email : "email@example.com");
+
+                // Menampilkan tombol Administrator hanya jika role adalah admin
+                if ("admin".equals(role)) {
+                    binding.llAdministrator.setVisibility(View.VISIBLE);
+                    binding.viewSeparatorAdmin.setVisibility(View.VISIBLE);
+                } else {
+                    binding.llAdministrator.setVisibility(View.GONE);
+                    binding.viewSeparatorAdmin.setVisibility(View.GONE);
+                }
 
                 if (photoUrl != null && !photoUrl.isEmpty()) {
                     Glide.with(this)
@@ -89,7 +114,6 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        // Hapus listener agar tidak mencoba update UI saat view sudah hancur
         if (userListener != null) {
             userListener.remove();
         }

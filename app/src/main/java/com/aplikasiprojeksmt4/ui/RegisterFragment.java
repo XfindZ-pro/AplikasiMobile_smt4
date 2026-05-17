@@ -15,21 +15,24 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.aplikasiprojeksmt4.R;
 import com.aplikasiprojeksmt4.databinding.FragmentRegisterBinding;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 public class RegisterFragment extends Fragment {
 
     private FragmentRegisterBinding binding;
     private FirebaseFirestore db;
+    private FirebaseAuth mAuth;
     private boolean isPasswordVisible = false;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentRegisterBinding.inflate(inflater, container, false);
+        mAuth = FirebaseAuth.getInstance();
         return binding.getRoot();
     }
 
@@ -94,12 +97,32 @@ public class RegisterFragment extends Fragment {
         binding.btnRegisterSubmit.setEnabled(false);
         binding.btnRegisterSubmit.setText("Loading...");
 
-        String userId = UUID.randomUUID().toString();
+        // Create user in Firebase Authentication
+        mAuth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        FirebaseUser user = mAuth.getCurrentUser();
+                        if (user != null) {
+                            saveUserToFirestore(user.getUid(), username, email, password);
+                        }
+                    } else {
+                        if (binding != null) {
+                            binding.btnRegisterSubmit.setEnabled(true);
+                            binding.btnRegisterSubmit.setText("Daftar");
+                            Toast.makeText(getContext(), "Registrasi Auth Gagal: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+    }
+
+    private void saveUserToFirestore(String userId, String username, String email, String password) {
         Map<String, Object> user = new HashMap<>();
         user.put("id", userId);
-        user.put("nama", username); // Menggunakan kolom "nama" sesuai permintaan
+        user.put("nama", username);
         user.put("email", email);
         user.put("password", password);
+        user.put("role", "user");
+        user.put("emailVerified", false); // Kolom emailVerified tipe boolean
 
         db.collection("users").document(userId).set(user)
                 .addOnSuccessListener(aVoid -> {
@@ -111,7 +134,7 @@ public class RegisterFragment extends Fragment {
                     if (binding == null) return;
                     binding.btnRegisterSubmit.setEnabled(true);
                     binding.btnRegisterSubmit.setText("Daftar");
-                    Toast.makeText(getContext(), "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Error Simpan Firestore: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                 });
     }
 
