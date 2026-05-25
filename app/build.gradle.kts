@@ -1,8 +1,16 @@
+import java.text.SimpleDateFormat
+import java.util.Date
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.google.services)
 }
+
+// Generate Automatic Versions
+val timestamp = Date()
+val autoVersionCode = (timestamp.time / 1000).toInt()
+val autoVersionName = "1.0." + SimpleDateFormat("yyyyMMdd-HHmm").format(timestamp)
 
 android {
     namespace = "com.aplikasiprojeksmt4"
@@ -12,8 +20,8 @@ android {
         applicationId = "com.aplikasiprojeksmt4"
         minSdk = 28
         targetSdk = 36
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = autoVersionCode
+        versionName = autoVersionName
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -34,6 +42,7 @@ android {
     buildFeatures {
         viewBinding = true
         compose = true
+        buildConfig = true
     }
 }
 

@@ -14,6 +14,7 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.aplikasiprojeksmt4.R;
 import com.aplikasiprojeksmt4.databinding.ActivityMainBinding;
+import com.aplikasiprojeksmt4.utils.UpdateManager;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -29,6 +30,10 @@ public class MainActivity extends AppCompatActivity {
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        // In-App Auto Update Check
+        UpdateManager updateManager = new UpdateManager(this);
+        updateManager.checkForUpdates();
 
         setSupportActionBar(binding.toolbar);
 
