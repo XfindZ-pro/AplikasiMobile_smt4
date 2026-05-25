@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import com.aplikasiprojeksmt4.R;
 import com.aplikasiprojeksmt4.databinding.FragmentHomeBinding;
@@ -38,6 +39,21 @@ public class HomeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         listenToUserData();
+
+        // Navigasi ke halaman notifikasi
+        binding.flNotification.setOnClickListener(v -> 
+            Navigation.findNavController(v).navigate(R.id.action_HomeFragment_to_NotifikasiPageFragment)
+        );
+
+        // Navigasi ke halaman Donasi Uang
+        binding.btnDonasiUang.setOnClickListener(v ->
+            Navigation.findNavController(v).navigate(R.id.action_HomeFragment_to_DonasiUangFragment)
+        );
+
+        // Navigasi ke halaman Donasi Barang
+        binding.btnDonasiBarang.setOnClickListener(v ->
+            Navigation.findNavController(v).navigate(R.id.action_HomeFragment_to_DonasiBarangFragment)
+        );
     }
 
     private void listenToUserData() {
@@ -49,9 +65,7 @@ public class HomeFragment extends Fragment {
             return;
         }
 
-        // Simpan listener ke dalam variabel agar bisa di-remove nanti
         userListener = db.collection("users").document(userId).addSnapshotListener((value, error) -> {
-            // CEK UTAMA: Jangan lanjutkan jika binding sudah null atau fragment tidak terpasang
             if (binding == null || !isAdded()) return;
 
             if (value != null && value.exists()) {
@@ -61,7 +75,7 @@ public class HomeFragment extends Fragment {
                 binding.tvUserName.setText(nama != null ? nama : "User");
 
                 if (photoUrl != null && !photoUrl.isEmpty()) {
-                    ImageView profileIv = binding.flNotification.findViewById(R.id.ivProfilePictureHome);
+                    ImageView profileIv = binding.ivProfilePictureHome;
                     if (profileIv != null) {
                         Glide.with(this)
                                 .load(photoUrl)
@@ -77,7 +91,6 @@ public class HomeFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        // Hentikan listener Firestore agar tidak terjadi crash saat fragment dihancurkan
         if (userListener != null) {
             userListener.remove();
         }

@@ -48,6 +48,18 @@ public class ProfileFragment extends Fragment {
             Navigation.findNavController(v).navigate(R.id.action_ProfileFragment_to_DataDiriFragment)
         );
 
+        binding.llRiwayat.setOnClickListener(v -> 
+            Navigation.findNavController(v).navigate(R.id.action_ProfileFragment_to_HistoryFragment)
+        );
+
+        binding.llSertifikat.setOnClickListener(v -> 
+            Navigation.findNavController(v).navigate(R.id.action_ProfileFragment_to_SertifDonasiFragment)
+        );
+
+        binding.llLaporanRealTime.setOnClickListener(v -> 
+            Navigation.findNavController(v).navigate(R.id.action_ProfileFragment_to_LaporanRealTimeFragment)
+        );
+
         binding.llAdministrator.setOnClickListener(v -> {
             Toast.makeText(getContext(), "Halaman Administrator", Toast.LENGTH_SHORT).show();
         });
@@ -80,18 +92,16 @@ public class ProfileFragment extends Fragment {
                 String photoUrl = value.getString("profile_photo");
                 String role = value.getString("role");
 
-                // AUTO-REPAIR: Jika kolom role belum ada (untuk akun lama), tambahkan default "user"
                 if (role == null) {
                     Map<String, Object> updateRole = new HashMap<>();
                     updateRole.put("role", "user");
                     db.collection("users").document(userId).update(updateRole);
-                    role = "user"; // Set sementara agar UI update
+                    role = "user";
                 }
 
                 binding.tvProfileName.setText(nama != null ? nama : "User");
                 binding.tvProfileEmail.setText(email != null ? email : "email@example.com");
 
-                // Menampilkan tombol Administrator hanya jika role adalah admin
                 if ("admin".equals(role)) {
                     binding.llAdministrator.setVisibility(View.VISIBLE);
                     binding.viewSeparatorAdmin.setVisibility(View.VISIBLE);

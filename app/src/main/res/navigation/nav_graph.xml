@@ -67,7 +67,17 @@
         android:id="@+id/HomeFragment"
         android:name="com.aplikasiprojeksmt4.ui.HomeFragment"
         android:label="Homepage"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_HomeFragment_to_NotifikasiPageFragment"
+            app:destination="@id/NotifikasiPageFragment" />
+        <action
+            android:id="@+id/action_HomeFragment_to_DonasiUangFragment"
+            app:destination="@id/DonasiUangFragment" />
+        <action
+            android:id="@+id/action_HomeFragment_to_DonasiBarangFragment"
+            app:destination="@id/DonasiBarangFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/MapsFragment"
@@ -79,7 +89,11 @@
         android:id="@+id/HistoryFragment"
         android:name="com.aplikasiprojeksmt4.ui.HistoryFragment"
         android:label="Riwayat"
-        tools:layout="@layout/fragment_history" />
+        tools:layout="@layout/fragment_history">
+        <action
+            android:id="@+id/action_HistoryFragment_to_DetailDonasiFragment"
+            app:destination="@id/DetailDonasiFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/ProfileFragment"
@@ -89,6 +103,15 @@
         <action
             android:id="@+id/action_ProfileFragment_to_DataDiriFragment"
             app:destination="@id/DataDiriFragment" />
+        <action
+            android:id="@+id/action_ProfileFragment_to_HistoryFragment"
+            app:destination="@id/HistoryFragment" />
+        <action
+            android:id="@+id/action_ProfileFragment_to_LaporanRealTimeFragment"
+            app:destination="@id/LaporanRealTimeFragment" />
+        <action
+            android:id="@+id/action_ProfileFragment_to_SertifDonasiFragment"
+            app:destination="@id/SertifDonasiFragment" />
     </fragment>
 
     <fragment
@@ -96,5 +119,41 @@
         android:name="com.aplikasiprojeksmt4.ui.DataDiriFragment"
         android:label="Data Diri"
         tools:layout="@layout/fragment_data_diri" />
+
+    <fragment
+        android:id="@+id/NotifikasiPageFragment"
+        android:name="com.aplikasiprojeksmt4.ui.NotifikasiPageFragment"
+        android:label="Notifikasi"
+        tools:layout="@layout/fragment_notifkasipage" />
+
+    <fragment
+        android:id="@+id/DonasiUangFragment"
+        android:name="com.aplikasiprojeksmt4.ui.DonasiUangFragment"
+        android:label="Donasi Uang"
+        tools:layout="@layout/fragment_donasiuang" />
+
+    <fragment
+        android:id="@+id/DonasiBarangFragment"
+        android:name="com.aplikasiprojeksmt4.ui.DonasiBarangFragment"
+        android:label="Donasi Barang"
+        tools:layout="@layout/fragment_donasibarang" />
+
+    <fragment
+        android:id="@+id/DetailDonasiFragment"
+        android:name="com.aplikasiprojeksmt4.ui.DetailDonasiFragment"
+        android:label="Detail Donasi"
+        tools:layout="@layout/fragment_detaildonasi" />
+
+    <fragment
+        android:id="@+id/LaporanRealTimeFragment"
+        android:name="com.aplikasiprojeksmt4.ui.LaporanRealTimeFragment"
+        android:label="Laporan Real-Time"
+        tools:layout="@layout/fragment_laporanrealtime" />
+
+    <fragment
+        android:id="@+id/SertifDonasiFragment"
+        android:name="com.aplikasiprojeksmt4.ui.SertifDonasiFragment"
+        android:label="Sertifikat Donasi"
+        tools:layout="@layout/fragment_sertifdonasi" />
 
 </navigation>
