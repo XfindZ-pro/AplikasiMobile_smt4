@@ -159,7 +159,8 @@
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:src="@android:drawable/ic_menu_myplaces"
-                        app:tint="#9C27B0" />
+                        app:tint="#9C27B0"
+                        android:contentDescription="Users Icon" />
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -172,7 +173,8 @@
                         android:layout_width="16dp"
                         android:layout_height="16dp"
                         android:src="@android:drawable/ic_media_play"
-                        app:tint="#CCCCCC" />
+                        app:tint="#CCCCCC"
+                        android:contentDescription="Arrow" />
                 </LinearLayout>
 
                 <View
@@ -194,7 +196,8 @@
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:src="@android:drawable/ic_menu_agenda"
-                        app:tint="#9C27B0" />
+                        app:tint="#9C27B0"
+                        android:contentDescription="Donation Icon" />
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -207,7 +210,8 @@
                         android:layout_width="16dp"
                         android:layout_height="16dp"
                         android:src="@android:drawable/ic_media_play"
-                        app:tint="#CCCCCC" />
+                        app:tint="#CCCCCC"
+                        android:contentDescription="Arrow" />
                 </LinearLayout>
 
                 <View
@@ -229,7 +233,8 @@
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:src="@android:drawable/ic_menu_view"
-                        app:tint="#9C27B0" />
+                        app:tint="#9C27B0"
+                        android:contentDescription="Report Icon" />
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -242,7 +247,46 @@
                         android:layout_width="16dp"
                         android:layout_height="16dp"
                         android:src="@android:drawable/ic_media_play"
-                        app:tint="#CCCCCC" />
+                        app:tint="#CCCCCC"
+                        android:contentDescription="Arrow" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginStart="56dp"
+                    android:background="#F0F0F0" />
+
+                <!-- Item 4: Rilis Update -->
+                <LinearLayout
+                    android:id="@+id/llRilisUpdate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:padding="16dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:background="?attr/selectableItemBackground">
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@android:drawable/stat_sys_upload"
+                        app:tint="#9C27B0"
+                        android:contentDescription="Upload Icon" />
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginStart="16dp"
+                        android:text="Rilis Versi Ini"
+                        android:textColor="#000000"
+                        android:textStyle="bold" />
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:src="@android:drawable/ic_media_play"
+                        app:tint="#CCCCCC"
+                        android:contentDescription="Arrow" />
                 </LinearLayout>
 
             </LinearLayout>
