@@ -28,6 +28,7 @@ public class AdministratorFragment extends Fragment {
     private FragmentAdministratorBinding binding;
     private FirebaseFirestore db;
     private FirebaseStorage storage;
+    private boolean isUploading = false;
 
     @Nullable
     @Override
@@ -44,13 +45,53 @@ public class AdministratorFragment extends Fragment {
 
         binding.btnBack.setOnClickListener(v -> Navigation.findNavController(v).navigateUp());
 
-        binding.llRilisUpdate.setOnClickListener(v -> uploadApkAndRelease());
+        binding.llRilisUpdate.setOnClickListener(v -> {
+            if (!isUploading) {
+                uploadApkAndRelease();
+            }
+        });
+
+        // Muat informasi versi terakhir saat halaman dibuka
+        loadLastVersionInfo();
+    }
+
+    private void loadLastVersionInfo() {
+        db.collection("app_settings").document("update_info")
+                .addSnapshotListener((value, error) -> {
+                    if (binding == null || !isAdded()) return;
+                    if (value != null && value.exists()) {
+                        String version = value.getString("latest_version");
+                        binding.tvLastVersion.setText(version != null ? version : "Belum ada rilis");
+                    } else {
+                        binding.tvLastVersion.setText("Belum ada data rilis");
+                    }
+                });
+    }
+
+    private void setUploadState(boolean uploading) {
+        isUploading = uploading;
+        if (binding == null) return;
+
+        if (uploading) {
+            binding.llRilisUpdate.setEnabled(false);
+            binding.llRilisUpdate.setAlpha(0.5f);
+            binding.pbUpload.setVisibility(View.VISIBLE);
+            binding.ivArrowRilis.setVisibility(View.GONE);
+            binding.tvRilisText.setText("Sedang Mengunggah...");
+        } else {
+            binding.llRilisUpdate.setEnabled(true);
+            binding.llRilisUpdate.setAlpha(1.0f);
+            binding.pbUpload.setVisibility(View.GONE);
+            binding.ivArrowRilis.setVisibility(View.VISIBLE);
+            binding.tvRilisText.setText("Rilis Versi Ini");
+        }
     }
 
     private void uploadApkAndRelease() {
         if (getContext() == null) return;
         
-        Toast.makeText(getContext(), "Sedang memproses rilis update...", Toast.LENGTH_SHORT).show();
+        setUploadState(true);
+        Toast.makeText(getContext(), "Memulai pengunggahan APK...", Toast.LENGTH_SHORT).show();
         
         // 1. Dapatkan path APK dari aplikasi yang sedang berjalan
         String apkPath = getContext().getPackageCodePath();
@@ -58,7 +99,6 @@ public class AdministratorFragment extends Fragment {
         Uri fileUri = Uri.fromFile(apkFile);
 
         // 2. Tentukan lokasi penyimpanan di Firebase Storage
-        // Kita gunakan nama tetap agar file lama tertimpa atau bisa gunakan versi dalam nama
         StorageReference storageRef = storage.getReference().child("releases/donasiku_latest.apk");
 
         // 3. Proses Upload
@@ -70,6 +110,7 @@ public class AdministratorFragment extends Fragment {
                     });
                 })
                 .addOnFailureListener(e -> {
+                    setUploadState(false);
                     if (isAdded()) {
                         Toast.makeText(getContext(), "Gagal upload APK: " + e.getMessage(), Toast.LENGTH_LONG).show();
                     }
@@ -87,11 +128,13 @@ public class AdministratorFragment extends Fragment {
         db.collection("app_settings").document("update_info")
                 .set(update, SetOptions.merge())
                 .addOnSuccessListener(aVoid -> {
+                    setUploadState(false);
                     if (isAdded()) {
-                        Toast.makeText(getContext(), "Update berhasil dirilis! Versi: " + currentVersion, Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(), "Berhasil merilis versi: " + currentVersion, Toast.LENGTH_LONG).show();
                     }
                 })
                 .addOnFailureListener(e -> {
+                    setUploadState(false);
                     if (isAdded()) {
                         Toast.makeText(getContext(), "Gagal update info Firestore: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
