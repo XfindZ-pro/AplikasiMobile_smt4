@@ -27,12 +27,20 @@ public class UpdateManager {
     private final Context context;
     private final FirebaseFirestore db;
 
+    public interface OnUpdateCheckListener {
+        void onNoUpdate();
+    }
+
     public UpdateManager(Context context) {
         this.context = context;
         this.db = FirebaseFirestore.getInstance();
     }
 
     public void checkForUpdates() {
+        checkForUpdates(null);
+    }
+
+    public void checkForUpdates(OnUpdateCheckListener listener) {
         db.collection("app_settings").document("update_info")
                 .get()
                 .addOnSuccessListener(documentSnapshot -> {
@@ -41,19 +49,24 @@ public class UpdateManager {
                         String downloadUrl = documentSnapshot.getString("download_url");
                         String currentVersion = BuildConfig.VERSION_NAME;
 
-                        Log.d(TAG, "Current Version: " + currentVersion);
-                        Log.d(TAG, "Latest Version: " + latestVersion);
-
                         if (latestVersion != null && isVersionNewer(currentVersion, latestVersion)) {
                             showUpdateDialog(latestVersion, downloadUrl);
+                        } else if (listener != null) {
+                            listener.onNoUpdate();
                         }
+                    } else if (listener != null) {
+                        listener.onNoUpdate();
                     }
                 })
-                .addOnFailureListener(e -> Log.e(TAG, "Error checking for updates", e));
+                .addOnFailureListener(e -> {
+                    Log.e(TAG, "Error checking for updates", e);
+                    if (listener != null) {
+                        listener.onNoUpdate();
+                    }
+                });
     }
 
     private boolean isVersionNewer(String current, String latest) {
-        // Simple comparison for version format like "1.0.YYYYMMDD-HHmm"
         return latest.compareTo(current) > 0;
     }
 
@@ -90,7 +103,6 @@ public class UpdateManager {
     }
 
     private void startDownload(String url) {
-        // Delete old APK if exists to avoid conflict
         File oldFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), APK_NAME);
         if (oldFile.exists()) {
             oldFile.delete();

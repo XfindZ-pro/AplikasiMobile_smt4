@@ -11,10 +11,12 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.aplikasiprojeksmt4.R;
 import com.aplikasiprojeksmt4.databinding.FragmentFirstBinding;
+import com.aplikasiprojeksmt4.utils.UpdateManager;
 
 public class FirstFragment extends Fragment {
 
     private FragmentFirstBinding binding;
+    private UpdateManager updateManager;
 
     @Override
     public View onCreateView(
@@ -22,17 +24,32 @@ public class FirstFragment extends Fragment {
             Bundle savedInstanceState
     ) {
         binding = FragmentFirstBinding.inflate(inflater, container, false);
+        updateManager = new UpdateManager(requireContext());
         return binding.getRoot();
     }
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        // Menggunakan ID btnNext sesuai dengan fragment_first.xml
-        binding.btnNext.setOnClickListener(v ->
-                NavHostFragment.findNavController(FirstFragment.this)
-                        .navigate(R.id.action_FirstFragment_to_WelcomeFragment)
-        );
+        binding.btnNext.setOnClickListener(v -> {
+            // Disable button during check
+            binding.btnNext.setEnabled(false);
+            
+            // Check for updates before proceeding
+            updateManager.checkForUpdates(new UpdateManager.OnUpdateCheckListener() {
+                @Override
+                public void onNoUpdate() {
+                    // Re-enable button and navigate if no update is found
+                    if (isAdded()) {
+                        requireActivity().runOnUiThread(() -> {
+                            binding.btnNext.setEnabled(true);
+                            NavHostFragment.findNavController(FirstFragment.this)
+                                    .navigate(R.id.action_FirstFragment_to_WelcomeFragment);
+                        });
+                    }
+                }
+            });
+        });
     }
 
     @Override
