@@ -8,12 +8,14 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
+import androidx.navigation.NavOptions;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.aplikasiprojeksmt4.R;
 import com.aplikasiprojeksmt4.databinding.ActivityMainBinding;
+import com.aplikasiprojeksmt4.utils.UpdateManager;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -30,6 +32,10 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        // In-App Auto Update Check
+        UpdateManager updateManager = new UpdateManager(this);
+        updateManager.checkForUpdates();
+
         setSupportActionBar(binding.toolbar);
 
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager()
@@ -38,21 +44,32 @@ public class MainActivity extends AppCompatActivity {
         if (navHostFragment != null) {
             NavController navController = navHostFragment.getNavController();
             
-            // Define top-level destinations to avoid showing back button
+            // Define top-level destinations to avoid showing back button on main tabs
             Set<Integer> topLevelDestinations = new HashSet<>();
             topLevelDestinations.add(R.id.HomeFragment);
-            topLevelDestinations.add(R.id.FirstFragment); // For the intro screens
+            topLevelDestinations.add(R.id.MapsFragment);
+            topLevelDestinations.add(R.id.HistoryFragment);
+            topLevelDestinations.add(R.id.ProfileFragment);
+            topLevelDestinations.add(R.id.FirstFragment);
 
             appBarConfiguration = new AppBarConfiguration.Builder(topLevelDestinations).build();
             NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
             NavigationUI.setupWithNavController(binding.bottomNavigation, navController);
 
+            // Handle Auto-Login from SplashActivity
+            boolean isLoggedIn = getIntent().getBooleanExtra("IS_LOGGED_IN", false);
+            if (isLoggedIn) {
+                // Navigate to Home and clear the intro fragments from the backstack
+                navController.navigate(R.id.HomeFragment, null, new NavOptions.Builder()
+                        .setPopUpTo(R.id.nav_graph, true)
+                        .build());
+            }
+
             // Control visibility of Bottom Navigation based on destination
             navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
-                if (destination.getId() == R.id.HomeFragment || 
-                    destination.getId() == R.id.MapsFragment || 
-                    destination.getId() == R.id.HistoryFragment || 
-                    destination.getId() == R.id.ProfileFragment) {
+                int id = destination.getId();
+                if (id == R.id.HomeFragment || id == R.id.MapsFragment || 
+                    id == R.id.HistoryFragment || id == R.id.ProfileFragment) {
                     
                     binding.bottomAppBar.setVisibility(View.VISIBLE);
                     binding.fab.setVisibility(View.VISIBLE);
@@ -62,10 +79,8 @@ public class MainActivity extends AppCompatActivity {
                     binding.fab.setVisibility(View.GONE);
                     
                     // Specific logic for fragments that should show/hide toolbar
-                    if (destination.getId() == R.id.FirstFragment || 
-                        destination.getId() == R.id.WelcomeFragment || 
-                        destination.getId() == R.id.LoginFragment || 
-                        destination.getId() == R.id.RegisterFragment) {
+                    if (id == R.id.FirstFragment || id == R.id.WelcomeFragment || 
+                        id == R.id.LoginFragment || id == R.id.RegisterFragment) {
                         if (getSupportActionBar() != null) getSupportActionBar().hide();
                     } else {
                         if (getSupportActionBar() != null) getSupportActionBar().show();

@@ -60,9 +60,9 @@ public class ProfileFragment extends Fragment {
             Navigation.findNavController(v).navigate(R.id.action_ProfileFragment_to_LaporanRealTimeFragment)
         );
 
-        binding.llAdministrator.setOnClickListener(v -> {
-            Toast.makeText(getContext(), "Halaman Administrator", Toast.LENGTH_SHORT).show();
-        });
+        binding.llAdministrator.setOnClickListener(v -> 
+            Navigation.findNavController(v).navigate(R.id.action_ProfileFragment_to_AdministratorFragment)
+        );
 
         binding.btnLogout.setOnClickListener(v -> {
             sessionManager.logout();

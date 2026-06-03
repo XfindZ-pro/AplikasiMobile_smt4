@@ -51,7 +51,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
         android:text="Daftarkan Akunmu"
-        android:textColor="#FFFFFF"
+        android:textColor="#3C3737"
         android:textSize="32sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -63,7 +63,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="Bergabung &amp; mulai berbagi kebaikan hari ini"
-        android:textColor="#E0E0E0"
+        android:textColor="#433E3E"
         android:textSize="14sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvTitle" />

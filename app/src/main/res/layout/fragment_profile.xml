@@ -433,7 +433,7 @@
                     <ImageView
                         android:layout_width="24dp"
                         android:layout_height="24dp"
-                        android:src="@android:drawable/ic_menu_agenda"
+                        android:src="@android:drawable/ic_menu_recent_history"
                         app:tint="#555555"
                         android:contentDescription="Riwayat Icon" />
                     <LinearLayout
@@ -451,7 +451,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="5 transaksi tercatat"
+                            android:text="Lihat semua riwayat kebaikan Anda"
                             android:textColor="#555555"
                             android:textSize="12sp" />
                     </LinearLayout>
@@ -481,7 +481,7 @@
                     <ImageView
                         android:layout_width="24dp"
                         android:layout_height="24dp"
-                        android:src="@android:drawable/star_big_off"
+                        android:src="@android:drawable/ic_menu_agenda"
                         app:tint="#555555"
                         android:contentDescription="Sertifikat Icon" />
                     <LinearLayout
@@ -499,7 +499,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Lihat sertifikat Anda"
+                            android:text="Kumpulkan apresiasi kebaikan"
                             android:textColor="#555555"
                             android:textSize="12sp" />
                     </LinearLayout>

@@ -112,6 +112,9 @@
         <action
             android:id="@+id/action_ProfileFragment_to_SertifDonasiFragment"
             app:destination="@id/SertifDonasiFragment" />
+        <action
+            android:id="@+id/action_ProfileFragment_to_AdministratorFragment"
+            app:destination="@id/AdministratorFragment" />
     </fragment>
 
     <fragment
@@ -155,5 +158,11 @@
         android:name="com.aplikasiprojeksmt4.ui.SertifDonasiFragment"
         android:label="Sertifikat Donasi"
         tools:layout="@layout/fragment_sertifdonasi" />
+
+    <fragment
+        android:id="@+id/AdministratorFragment"
+        android:name="com.aplikasiprojeksmt4.ui.AdministratorFragment"
+        android:label="Administrator"
+        tools:layout="@layout/fragment_administrator" />
 
 </navigation>
