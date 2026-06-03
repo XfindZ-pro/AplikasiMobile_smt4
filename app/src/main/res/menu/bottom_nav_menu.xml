@@ -9,15 +9,11 @@
         android:icon="@android:drawable/ic_dialog_map"
         android:title="Peta" />
     <item
-        android:id="@+id/placeholder"
-        android:title=""
-        android:enabled="false" />
-    <item
         android:id="@+id/HistoryFragment"
         android:icon="@android:drawable/ic_menu_recent_history"
         android:title="Riwayat" />
     <item
         android:id="@+id/ProfileFragment"
-        android:icon="@android:drawable/ic_menu_mylocation"
+        android:icon="@android:drawable/ic_menu_myplaces"
         android:title="Profil" />
 </menu>

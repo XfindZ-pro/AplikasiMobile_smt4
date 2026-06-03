@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
@@ -36,8 +35,6 @@ public class MainActivity extends AppCompatActivity {
         UpdateManager updateManager = new UpdateManager(this);
         updateManager.checkForUpdates();
 
-        setSupportActionBar(binding.toolbar);
-
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.nav_host_fragment_content_main);
         
@@ -54,7 +51,6 @@ public class MainActivity extends AppCompatActivity {
 
             appBarConfiguration = new AppBarConfiguration.Builder(topLevelDestinations).build();
             NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-            NavigationUI.setupWithNavController(binding.bottomNavigation, navController);
 
             // Handle Auto-Login from SplashActivity
             boolean isLoggedIn = getIntent().getBooleanExtra("IS_LOGGED_IN", false);
@@ -65,33 +61,17 @@ public class MainActivity extends AppCompatActivity {
                         .build());
             }
 
-            // Control visibility of Bottom Navigation based on destination
+            // Control visibility of ActionBar based on destination
             navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
                 int id = destination.getId();
-                if (id == R.id.HomeFragment || id == R.id.MapsFragment || 
-                    id == R.id.HistoryFragment || id == R.id.ProfileFragment) {
-                    
-                    binding.bottomAppBar.setVisibility(View.VISIBLE);
-                    binding.fab.setVisibility(View.VISIBLE);
+                if (id == R.id.HomeFragment || id == R.id.FirstFragment || id == R.id.WelcomeFragment || 
+                    id == R.id.LoginFragment || id == R.id.RegisterFragment) {
                     if (getSupportActionBar() != null) getSupportActionBar().hide();
                 } else {
-                    binding.bottomAppBar.setVisibility(View.GONE);
-                    binding.fab.setVisibility(View.GONE);
-                    
-                    // Specific logic for fragments that should show/hide toolbar
-                    if (id == R.id.FirstFragment || id == R.id.WelcomeFragment || 
-                        id == R.id.LoginFragment || id == R.id.RegisterFragment) {
-                        if (getSupportActionBar() != null) getSupportActionBar().hide();
-                    } else {
-                        if (getSupportActionBar() != null) getSupportActionBar().show();
-                    }
+                    if (getSupportActionBar() != null) getSupportActionBar().show();
                 }
             });
         }
-
-        binding.fab.setOnClickListener(view -> {
-            Toast.makeText(this, "Aksi Tambah Donasi", Toast.LENGTH_SHORT).show();
-        });
     }
 
     @Override

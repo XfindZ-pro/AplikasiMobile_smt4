@@ -74,4 +74,7 @@
     <string name="cert_for_program">untuk Bantuan Dana Pangan</string>
     <string name="btn_download_pdf">Download PDF</string>
     <string name="btn_back_home">Kembali ke Beranda</string>
+    <string name="halo_donatur">Halo Donatur 👋</string>
+    <string name="zulpa_apipah">Zulpa Apipah</string>
+    <string name="rp_300rb">Rp 300rb</string>
 </resources>
