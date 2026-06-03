@@ -31,6 +31,9 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        // Set support action bar even if it's hidden to avoid NavigationUI crashes
+        setSupportActionBar(binding.toolbar);
+
         // In-App Auto Update Check
         UpdateManager updateManager = new UpdateManager(this);
         updateManager.checkForUpdates();
@@ -50,7 +53,10 @@ public class MainActivity extends AppCompatActivity {
             topLevelDestinations.add(R.id.FirstFragment);
 
             appBarConfiguration = new AppBarConfiguration.Builder(topLevelDestinations).build();
+            
+            // Setup ActionBar and BottomNavigation with NavController
             NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+            NavigationUI.setupWithNavController(binding.bottomNavigation, navController);
 
             // Handle Auto-Login from SplashActivity
             boolean isLoggedIn = getIntent().getBooleanExtra("IS_LOGGED_IN", false);
@@ -61,9 +67,22 @@ public class MainActivity extends AppCompatActivity {
                         .build());
             }
 
-            // Control visibility of ActionBar based on destination
+            // Control visibility of ActionBar and Bottom Navigation based on destination
             navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
                 int id = destination.getId();
+                boolean isMainScreen = id == R.id.HomeFragment || id == R.id.MapsFragment || 
+                                     id == R.id.HistoryFragment || id == R.id.ProfileFragment;
+
+                // Toggle Bottom Bar and FAB
+                if (isMainScreen) {
+                    binding.bottomAppBar.setVisibility(View.VISIBLE);
+                    binding.fab.setVisibility(View.VISIBLE);
+                } else {
+                    binding.bottomAppBar.setVisibility(View.GONE);
+                    binding.fab.setVisibility(View.GONE);
+                }
+
+                // Toggle ActionBar (Toolbar)
                 if (id == R.id.HomeFragment || id == R.id.FirstFragment || id == R.id.WelcomeFragment || 
                     id == R.id.LoginFragment || id == R.id.RegisterFragment) {
                     if (getSupportActionBar() != null) getSupportActionBar().hide();
