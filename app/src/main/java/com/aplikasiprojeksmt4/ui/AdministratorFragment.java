@@ -12,17 +12,23 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.aplikasiprojeksmt4.BuildConfig;
 import com.aplikasiprojeksmt4.R;
+import com.aplikasiprojeksmt4.adapters.ProgramAdapter;
 import com.aplikasiprojeksmt4.databinding.FragmentAdministratorBinding;
+import com.aplikasiprojeksmt4.models.Program;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.SetOptions;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class AdministratorFragment extends Fragment {
@@ -32,6 +38,10 @@ public class AdministratorFragment extends Fragment {
     private FirebaseStorage storage;
     private boolean isUploading = false;
     private String cloudVersion = "Unknown";
+    
+    private ProgramAdapter homeAdapter;
+    private ProgramAdapter listAdapter;
+    private List<Program> programList = new ArrayList<>();
 
     @Nullable
     @Override
@@ -48,6 +58,9 @@ public class AdministratorFragment extends Fragment {
 
         // Tombol Kembali
         binding.btnBack.setOnClickListener(v -> Navigation.findNavController(v).navigateUp());
+
+        // Setup RecyclerViews
+        setupRecyclerViews();
 
         // Setup Bottom Navigation untuk Administrator
         setupBottomNavigation();
@@ -70,6 +83,17 @@ public class AdministratorFragment extends Fragment {
         // Muat informasi stats dan versi awal
         loadStats();
         loadCloudVersionInfo();
+        loadPrograms();
+    }
+
+    private void setupRecyclerViews() {
+        homeAdapter = new ProgramAdapter(programList);
+        binding.rvProgramHome.setLayoutManager(new LinearLayoutManager(getContext()));
+        binding.rvProgramHome.setAdapter(homeAdapter);
+
+        listAdapter = new ProgramAdapter(programList);
+        binding.rvDaftarProgram.setLayoutManager(new LinearLayoutManager(getContext()));
+        binding.rvDaftarProgram.setAdapter(listAdapter);
     }
 
     private void setupBottomNavigation() {
@@ -98,6 +122,30 @@ public class AdministratorFragment extends Fragment {
             }
             return false;
         });
+    }
+
+    private void loadPrograms() {
+        db.collection("programs")
+                .orderBy("created_at", Query.Direction.DESCENDING)
+                .addSnapshotListener((value, error) -> {
+                    if (error != null) {
+                        return;
+                    }
+
+                    if (value != null) {
+                        programList.clear();
+                        List<Program> docs = value.toObjects(Program.class);
+                        for (int i = 0; i < docs.size(); i++) {
+                            Program p = docs.get(i);
+                            p.setId(value.getDocuments().get(i).getId());
+                            programList.add(p);
+                        }
+                        homeAdapter.notifyDataSetChanged();
+                        listAdapter.notifyDataSetChanged();
+                        
+                        binding.tvTotalProgramAktif.setText(String.valueOf(programList.size()));
+                    }
+                });
     }
 
     private void loadStats() {

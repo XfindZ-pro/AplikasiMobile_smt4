@@ -1,5 +1,8 @@
 package com.aplikasiprojeksmt4.ui;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -7,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -16,20 +21,38 @@ import com.aplikasiprojeksmt4.R;
 import com.aplikasiprojeksmt4.databinding.FragmentTambahProgramBinding;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 public class TambahProgramFragment extends Fragment {
 
     private FragmentTambahProgramBinding binding;
     private FirebaseFirestore db;
+    private FirebaseStorage storage;
+    private Uri imageUri;
+
+    private final ActivityResultLauncher<Intent> imagePickerLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == Activity.RESULT_OK && result.getData() != null) {
+                    imageUri = result.getData().getData();
+                    binding.ivProgramPreview.setImageURI(imageUri);
+                    binding.ivProgramPreview.setVisibility(View.VISIBLE);
+                    binding.ivPlaceholderIcon.setVisibility(View.GONE);
+                }
+            }
+    );
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentTambahProgramBinding.inflate(inflater, container, false);
         db = FirebaseFirestore.getInstance();
+        storage = FirebaseStorage.getInstance();
         return binding.getRoot();
     }
 
@@ -39,10 +62,18 @@ public class TambahProgramFragment extends Fragment {
 
         binding.btnBack.setOnClickListener(v -> Navigation.findNavController(v).navigateUp());
 
-        binding.btnBuatProgram.setOnClickListener(v -> simpanProgram());
+        binding.cvUploadImage.setOnClickListener(v -> pickImage());
+
+        binding.btnBuatProgram.setOnClickListener(v -> validateAndSave());
     }
 
-    private void simpanProgram() {
+    private void pickImage() {
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setType("image/*");
+        imagePickerLauncher.launch(intent);
+    }
+
+    private void validateAndSave() {
         String nama = binding.etNamaProgram.getText().toString().trim();
         String organisasi = binding.etOrganisasi.getText().toString().trim();
         String wilayah = binding.etWilayah.getText().toString().trim();
@@ -57,8 +88,34 @@ public class TambahProgramFragment extends Fragment {
             return;
         }
 
+        if (imageUri == null) {
+            Toast.makeText(getContext(), "Harap pilih foto program", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        uploadImageAndSave(nama, organisasi, wilayah, tipe, target, deskripsi);
+    }
+
+    private void uploadImageAndSave(String nama, String organisasi, String wilayah, String tipe, String target, String deskripsi) {
         binding.btnBuatProgram.setEnabled(false);
-        binding.btnBuatProgram.setText("Menyimpan...");
+        binding.btnBuatProgram.setText("Mengunggah Gambar...");
+
+        String fileName = UUID.randomUUID().toString();
+        StorageReference ref = storage.getReference().child("program_images/" + fileName);
+
+        ref.putFile(imageUri)
+                .addOnSuccessListener(taskSnapshot -> ref.getDownloadUrl().addOnSuccessListener(uri -> {
+                    saveToFirestore(nama, organisasi, wilayah, tipe, target, deskripsi, uri.toString());
+                }))
+                .addOnFailureListener(e -> {
+                    binding.btnBuatProgram.setEnabled(true);
+                    binding.btnBuatProgram.setText("Buat Program");
+                    Toast.makeText(getContext(), "Gagal unggah gambar: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                });
+    }
+
+    private void saveToFirestore(String nama, String organisasi, String wilayah, String tipe, String target, String deskripsi, String imageUrl) {
+        binding.btnBuatProgram.setText("Menyimpan Program...");
 
         Map<String, Object> program = new HashMap<>();
         program.put("nama", nama);
@@ -67,6 +124,7 @@ public class TambahProgramFragment extends Fragment {
         program.put("tipe", tipe);
         program.put("target", target);
         program.put("deskripsi", deskripsi);
+        program.put("imageUrl", imageUrl);
         program.put("status", "Aktif");
         program.put("terkumpul", 0);
         program.put("created_at", FieldValue.serverTimestamp());

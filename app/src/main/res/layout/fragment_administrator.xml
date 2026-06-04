@@ -218,6 +218,7 @@
                             android:gravity="center"
                             android:orientation="vertical">
                             <TextView
+                                android:id="@+id/tvTotalProgramAktif"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="6"
@@ -519,75 +520,14 @@
                             android:textSize="14sp"
                             android:textStyle="bold" />
 
-                        <LinearLayout
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rvProgramHome"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="16dp"
-                            android:orientation="vertical">
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal">
-                                <TextView
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:text="Dana Sembako Keluarga"
-                                    android:textColor="#333333"
-                                    android:textSize="12sp" />
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="80%"
-                                    android:textColor="#9C27B0"
-                                    android:textSize="12sp"
-                                    android:textStyle="bold" />
-                            </LinearLayout>
-                            <com.google.android.material.progressindicator.LinearProgressIndicator
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="8dp"
-                                android:progress="80"
-                                app:indicatorColor="#9C27B0"
-                                app:trackColor="#F3E5F5"
-                                app:trackCornerRadius="4dp"
-                                app:trackThickness="8dp" />
-                        </LinearLayout>
+                            android:layout_marginTop="8dp"
+                            android:nestedScrollingEnabled="false"
+                            tools:listitem="@layout/item_program_admin" />
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="16dp"
-                            android:orientation="vertical">
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal">
-                                <TextView
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:text="Beasiswa Anak Dhuafa"
-                                    android:textColor="#333333"
-                                    android:textSize="12sp" />
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="73%"
-                                    android:textColor="#9C27B0"
-                                    android:textSize="12sp"
-                                    android:textStyle="bold" />
-                            </LinearLayout>
-                            <com.google.android.material.progressindicator.LinearProgressIndicator
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="8dp"
-                                android:progress="73"
-                                app:indicatorColor="#9C27B0"
-                                app:trackColor="#F3E5F5"
-                                app:trackCornerRadius="4dp"
-                                app:trackThickness="8dp" />
-                        </LinearLayout>
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
 
@@ -613,6 +553,14 @@
                     android:textSize="20sp"
                     android:textStyle="bold"
                     android:textColor="#333333" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvDaftarProgram"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:nestedScrollingEnabled="false"
+                    tools:listitem="@layout/item_program_admin" />
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
 
