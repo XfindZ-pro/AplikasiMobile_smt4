@@ -185,6 +185,16 @@
     </fragment>
 
     <fragment
+        android:id="@+id/AdministratorFragment"
+        android:name="com.aplikasiprojeksmt4.ui.AdministratorFragment"
+        android:label="Administrator"
+        tools:layout="@layout/fragment_administrator">
+        <action
+            android:id="@+id/action_AdministratorFragment_to_TambahProgramFragment"
+            app:destination="@id/TambahProgramFragment" />
+    </fragment>
+
+    <fragment
         android:id="@+id/DataDiriFragment"
         android:name="com.aplikasiprojeksmt4.ui.DataDiriFragment"
         android:label="Data Diri"
@@ -227,12 +237,12 @@
         tools:layout="@layout/fragment_sertifdonasi" />
 
     <fragment
-        android:id="@+id/AdministratorFragment"
-        android:name="com.aplikasiprojeksmt4.ui.AdministratorFragment"
-        android:label="Administrator"
-        tools:layout="@layout/fragment_administrator">
+        android:id="@+id/HomepageAdminFragment"
+        android:name="com.aplikasiprojeksmt4.ui.HomepageAdminFragment"
+        android:label="Admin Homepage"
+        tools:layout="@layout/homepage_admin">
         <action
-            android:id="@+id/action_AdministratorFragment_to_TambahProgramFragment"
+            android:id="@+id/action_HomepageAdminFragment_to_TambahProgramFragment"
             app:destination="@id/TambahProgramFragment" />
     </fragment>
 

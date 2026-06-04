@@ -119,7 +119,6 @@
 
             <!-- Filtered List: Only In-Process items -->
             <include layout="@layout/item_history_money_1" />
-            <include layout="@layout/item_history_medis" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

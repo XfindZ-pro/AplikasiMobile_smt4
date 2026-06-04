@@ -9,9 +9,9 @@
         android:icon="@android:drawable/ic_menu_agenda"
         android:title="Program" />
     <item
-        android:id="@+id/adminVerifikasi"
+        android:id="@+id/adminStatistik"
         android:icon="@android:drawable/checkbox_on_background"
-        android:title="Verifikasi" />
+        android:title="Statistik" />
     <item
         android:id="@+id/adminDonatur"
         android:icon="@android:drawable/ic_menu_myplaces"

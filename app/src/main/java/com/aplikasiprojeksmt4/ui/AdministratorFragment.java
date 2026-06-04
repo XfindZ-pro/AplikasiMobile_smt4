@@ -75,10 +75,12 @@ public class AdministratorFragment extends Fragment {
             }
         });
 
-        // Tombol Tambah Program (Mengarahkan ke page fragment_tambah_program.xml)
-        binding.btnTambahProgram.setOnClickListener(v -> 
-            Navigation.findNavController(v).navigate(R.id.action_AdministratorFragment_to_TambahProgramFragment)
-        );
+        // Tombol Tambah Program
+        if (binding.btnTambahProgram != null) {
+            binding.btnTambahProgram.setOnClickListener(v -> 
+                Navigation.findNavController(v).navigate(R.id.action_AdministratorFragment_to_TambahProgramFragment)
+            );
+        }
 
         // Muat informasi stats dan versi awal
         loadStats();
@@ -87,13 +89,17 @@ public class AdministratorFragment extends Fragment {
     }
 
     private void setupRecyclerViews() {
-        homeAdapter = new ProgramAdapter(programList);
-        binding.rvProgramHome.setLayoutManager(new LinearLayoutManager(getContext()));
-        binding.rvProgramHome.setAdapter(homeAdapter);
+        if (binding.rvProgramHome != null) {
+            homeAdapter = new ProgramAdapter(programList);
+            binding.rvProgramHome.setLayoutManager(new LinearLayoutManager(getContext()));
+            binding.rvProgramHome.setAdapter(homeAdapter);
+        }
 
-        listAdapter = new ProgramAdapter(programList);
-        binding.rvDaftarProgram.setLayoutManager(new LinearLayoutManager(getContext()));
-        binding.rvDaftarProgram.setAdapter(listAdapter);
+        if (binding.rvDaftarProgram != null) {
+            listAdapter = new ProgramAdapter(programList);
+            binding.rvDaftarProgram.setLayoutManager(new LinearLayoutManager(getContext()));
+            binding.rvDaftarProgram.setAdapter(listAdapter);
+        }
     }
 
     private void setupBottomNavigation() {
@@ -101,23 +107,23 @@ public class AdministratorFragment extends Fragment {
             int id = item.getItemId();
             
             // Sembunyikan semua layout tab terlebih dahulu
-            binding.layoutAdminHome.setVisibility(View.GONE);
-            binding.layoutAdminProgram.setVisibility(View.GONE);
-            binding.layoutAdminVerifikasi.setVisibility(View.GONE);
-            binding.layoutAdminDonatur.setVisibility(View.GONE);
+            if (binding.layoutAdminHome != null) binding.layoutAdminHome.setVisibility(View.GONE);
+            if (binding.layoutAdminProgram != null) binding.layoutAdminProgram.setVisibility(View.GONE);
+            if (binding.layoutAdminStatistik != null) binding.layoutAdminStatistik.setVisibility(View.GONE);
+            if (binding.layoutAdminDonatur != null) binding.layoutAdminDonatur.setVisibility(View.GONE);
 
             // Tampilkan layout sesuai tab yang dipilih
             if (id == R.id.adminHome) {
-                binding.layoutAdminHome.setVisibility(View.VISIBLE);
+                if (binding.layoutAdminHome != null) binding.layoutAdminHome.setVisibility(View.VISIBLE);
                 return true;
             } else if (id == R.id.adminProgram) {
-                binding.layoutAdminProgram.setVisibility(View.VISIBLE);
+                if (binding.layoutAdminProgram != null) binding.layoutAdminProgram.setVisibility(View.VISIBLE);
                 return true;
-            } else if (id == R.id.adminVerifikasi) {
-                binding.layoutAdminVerifikasi.setVisibility(View.VISIBLE);
+            } else if (id == R.id.adminStatistik) {
+                if (binding.layoutAdminStatistik != null) binding.layoutAdminStatistik.setVisibility(View.VISIBLE);
                 return true;
             } else if (id == R.id.adminDonatur) {
-                binding.layoutAdminDonatur.setVisibility(View.VISIBLE);
+                if (binding.layoutAdminDonatur != null) binding.layoutAdminDonatur.setVisibility(View.VISIBLE);
                 return true;
             }
             return false;
@@ -132,7 +138,7 @@ public class AdministratorFragment extends Fragment {
                         return;
                     }
 
-                    if (value != null) {
+                    if (value != null && binding != null) {
                         programList.clear();
                         List<Program> docs = value.toObjects(Program.class);
                         for (int i = 0; i < docs.size(); i++) {
@@ -140,17 +146,20 @@ public class AdministratorFragment extends Fragment {
                             p.setId(value.getDocuments().get(i).getId());
                             programList.add(p);
                         }
-                        homeAdapter.notifyDataSetChanged();
-                        listAdapter.notifyDataSetChanged();
+                        if (homeAdapter != null) homeAdapter.notifyDataSetChanged();
+                        if (listAdapter != null) listAdapter.notifyDataSetChanged();
                         
-                        binding.tvTotalProgramAktif.setText(String.valueOf(programList.size()));
+                        if (binding.tvTotalProgramAktif != null) {
+                            binding.tvTotalProgramAktif.setText(String.valueOf(programList.size()));
+                        }
                     }
                 });
     }
 
     private void loadStats() {
-        // Dummy data dashboard admin
-        binding.tvTotalDana.setText("Rp 300rb");
+        if (binding != null && binding.tvTotalDana != null) {
+            binding.tvTotalDana.setText("Rp 300rb");
+        }
     }
 
     private void loadCloudVersionInfo() {
@@ -159,7 +168,6 @@ public class AdministratorFragment extends Fragment {
                     if (binding == null || !isAdded()) return;
                     if (value != null && value.exists()) {
                         cloudVersion = value.getString("latest_version");
-                        // Sinkronisasi status visual icon cloud
                         if (BuildConfig.VERSION_NAME.equals(cloudVersion)) {
                             binding.ivCloudStatus.setAlpha(1.0f);
                         } else {

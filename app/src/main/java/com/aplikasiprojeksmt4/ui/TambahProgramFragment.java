@@ -42,7 +42,7 @@ public class TambahProgramFragment extends Fragment {
                     imageUri = result.getData().getData();
                     binding.ivProgramPreview.setImageURI(imageUri);
                     binding.ivProgramPreview.setVisibility(View.VISIBLE);
-                    binding.ivPlaceholderIcon.setVisibility(View.GONE);
+                    binding.llUploadPlaceholder.setVisibility(View.GONE);
                 }
             }
     );
@@ -77,13 +77,14 @@ public class TambahProgramFragment extends Fragment {
         String nama = binding.etNamaProgram.getText().toString().trim();
         String organisasi = binding.etOrganisasi.getText().toString().trim();
         String wilayah = binding.etWilayah.getText().toString().trim();
+        String status = binding.etStatus.getText().toString().trim();
         String target = binding.etTarget.getText().toString().trim();
         String deskripsi = binding.etDeskripsi.getText().toString().trim();
         
         String tipe = binding.rbDana.isChecked() ? "Dana" : "Barang";
 
         if (TextUtils.isEmpty(nama) || TextUtils.isEmpty(organisasi) || TextUtils.isEmpty(wilayah) || 
-            TextUtils.isEmpty(target) || TextUtils.isEmpty(deskripsi)) {
+            TextUtils.isEmpty(status) || TextUtils.isEmpty(target) || TextUtils.isEmpty(deskripsi)) {
             Toast.makeText(getContext(), "Harap isi semua field", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -93,10 +94,10 @@ public class TambahProgramFragment extends Fragment {
             return;
         }
 
-        uploadImageAndSave(nama, organisasi, wilayah, tipe, target, deskripsi);
+        uploadImageAndSave(nama, organisasi, wilayah, tipe, status, target, deskripsi);
     }
 
-    private void uploadImageAndSave(String nama, String organisasi, String wilayah, String tipe, String target, String deskripsi) {
+    private void uploadImageAndSave(String nama, String organisasi, String wilayah, String tipe, String status, String target, String deskripsi) {
         binding.btnBuatProgram.setEnabled(false);
         binding.btnBuatProgram.setText("Mengunggah Gambar...");
 
@@ -105,7 +106,7 @@ public class TambahProgramFragment extends Fragment {
 
         ref.putFile(imageUri)
                 .addOnSuccessListener(taskSnapshot -> ref.getDownloadUrl().addOnSuccessListener(uri -> {
-                    saveToFirestore(nama, organisasi, wilayah, tipe, target, deskripsi, uri.toString());
+                    saveToFirestore(nama, organisasi, wilayah, tipe, status, target, deskripsi, uri.toString());
                 }))
                 .addOnFailureListener(e -> {
                     binding.btnBuatProgram.setEnabled(true);
@@ -114,7 +115,7 @@ public class TambahProgramFragment extends Fragment {
                 });
     }
 
-    private void saveToFirestore(String nama, String organisasi, String wilayah, String tipe, String target, String deskripsi, String imageUrl) {
+    private void saveToFirestore(String nama, String organisasi, String wilayah, String tipe, String status, String target, String deskripsi, String imageUrl) {
         binding.btnBuatProgram.setText("Menyimpan Program...");
 
         Map<String, Object> program = new HashMap<>();
@@ -122,10 +123,10 @@ public class TambahProgramFragment extends Fragment {
         program.put("organisasi", organisasi);
         program.put("wilayah", wilayah);
         program.put("tipe", tipe);
+        program.put("status", status);
         program.put("target", target);
         program.put("deskripsi", deskripsi);
         program.put("imageUrl", imageUrl);
-        program.put("status", "Aktif");
         program.put("terkumpul", 0);
         program.put("created_at", FieldValue.serverTimestamp());
 
