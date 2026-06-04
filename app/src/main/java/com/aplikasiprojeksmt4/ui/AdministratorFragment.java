@@ -1,5 +1,6 @@
 package com.aplikasiprojeksmt4.ui;
 
+import android.app.AlertDialog;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import com.aplikasiprojeksmt4.BuildConfig;
+import com.aplikasiprojeksmt4.R;
 import com.aplikasiprojeksmt4.databinding.FragmentAdministratorBinding;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
@@ -29,6 +31,7 @@ public class AdministratorFragment extends Fragment {
     private FirebaseFirestore db;
     private FirebaseStorage storage;
     private boolean isUploading = false;
+    private String cloudVersion = "Unknown";
 
     @Nullable
     @Override
@@ -43,29 +46,94 @@ public class AdministratorFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        // Tombol Kembali
         binding.btnBack.setOnClickListener(v -> Navigation.findNavController(v).navigateUp());
 
+        // Setup Bottom Navigation untuk Administrator
+        setupBottomNavigation();
+
+        // Tombol Status Cloud di Pojok Kanan Atas (Beranda Tab)
+        binding.btnCloudStatus.setOnClickListener(v -> showCloudStatusDialog());
+
+        // Tombol Rilis Versi Ini (Beranda Tab)
         binding.llRilisUpdate.setOnClickListener(v -> {
             if (!isUploading) {
-                uploadApkAndRelease();
+                showReleaseConfirmation();
             }
         });
 
-        // Muat informasi versi terakhir saat halaman dibuka
-        loadLastVersionInfo();
+        // Muat informasi stats dan versi awal
+        loadStats();
+        loadCloudVersionInfo();
     }
 
-    private void loadLastVersionInfo() {
+    private void setupBottomNavigation() {
+        binding.adminBottomNav.setOnItemSelectedListener(item -> {
+            int id = item.getItemId();
+            
+            // Sembunyikan semua layout tab terlebih dahulu
+            binding.layoutAdminHome.setVisibility(View.GONE);
+            binding.layoutAdminProgram.setVisibility(View.GONE);
+            binding.layoutAdminVerifikasi.setVisibility(View.GONE);
+            binding.layoutAdminDonatur.setVisibility(View.GONE);
+
+            // Tampilkan layout sesuai tab yang dipilih
+            if (id == R.id.adminHome) {
+                binding.layoutAdminHome.setVisibility(View.VISIBLE);
+                return true;
+            } else if (id == R.id.adminProgram) {
+                binding.layoutAdminProgram.setVisibility(View.VISIBLE);
+                return true;
+            } else if (id == R.id.adminVerifikasi) {
+                binding.layoutAdminVerifikasi.setVisibility(View.VISIBLE);
+                return true;
+            } else if (id == R.id.adminDonatur) {
+                binding.layoutAdminDonatur.setVisibility(View.VISIBLE);
+                return true;
+            }
+            return false;
+        });
+    }
+
+    private void loadStats() {
+        // Dummy data dashboard admin
+        binding.tvTotalDana.setText("Rp 300rb");
+    }
+
+    private void loadCloudVersionInfo() {
         db.collection("app_settings").document("update_info")
                 .addSnapshotListener((value, error) -> {
                     if (binding == null || !isAdded()) return;
                     if (value != null && value.exists()) {
-                        String version = value.getString("latest_version");
-                        binding.tvLastVersion.setText(version != null ? version : "Belum ada rilis");
-                    } else {
-                        binding.tvLastVersion.setText("Belum ada data rilis");
+                        cloudVersion = value.getString("latest_version");
+                        // Sinkronisasi status visual icon cloud
+                        if (BuildConfig.VERSION_NAME.equals(cloudVersion)) {
+                            binding.ivCloudStatus.setAlpha(1.0f);
+                        } else {
+                            binding.ivCloudStatus.setAlpha(0.5f);
+                        }
                     }
                 });
+    }
+
+    private void showCloudStatusDialog() {
+        String msg = "Versi Aplikasi Saat Ini: " + BuildConfig.VERSION_NAME + 
+                     "\nVersi di Cloud: " + cloudVersion;
+        
+        new AlertDialog.Builder(requireContext())
+                .setTitle("Status Update Cloud")
+                .setMessage(msg)
+                .setPositiveButton("OK", null)
+                .show();
+    }
+
+    private void showReleaseConfirmation() {
+        new AlertDialog.Builder(requireContext())
+                .setTitle("Konfirmasi Rilis")
+                .setMessage("Apakah Anda yakin ingin merilis versi " + BuildConfig.VERSION_NAME + " ke cloud?")
+                .setPositiveButton("Ya, Rilis", (dialog, which) -> uploadApkAndRelease())
+                .setNegativeButton("Batal", null)
+                .show();
     }
 
     private void setUploadState(boolean uploading) {
@@ -74,16 +142,14 @@ public class AdministratorFragment extends Fragment {
 
         if (uploading) {
             binding.llRilisUpdate.setEnabled(false);
-            binding.llRilisUpdate.setAlpha(0.5f);
             binding.pbUpload.setVisibility(View.VISIBLE);
             binding.ivArrowRilis.setVisibility(View.GONE);
-            binding.tvRilisText.setText("Sedang Mengunggah...");
+            binding.tvRilisText.setText("Proses...");
         } else {
             binding.llRilisUpdate.setEnabled(true);
-            binding.llRilisUpdate.setAlpha(1.0f);
             binding.pbUpload.setVisibility(View.GONE);
             binding.ivArrowRilis.setVisibility(View.VISIBLE);
-            binding.tvRilisText.setText("Rilis Versi Ini");
+            binding.tvRilisText.setText("Rilis\nVersi Ini");
         }
     }
 
@@ -91,20 +157,16 @@ public class AdministratorFragment extends Fragment {
         if (getContext() == null) return;
         
         setUploadState(true);
-        Toast.makeText(getContext(), "Memulai pengunggahan APK...", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), "Sedang mengunggah file APK...", Toast.LENGTH_SHORT).show();
         
-        // 1. Dapatkan path APK dari aplikasi yang sedang berjalan
         String apkPath = getContext().getPackageCodePath();
         File apkFile = new File(apkPath);
         Uri fileUri = Uri.fromFile(apkFile);
 
-        // 2. Tentukan lokasi penyimpanan di Firebase Storage
         StorageReference storageRef = storage.getReference().child("releases/donasiku_latest.apk");
 
-        // 3. Proses Upload
         storageRef.putFile(fileUri)
                 .addOnSuccessListener(taskSnapshot -> {
-                    // 4. Ambil URL unduhan setelah upload berhasil
                     storageRef.getDownloadUrl().addOnSuccessListener(uri -> {
                         updateFirestoreInfo(uri.toString());
                     });
@@ -112,31 +174,29 @@ public class AdministratorFragment extends Fragment {
                 .addOnFailureListener(e -> {
                     setUploadState(false);
                     if (isAdded()) {
-                        Toast.makeText(getContext(), "Gagal upload APK: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(), "Gagal: " + e.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 });
     }
 
     private void updateFirestoreInfo(String downloadUrl) {
         String currentVersion = BuildConfig.VERSION_NAME;
-        
         Map<String, Object> update = new HashMap<>();
         update.put("latest_version", currentVersion);
         update.put("download_url", downloadUrl);
         
-        // 5. Update Firestore agar terdeteksi oleh UpdateManager di user lain
         db.collection("app_settings").document("update_info")
                 .set(update, SetOptions.merge())
                 .addOnSuccessListener(aVoid -> {
                     setUploadState(false);
                     if (isAdded()) {
-                        Toast.makeText(getContext(), "Berhasil merilis versi: " + currentVersion, Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(), "Berhasil Rilis Versi " + currentVersion, Toast.LENGTH_LONG).show();
                     }
                 })
                 .addOnFailureListener(e -> {
                     setUploadState(false);
                     if (isAdded()) {
-                        Toast.makeText(getContext(), "Gagal update info Firestore: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "Gagal update Firestore: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
     }

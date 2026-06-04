@@ -190,7 +190,7 @@
                     android:name="com.google.android.gms.maps.SupportMapFragment"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    tools:context=".GMapFragment" />
+                    tools:context=".ui.GMapFragment" />
 
             </com.google.android.material.card.MaterialCardView>
 
@@ -245,7 +245,8 @@
                                 android:layout_height="24dp"
                                 android:layout_gravity="center"
                                 android:src="@android:drawable/ic_menu_send"
-                                app:tint="#9C27B0" />
+                                app:tint="#9C27B0"
+                                android:contentDescription="Icon Program" />
                         </com.google.android.material.card.MaterialCardView>
 
                         <LinearLayout
@@ -322,7 +323,8 @@
                             android:layout_width="14dp"
                             android:layout_height="14dp"
                             android:src="@android:drawable/ic_menu_myplaces"
-                            app:tint="#888888" />
+                            app:tint="#888888"
+                            android:contentDescription="Donatur" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -337,7 +339,8 @@
                             android:layout_height="14dp"
                             android:layout_marginStart="12dp"
                             android:src="@android:drawable/ic_menu_recent_history"
-                            app:tint="#888888" />
+                            app:tint="#888888"
+                            android:contentDescription="Waktu" />
 
                         <TextView
                             android:layout_width="0dp"
@@ -392,7 +395,7 @@
                         <com.google.android.material.card.MaterialCardView
                             android:layout_width="48dp"
                             android:layout_height="48dp"
-                            app:cardBackgroundColor="#F3E5F5"
+                            app:cardBackgroundColor="#E8F5E9"
                             app:cardCornerRadius="12dp"
                             app:cardElevation="0dp">
 
@@ -400,8 +403,9 @@
                                 android:layout_width="24dp"
                                 android:layout_height="24dp"
                                 android:layout_gravity="center"
-                                android:src="@android:drawable/ic_menu_send"
-                                app:tint="#9C27B0" />
+                                android:src="@android:drawable/ic_dialog_map"
+                                app:tint="#4CAF50"
+                                android:contentDescription="Icon Program" />
                         </com.google.android.material.card.MaterialCardView>
 
                         <LinearLayout
@@ -414,11 +418,11 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:background="#FFF9C4"
+                                android:background="#C8E6C9"
                                 android:paddingHorizontal="8dp"
                                 android:paddingVertical="2dp"
-                                android:text="Hampir Selesai"
-                                android:textColor="#FBC02D"
+                                android:text="Tersalurkan"
+                                android:textColor="#2E7D32"
                                 android:textSize="10sp"
                                 android:textStyle="bold" />
 
@@ -426,7 +430,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="4dp"
-                                android:text="Dana Sembako untuk Keluarga Pra-..."
+                                android:text="Bantuan Pangan Kenjeran"
                                 android:textColor="#333333"
                                 android:textSize="14sp"
                                 android:textStyle="bold" />
@@ -444,15 +448,15 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Rp 36.100.000 terkumpul"
+                            android:text="Rp 10.000.000 tersalurkan"
                             android:textColor="#888888"
                             android:textSize="12sp" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="72%"
-                            android:textColor="#9C27B0"
+                            android:text="100%"
+                            android:textColor="#4CAF50"
                             android:textSize="12sp"
                             android:textStyle="bold" />
                     </LinearLayout>
@@ -461,9 +465,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:progress="72"
-                        app:indicatorColor="#9C27B0"
-                        app:trackColor="#F3E5F5"
+                        android:progress="100"
+                        app:indicatorColor="#4CAF50"
+                        app:trackColor="#E8F5E9"
                         app:trackCornerRadius="4dp"
                         app:trackThickness="8dp" />
 
@@ -478,47 +482,37 @@
                             android:layout_width="14dp"
                             android:layout_height="14dp"
                             android:src="@android:drawable/ic_menu_myplaces"
-                            app:tint="#888888" />
+                            app:tint="#888888"
+                            android:contentDescription="Donatur" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="4dp"
-                            android:text="156 donatur"
+                            android:text="42 donatur"
                             android:textColor="#888888"
                             android:textSize="11sp" />
-
-                        <ImageView
-                            android:layout_width="14dp"
-                            android:layout_height="14dp"
-                            android:layout_marginStart="12dp"
-                            android:src="@android:drawable/ic_menu_recent_history"
-                            app:tint="#888888" />
 
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="4dp"
+                            android:layout_marginStart="12dp"
                             android:layout_weight="1"
-                            android:text="5 hari lagi"
-                            android:textColor="#888888"
-                            android:textSize="11sp" />
+                            android:text="Selesai"
+                            android:textColor="#4CAF50"
+                            android:textSize="11sp"
+                            android:textStyle="bold" />
 
                         <com.google.android.material.button.MaterialButton
-                            style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                            style="@style/Widget.MaterialComponents.Button.TextButton"
                             android:layout_width="wrap_content"
                             android:layout_height="32dp"
-                            android:backgroundTint="#9C27B0"
                             android:insetTop="0dp"
                             android:insetBottom="0dp"
-                            android:text="Donasi"
+                            android:text="Detail"
                             android:textAllCaps="false"
-                            android:textSize="11sp"
-                            app:cornerRadius="16dp"
-                            app:icon="@android:drawable/ic_menu_send"
-                            app:iconGravity="end"
-                            app:iconSize="12dp"
-                            app:iconTint="@android:color/white" />
+                            android:textColor="#888888"
+                            android:textSize="11sp" />
                     </LinearLayout>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
