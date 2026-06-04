@@ -31,6 +31,9 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        // Set the toolbar as the ActionBar
+        setSupportActionBar(binding.toolbar);
+
         // In-App Auto Update Check
         UpdateManager updateManager = new UpdateManager(this);
         updateManager.checkForUpdates();
@@ -68,12 +71,12 @@ public class MainActivity extends AppCompatActivity {
             navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
                 int id = destination.getId();
                 
-                // ActionBar visibility
+                // Toolbar visibility
                 if (id == R.id.HomeFragment || id == R.id.FirstFragment || id == R.id.WelcomeFragment || 
                     id == R.id.LoginFragment || id == R.id.RegisterFragment) {
-                    if (getSupportActionBar() != null) getSupportActionBar().hide();
+                    binding.toolbar.setVisibility(View.GONE);
                 } else {
-                    if (getSupportActionBar() != null) getSupportActionBar().show();
+                    binding.toolbar.setVisibility(View.VISIBLE);
                 }
 
                 // Bottom Navigation visibility - show only on main tabs

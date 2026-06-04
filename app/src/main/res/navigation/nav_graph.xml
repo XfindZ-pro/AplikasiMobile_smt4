@@ -230,6 +230,16 @@
         android:id="@+id/AdministratorFragment"
         android:name="com.aplikasiprojeksmt4.ui.AdministratorFragment"
         android:label="Administrator"
-        tools:layout="@layout/fragment_administrator" />
+        tools:layout="@layout/fragment_administrator">
+        <action
+            android:id="@+id/action_AdministratorFragment_to_TambahProgramFragment"
+            app:destination="@id/TambahProgramFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/TambahProgramFragment"
+        android:name="com.aplikasiprojeksmt4.ui.TambahProgramFragment"
+        android:label="Tambah Program"
+        tools:layout="@layout/fragment_tambah_program" />
 
 </navigation>

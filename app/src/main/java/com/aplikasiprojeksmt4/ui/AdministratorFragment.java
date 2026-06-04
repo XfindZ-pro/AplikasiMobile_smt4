@@ -62,6 +62,11 @@ public class AdministratorFragment extends Fragment {
             }
         });
 
+        // Tombol Tambah Program (Mengarahkan ke page fragment_tambah_program.xml)
+        binding.btnTambahProgram.setOnClickListener(v -> 
+            Navigation.findNavController(v).navigate(R.id.action_AdministratorFragment_to_TambahProgramFragment)
+        );
+
         // Muat informasi stats dan versi awal
         loadStats();
         loadCloudVersionInfo();
