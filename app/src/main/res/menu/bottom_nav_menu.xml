@@ -3,19 +3,15 @@
     <item
         android:id="@+id/HomeFragment"
         android:icon="@android:drawable/ic_menu_today"
-        android:title="Beranda" />
+        android:title="Home" />
     <item
         android:id="@+id/MapsFragment"
         android:icon="@android:drawable/ic_dialog_map"
-        android:title="Peta" />
-    <item
-        android:id="@+id/placeholder"
-        android:title=""
-        android:enabled="false" />
+        android:title="Maps" />
     <item
         android:id="@+id/HistoryFragment"
         android:icon="@android:drawable/ic_menu_recent_history"
-        android:title="Aktivitas" />
+        android:title="Riwayat" />
     <item
         android:id="@+id/ProfileFragment"
         android:icon="@android:drawable/ic_menu_myplaces"

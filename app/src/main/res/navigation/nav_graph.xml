@@ -81,9 +81,13 @@
 
     <fragment
         android:id="@+id/MapsFragment"
-        android:name="com.aplikasiprojeksmt4.ui.MapsFragment"
+        android:name="com.aplikasiprojeksmt4.ui.GMapFragment"
         android:label="Peta"
-        tools:layout="@layout/fragment_maps" />
+        tools:layout="@layout/fragment_gmap" >
+        <action
+            android:id="@+id/action_MapsFragment_to_HomeFragment"
+            app:destination="@id/HomeFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/HistoryFragment"
@@ -93,6 +97,69 @@
         <action
             android:id="@+id/action_HistoryFragment_to_DetailDonasiFragment"
             app:destination="@id/DetailDonasiFragment" />
+        <action
+            android:id="@+id/action_HistoryFragment_to_HistoryUangFragment"
+            app:destination="@id/HistoryUangFragment" />
+        <action
+            android:id="@+id/action_HistoryFragment_to_HistoryBarangFragment"
+            app:destination="@id/HistoryBarangFragment" />
+        <action
+            android:id="@+id/action_HistoryFragment_to_HistoryProsesFragment"
+            app:destination="@id/HistoryProsesFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/HistoryUangFragment"
+        android:name="com.aplikasiprojeksmt4.ui.HistoryUangFragment"
+        android:label="Riwayat Uang"
+        tools:layout="@layout/fragment_history_uang">
+        <action
+            android:id="@+id/action_HistoryUangFragment_to_HistoryFragment"
+            app:destination="@id/HistoryFragment"
+            app:popUpTo="@id/HistoryFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_HistoryUangFragment_to_HistoryBarangFragment"
+            app:destination="@id/HistoryBarangFragment" />
+        <action
+            android:id="@+id/action_HistoryUangFragment_to_HistoryProsesFragment"
+            app:destination="@id/HistoryProsesFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/HistoryBarangFragment"
+        android:name="com.aplikasiprojeksmt4.ui.HistoryBarangFragment"
+        android:label="Riwayat Barang"
+        tools:layout="@layout/fragment_history_barang">
+        <action
+            android:id="@+id/action_HistoryBarangFragment_to_HistoryFragment"
+            app:destination="@id/HistoryFragment"
+            app:popUpTo="@id/HistoryFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_HistoryBarangFragment_to_HistoryUangFragment"
+            app:destination="@id/HistoryUangFragment" />
+        <action
+            android:id="@+id/action_HistoryBarangFragment_to_HistoryProsesFragment"
+            app:destination="@id/HistoryProsesFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/HistoryProsesFragment"
+        android:name="com.aplikasiprojeksmt4.ui.HistoryProsesFragment"
+        android:label="Riwayat Proses"
+        tools:layout="@layout/fragment_history_proses">
+        <action
+            android:id="@+id/action_HistoryProsesFragment_to_HistoryFragment"
+            app:destination="@id/HistoryFragment"
+            app:popUpTo="@id/HistoryFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_HistoryProsesFragment_to_HistoryUangFragment"
+            app:destination="@id/HistoryUangFragment" />
+        <action
+            android:id="@+id/action_HistoryProsesFragment_to_HistoryBarangFragment"
+            app:destination="@id/HistoryBarangFragment" />
     </fragment>
 
     <fragment

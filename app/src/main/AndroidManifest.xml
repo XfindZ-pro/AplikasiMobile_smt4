@@ -21,7 +21,7 @@
         <!-- GOOGLE MAPS API KEY -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="YOUR_API_KEY_HERE" />
+            android:value="AIzaSyBwTOjomzupJKupJPn5n5uk8UcK2-j8tYQ" />
 
         <activity
             android:name="com.aplikasiprojeksmt4.ui.SplashActivity"
