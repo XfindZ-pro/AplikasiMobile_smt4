@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.aplikasiprojeksmt4.R;
 import com.aplikasiprojeksmt4.databinding.ItemProgramAdminBinding;
 import com.aplikasiprojeksmt4.models.Program;
-import com.github.bumptech.glide.Glide;
+import com.bumptech.glide.Glide;
 import java.util.List;
 
 public class ProgramAdapter extends RecyclerView.Adapter<ProgramAdapter.ProgramViewHolder> {
