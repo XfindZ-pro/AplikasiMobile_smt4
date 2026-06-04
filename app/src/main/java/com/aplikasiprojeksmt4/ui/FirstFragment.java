@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
+import com.aplikasiprojeksmt4.BuildConfig;
 import com.aplikasiprojeksmt4.R;
 import com.aplikasiprojeksmt4.databinding.FragmentFirstBinding;
 import com.aplikasiprojeksmt4.utils.UpdateManager;
@@ -25,6 +26,11 @@ public class FirstFragment extends Fragment {
     ) {
         binding = FragmentFirstBinding.inflate(inflater, container, false);
         updateManager = new UpdateManager(requireContext());
+        
+        // Menampilkan versi aplikasi saat ini
+        String versionText = "Versi " + BuildConfig.VERSION_NAME;
+        binding.tvAppVersion.setText(versionText);
+
         return binding.getRoot();
     }
 
