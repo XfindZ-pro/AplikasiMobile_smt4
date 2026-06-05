@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -64,6 +63,10 @@ public class ProfileFragment extends Fragment {
             Navigation.findNavController(v).navigate(R.id.action_ProfileFragment_to_AdministratorFragment)
         );
 
+        binding.llManajemenProgram.setOnClickListener(v -> 
+            Navigation.findNavController(v).navigate(R.id.action_ProfileFragment_to_ManajemenProgramFragment)
+        );
+
         binding.btnLogout.setOnClickListener(v -> {
             sessionManager.logout();
             Intent intent = new Intent(requireActivity(), SplashActivity.class);
@@ -102,12 +105,22 @@ public class ProfileFragment extends Fragment {
                 binding.tvProfileName.setText(nama != null ? nama : "User");
                 binding.tvProfileEmail.setText(email != null ? email : "email@example.com");
 
+                // Check visibility for Administrator (Admin only)
                 if ("admin".equals(role)) {
                     binding.llAdministrator.setVisibility(View.VISIBLE);
                     binding.viewSeparatorAdmin.setVisibility(View.VISIBLE);
                 } else {
                     binding.llAdministrator.setVisibility(View.GONE);
                     binding.viewSeparatorAdmin.setVisibility(View.GONE);
+                }
+
+                // Check visibility for Manajemen Program (Admin and Mitra)
+                if ("admin".equals(role) || "mitra".equals(role)) {
+                    binding.llManajemenProgram.setVisibility(View.VISIBLE);
+                    binding.viewSeparatorManajemen.setVisibility(View.VISIBLE);
+                } else {
+                    binding.llManajemenProgram.setVisibility(View.GONE);
+                    binding.viewSeparatorManajemen.setVisibility(View.GONE);
                 }
 
                 if (photoUrl != null && !photoUrl.isEmpty()) {

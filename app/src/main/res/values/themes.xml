@@ -22,4 +22,9 @@
 
     <style name="Theme.AplikasiProjekSMT4.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
     <style name="Theme.AplikasiProjekSMT4.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <!-- Shape Appearance for Circular Images -->
+    <style name="CircleImage" parent="ShapeAppearance.MaterialComponents.SmallComponent">
+        <item name="cornerSize">50%</item>
+    </style>
 </resources>

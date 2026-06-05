@@ -56,9 +56,6 @@ public class AdministratorFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        // Tombol Kembali
-        binding.btnBack.setOnClickListener(v -> Navigation.findNavController(v).navigateUp());
-
         // Setup RecyclerViews
         setupRecyclerViews();
 
@@ -75,9 +72,9 @@ public class AdministratorFragment extends Fragment {
             }
         });
 
-        // Tombol Tambah Program
-        if (binding.btnTambahProgram != null) {
-            binding.btnTambahProgram.setOnClickListener(v -> 
+        // Tombol Tambah Program di Header
+        if (binding.btnTambahProgramHeader != null) {
+            binding.btnTambahProgramHeader.setOnClickListener(v ->
                 Navigation.findNavController(v).navigate(R.id.action_AdministratorFragment_to_TambahProgramFragment)
             );
         }
