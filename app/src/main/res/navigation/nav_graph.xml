@@ -185,9 +185,6 @@
         <action
             android:id="@+id/action_ProfileFragment_to_HomepageAdminFragment"
             app:destination="@id/HomepageAdminFragment" />
-        <action
-            android:id="@+id/action_ProfileFragment_to_ManajemenProgramFragment"
-            app:destination="@id/ManajemenProgramFragment" />
     </fragment>
 
     <fragment
@@ -246,10 +243,16 @@
         android:id="@+id/HomepageAdminFragment"
         android:name="com.aplikasiprojeksmt4.ui.HomepageAdminFragment"
         android:label="Admin Homepage"
-        tools:layout="@layout/homepage_admin">
+        tools:layout="@layout/homepageadmin">
         <action
             android:id="@+id/action_HomepageAdminFragment_to_TambahProgramFragment"
             app:destination="@id/TambahProgramFragment" />
+        <action
+            android:id="@+id/action_HomepageAdminFragment_to_VerifikasiAjuanProgramAdminFragment"
+            app:destination="@id/VerifikasiAjuanProgramAdminFragment" />
+        <action
+            android:id="@+id/action_HomepageAdminFragment_to_VerifikasiDonasiDanaFragment"
+            app:destination="@id/VerifikasiDonasiDanaFragment" />
     </fragment>
 
     <fragment
@@ -259,9 +262,15 @@
         tools:layout="@layout/fragment_tambah_program" />
 
     <fragment
-        android:id="@+id/ManajemenProgramFragment"
-        android:name="com.aplikasiprojeksmt4.ui.ManajemenProgramFragment"
-        android:label="Manajemen Program"
-        tools:layout="@layout/fragment_manajemen_program" />
+        android:id="@+id/VerifikasiAjuanProgramAdminFragment"
+        android:name="com.aplikasiprojeksmt4.ui.VerifikasiAjuanProgramAdminFragment"
+        android:label="Verifikasi Ajuan Program"
+        tools:layout="@layout/page_verifikasi_ajuanprogram_admin" />
+
+    <fragment
+        android:id="@+id/VerifikasiDonasiDanaFragment"
+        android:name="com.aplikasiprojeksmt4.ui.VerifikasiDonasiDanaFragment"
+        android:label="Verifikasi Donasi Dana"
+        tools:layout="@layout/page_verifdonasidana" />
 
 </navigation>

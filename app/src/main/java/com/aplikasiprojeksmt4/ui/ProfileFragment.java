@@ -11,7 +11,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
-import com.aplikasiprojeksmt4.BuildConfig;
 import com.aplikasiprojeksmt4.R;
 import com.aplikasiprojeksmt4.databinding.FragmentProfileBinding;
 import com.aplikasiprojeksmt4.utils.SessionManager;
@@ -42,9 +41,6 @@ public class ProfileFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        // Menampilkan versi aplikasi
-        binding.tvAppVersion.setText("Versi " + BuildConfig.VERSION_NAME);
-
         loadUserData();
 
         binding.llDataDiri.setOnClickListener(v -> 
@@ -55,25 +51,19 @@ public class ProfileFragment extends Fragment {
             Navigation.findNavController(v).navigate(R.id.action_ProfileFragment_to_HistoryFragment)
         );
 
-        binding.llSertifikat.setOnClickListener(v -> 
-            Navigation.findNavController(v).navigate(R.id.action_ProfileFragment_to_SertifDonasiFragment)
-        );
-
         binding.llLaporanRealTime.setOnClickListener(v -> 
             Navigation.findNavController(v).navigate(R.id.action_ProfileFragment_to_LaporanRealTimeFragment)
         );
 
+        // Menghubungkan ke Homepage Admin (Hanya muncul jika role admin)
         binding.llAdministrator.setOnClickListener(v -> 
-            Navigation.findNavController(v).navigate(R.id.action_ProfileFragment_to_AdministratorFragment)
-        );
-
-        binding.llManajemenProgram.setOnClickListener(v -> 
-            Navigation.findNavController(v).navigate(R.id.action_ProfileFragment_to_ManajemenProgramFragment)
+            Navigation.findNavController(v).navigate(R.id.action_ProfileFragment_to_HomepageAdminFragment)
         );
 
         binding.btnLogout.setOnClickListener(v -> {
             sessionManager.logout();
-            Intent intent = new Intent(requireActivity(), SplashActivity.class);
+            // Ganti SplashActivity atau LoginPage sesuai alur aplikasi Anda
+            Intent intent = new Intent(requireActivity(), WelcomeFragment.class); 
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
             requireActivity().finish();
@@ -82,13 +72,7 @@ public class ProfileFragment extends Fragment {
 
     private void loadUserData() {
         String userId = sessionManager.getUserId();
-        if (userId == null) {
-            if (binding != null) {
-                binding.tvProfileName.setText(sessionManager.getUsername());
-                binding.tvProfileEmail.setText(sessionManager.getEmail());
-            }
-            return;
-        }
+        if (userId == null) return;
 
         userListener = db.collection("users").document(userId).addSnapshotListener((value, error) -> {
             if (binding == null || !isAdded()) return;
@@ -99,17 +83,10 @@ public class ProfileFragment extends Fragment {
                 String photoUrl = value.getString("profile_photo");
                 String role = value.getString("role");
 
-                if (role == null) {
-                    Map<String, Object> updateRole = new HashMap<>();
-                    updateRole.put("role", "user");
-                    db.collection("users").document(userId).update(updateRole);
-                    role = "user";
-                }
-
                 binding.tvProfileName.setText(nama != null ? nama : "User");
-                binding.tvProfileEmail.setText(email != null ? email : "email@example.com");
+                binding.tvProfileEmail.setText(email != null ? email : "");
 
-                // Check visibility for Administrator (Admin only)
+                // Cek Role Admin dari Database
                 if ("admin".equals(role)) {
                     binding.llAdministrator.setVisibility(View.VISIBLE);
                     binding.viewSeparatorAdmin.setVisibility(View.VISIBLE);
@@ -118,18 +95,10 @@ public class ProfileFragment extends Fragment {
                     binding.viewSeparatorAdmin.setVisibility(View.GONE);
                 }
 
-                // Check visibility for Manajemen Program (Admin and Mitra)
-                if ("admin".equals(role) || "mitra".equals(role)) {
-                    binding.llManajemenProgram.setVisibility(View.VISIBLE);
-                    binding.viewSeparatorManajemen.setVisibility(View.VISIBLE);
-                } else {
-                    binding.llManajemenProgram.setVisibility(View.GONE);
-                    binding.viewSeparatorManajemen.setVisibility(View.GONE);
-                }
-
                 if (photoUrl != null && !photoUrl.isEmpty()) {
                     Glide.with(this)
                             .load(photoUrl)
+                            .circleCrop()
                             .placeholder(R.drawable.group_2)
                             .into(binding.ivProfilePicture);
                 }
