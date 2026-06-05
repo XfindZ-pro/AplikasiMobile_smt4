@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import com.aplikasiprojeksmt4.BuildConfig;
 import com.aplikasiprojeksmt4.R;
 import com.aplikasiprojeksmt4.databinding.FragmentProfileBinding;
 import com.aplikasiprojeksmt4.utils.SessionManager;
@@ -40,6 +41,9 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        // Menampilkan versi aplikasi
+        binding.tvAppVersion.setText("Versi " + BuildConfig.VERSION_NAME);
 
         loadUserData();
 
@@ -126,7 +130,6 @@ public class ProfileFragment extends Fragment {
                 if (photoUrl != null && !photoUrl.isEmpty()) {
                     Glide.with(this)
                             .load(photoUrl)
-                            .circleCrop()
                             .placeholder(R.drawable.group_2)
                             .into(binding.ivProfilePicture);
                 }

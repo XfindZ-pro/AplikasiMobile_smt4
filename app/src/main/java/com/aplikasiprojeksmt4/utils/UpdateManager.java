@@ -23,7 +23,7 @@ import java.io.File;
 public class UpdateManager {
 
     private static final String TAG = "UpdateManager";
-    private static final String APK_NAME = "update_donasiku.apk";
+    private static final String APK_NAME = "donasiku_update.apk";
     private final Context context;
     private final FirebaseFirestore db;
 
@@ -45,12 +45,14 @@ public class UpdateManager {
                 .get()
                 .addOnSuccessListener(documentSnapshot -> {
                     if (documentSnapshot.exists()) {
-                        String latestVersion = documentSnapshot.getString("latest_version");
+                        String latestVersionName = documentSnapshot.getString("latest_version");
+                        Long latestVersionCode = documentSnapshot.getLong("latest_version_code");
                         String downloadUrl = documentSnapshot.getString("download_url");
-                        String currentVersion = BuildConfig.VERSION_NAME;
+                        
+                        long currentVersionCode = BuildConfig.VERSION_CODE;
 
-                        if (latestVersion != null && isVersionNewer(currentVersion, latestVersion)) {
-                            showUpdateDialog(latestVersion, downloadUrl);
+                        if (latestVersionCode != null && latestVersionCode > currentVersionCode && downloadUrl != null) {
+                            showUpdateDialog(latestVersionName != null ? latestVersionName : "Terbaru", downloadUrl);
                         } else if (listener != null) {
                             listener.onNoUpdate();
                         }
@@ -66,10 +68,6 @@ public class UpdateManager {
                 });
     }
 
-    private boolean isVersionNewer(String current, String latest) {
-        return latest.compareTo(current) > 0;
-    }
-
     private void showUpdateDialog(String version, String url) {
         new AlertDialog.Builder(context)
                 .setTitle("Pembaruan DonasiKu Tersedia")
@@ -79,6 +77,8 @@ public class UpdateManager {
                         startDownload(url);
                     } else {
                         requestInstallPermission();
+                        // Simpan URL agar bisa didownload setelah izin diberikan (opsional, untuk UX lebih baik)
+                        Toast.makeText(context, "Silakan coba lagi setelah memberikan izin.", Toast.LENGTH_SHORT).show();
                     }
                 })
                 .setNegativeButton("Nanti", null)
@@ -98,34 +98,44 @@ public class UpdateManager {
             Toast.makeText(context, "Aktifkan 'Izinkan dari sumber ini' untuk mengupdate aplikasi", Toast.LENGTH_LONG).show();
             Intent intent = new Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES)
                     .setData(Uri.parse("package:" + context.getPackageName()));
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(intent);
         }
     }
 
     private void startDownload(String url) {
-        File oldFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), APK_NAME);
-        if (oldFile.exists()) {
-            oldFile.delete();
+        // Bersihkan file lama jika ada
+        File downloadsDir = context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS);
+        if (downloadsDir == null) {
+            downloadsDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+        }
+        File apkFile = new File(downloadsDir, APK_NAME);
+        if (apkFile.exists()) {
+            apkFile.delete();
         }
 
-        Toast.makeText(context, "Mengunduh pembaruan di latar belakang...", Toast.LENGTH_LONG).show();
+        Toast.makeText(context, "Mengunduh pembaruan...", Toast.LENGTH_LONG).show();
 
         DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
         request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI | DownloadManager.Request.NETWORK_MOBILE);
         request.setTitle("DonasiKu Update");
-        request.setDescription("Versi " + BuildConfig.VERSION_NAME + " -> Terbaru");
+        request.setDescription("Sedang mengunduh versi terbaru...");
         request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, APK_NAME);
+        
+        // Gunakan setDestinationUri agar FileProvider bisa mengaksesnya dengan aman
+        request.setDestinationUri(Uri.fromFile(apkFile));
 
         DownloadManager downloadManager = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
-        long downloadId = downloadManager.enqueue(request);
+        if (downloadManager == null) return;
+        
+        final long downloadId = downloadManager.enqueue(request);
 
         BroadcastReceiver receiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
                 long id = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1);
                 if (id == downloadId) {
-                    installApk();
+                    installApk(apkFile);
                     context.unregisterReceiver(this);
                 }
             }
@@ -138,8 +148,7 @@ public class UpdateManager {
         }
     }
 
-    private void installApk() {
-        File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), APK_NAME);
+    private void installApk(File file) {
         if (file.exists()) {
             Intent intent = new Intent(Intent.ACTION_VIEW);
             Uri apkUri = FileProvider.getUriForFile(context, BuildConfig.APPLICATION_ID + ".fileprovider", file);
@@ -148,9 +157,15 @@ public class UpdateManager {
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             
-            context.startActivity(intent);
+            try {
+                context.startActivity(intent);
+            } catch (Exception e) {
+                Log.e(TAG, "Gagal menginstal APK", e);
+                Toast.makeText(context, "Gagal membuka file instalasi: " + e.getMessage(), Toast.LENGTH_LONG).show();
+            }
         } else {
-            Log.e(TAG, "File APK tidak ditemukan di folder Downloads");
+            Log.e(TAG, "File APK tidak ditemukan");
+            Toast.makeText(context, "File instalasi tidak ditemukan.", Toast.LENGTH_SHORT).show();
         }
     }
 }

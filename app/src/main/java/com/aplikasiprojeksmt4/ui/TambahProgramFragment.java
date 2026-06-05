@@ -19,6 +19,8 @@ import androidx.navigation.Navigation;
 
 import com.aplikasiprojeksmt4.R;
 import com.aplikasiprojeksmt4.databinding.FragmentTambahProgramBinding;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
@@ -33,6 +35,7 @@ public class TambahProgramFragment extends Fragment {
     private FragmentTambahProgramBinding binding;
     private FirebaseFirestore db;
     private FirebaseStorage storage;
+    private FirebaseAuth auth;
     private Uri imageUri;
 
     private final ActivityResultLauncher<Intent> imagePickerLauncher = registerForActivityResult(
@@ -53,6 +56,7 @@ public class TambahProgramFragment extends Fragment {
         binding = FragmentTambahProgramBinding.inflate(inflater, container, false);
         db = FirebaseFirestore.getInstance();
         storage = FirebaseStorage.getInstance();
+        auth = FirebaseAuth.getInstance();
         return binding.getRoot();
     }
 
@@ -118,6 +122,9 @@ public class TambahProgramFragment extends Fragment {
     private void saveToFirestore(String nama, String organisasi, String wilayah, String tipe, String status, String target, String deskripsi, String imageUrl) {
         binding.btnBuatProgram.setText("Menyimpan Program...");
 
+        FirebaseUser currentUser = auth.getCurrentUser();
+        String userId = (currentUser != null) ? currentUser.getUid() : null;
+
         Map<String, Object> program = new HashMap<>();
         program.put("nama", nama);
         program.put("organisasi", organisasi);
@@ -128,6 +135,7 @@ public class TambahProgramFragment extends Fragment {
         program.put("deskripsi", deskripsi);
         program.put("imageUrl", imageUrl);
         program.put("terkumpul", 0);
+        program.put("dibuat_oleh", userId); // Menyimpan UID pembuat
         program.put("created_at", FieldValue.serverTimestamp());
 
         db.collection("programs")

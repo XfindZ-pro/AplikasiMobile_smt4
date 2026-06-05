@@ -38,6 +38,7 @@ public class AdministratorFragment extends Fragment {
     private FirebaseStorage storage;
     private boolean isUploading = false;
     private String cloudVersion = "Unknown";
+    private long cloudVersionCode = 0;
     
     private ProgramAdapter homeAdapter;
     private ProgramAdapter listAdapter;
@@ -165,7 +166,10 @@ public class AdministratorFragment extends Fragment {
                     if (binding == null || !isAdded()) return;
                     if (value != null && value.exists()) {
                         cloudVersion = value.getString("latest_version");
-                        if (BuildConfig.VERSION_NAME.equals(cloudVersion)) {
+                        Long code = value.getLong("latest_version_code");
+                        cloudVersionCode = (code != null) ? code : 0;
+                        
+                        if (BuildConfig.VERSION_CODE >= cloudVersionCode) {
                             binding.ivCloudStatus.setAlpha(1.0f);
                         } else {
                             binding.ivCloudStatus.setAlpha(0.5f);
@@ -175,8 +179,8 @@ public class AdministratorFragment extends Fragment {
     }
 
     private void showCloudStatusDialog() {
-        String msg = "Versi Aplikasi Saat Ini: " + BuildConfig.VERSION_NAME + 
-                     "\nVersi di Cloud: " + cloudVersion;
+        String msg = "Versi Aplikasi Saat Ini: " + BuildConfig.VERSION_NAME + " (Code: " + BuildConfig.VERSION_CODE + ")" +
+                     "\nVersi di Cloud: " + cloudVersion + " (Code: " + cloudVersionCode + ")";
         
         new AlertDialog.Builder(requireContext())
                 .setTitle("Status Update Cloud")
@@ -189,7 +193,7 @@ public class AdministratorFragment extends Fragment {
         new AlertDialog.Builder(requireContext())
                 .setTitle("Konfirmasi Rilis")
                 .setMessage("Apakah Anda yakin ingin merilis versi " + BuildConfig.VERSION_NAME + " ke cloud?")
-                .setPositiveButton("Ya, Rilis", (dialog, which) -> uploadApkAndRelease())
+                .setPositiveButton("Ya, Rilis Full", (dialog, which) -> uploadApkAndRelease())
                 .setNegativeButton("Batal", null)
                 .show();
     }
@@ -215,13 +219,14 @@ public class AdministratorFragment extends Fragment {
         if (getContext() == null) return;
         
         setUploadState(true);
-        Toast.makeText(getContext(), "Sedang mengunggah file APK...", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), "Sedang mengunggah full APK...", Toast.LENGTH_SHORT).show();
         
         String apkPath = getContext().getPackageCodePath();
         File apkFile = new File(apkPath);
         Uri fileUri = Uri.fromFile(apkFile);
 
-        StorageReference storageRef = storage.getReference().child("releases/donasiku_latest.apk");
+        // Gunakan timestamp agar file di storage unik atau timpa yang lama
+        StorageReference storageRef = storage.getReference().child("releases/donasiku_v" + BuildConfig.VERSION_CODE + ".apk");
 
         storageRef.putFile(fileUri)
                 .addOnSuccessListener(taskSnapshot -> {
@@ -239,16 +244,20 @@ public class AdministratorFragment extends Fragment {
 
     private void updateFirestoreInfo(String downloadUrl) {
         String currentVersion = BuildConfig.VERSION_NAME;
+        int currentVersionCode = BuildConfig.VERSION_CODE;
+        
         Map<String, Object> update = new HashMap<>();
         update.put("latest_version", currentVersion);
+        update.put("latest_version_code", currentVersionCode);
         update.put("download_url", downloadUrl);
+        update.put("updated_at", System.currentTimeMillis());
         
         db.collection("app_settings").document("update_info")
                 .set(update, SetOptions.merge())
                 .addOnSuccessListener(aVoid -> {
                     setUploadState(false);
                     if (isAdded()) {
-                        Toast.makeText(getContext(), "Berhasil Rilis Versi " + currentVersion, Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(), "Berhasil Rilis Versi " + currentVersion + " ke Cloud", Toast.LENGTH_LONG).show();
                     }
                 })
                 .addOnFailureListener(e -> {
