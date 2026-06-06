@@ -14,7 +14,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="100dp">
+            android:paddingBottom="80dp">
 
             <!-- Header Background Gradient -->
             <View
@@ -27,12 +27,12 @@
             <!-- Logout Button (Small, Top Right) -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/btnLogout"
-                android:layout_width="38dp"
-                android:layout_height="38dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
-                app:cardBackgroundColor="#44FFFFFF"
-                app:cardCornerRadius="19dp"
+                app:cardBackgroundColor="#33FFFFFF"
+                app:cardCornerRadius="20dp"
                 app:cardElevation="0dp"
                 app:strokeWidth="0dp"
                 android:clickable="true"
@@ -41,21 +41,21 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
                 <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
                     android:layout_gravity="center"
                     android:src="@android:drawable/ic_lock_power_off"
                     app:tint="#FFFFFF"
                     android:contentDescription="Keluar" />
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Profile Info Section -->
+            <!-- Profile Info Section (Card) -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cvProfileInfo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
-                android:layout_marginTop="110dp"
+                android:layout_marginTop="140dp"
                 android:layout_marginEnd="24dp"
                 app:cardBackgroundColor="#FFFFFF"
                 app:cardCornerRadius="24dp"
@@ -65,34 +65,20 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:paddingTop="60dp"
                     android:paddingBottom="24dp">
-
-                    <com.google.android.material.imageview.ShapeableImageView
-                        android:id="@+id/ivProfilePicture"
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
-                        android:layout_marginTop="-50dp"
-                        android:background="#FFFFFF"
-                        android:padding="2dp"
-                        android:scaleType="centerInside"
-                        android:src="@drawable/group_2"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:shapeAppearanceOverlay="@style/CircleImage" />
 
                     <TextView
                         android:id="@+id/tvProfileName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
                         android:text="Memuat Nama..."
                         android:textColor="#333333"
                         android:textSize="20sp"
                         android:textStyle="bold"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/ivProfilePicture" />
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
                         android:id="@+id/tvProfileEmail"
@@ -108,6 +94,22 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </com.google.android.material.card.MaterialCardView>
+
+            <!-- Profile Picture (Moved outside to prevent clipping) -->
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/ivProfilePicture"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:background="#FFFFFF"
+                android:elevation="6dp"
+                android:padding="3dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/group_2"
+                app:layout_constraintBottom_toTopOf="@+id/cvProfileInfo"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/cvProfileInfo"
+                app:shapeAppearanceOverlay="@style/CircleImage" />
 
             <!-- Stats Overview -->
             <com.google.android.material.card.MaterialCardView
@@ -375,7 +377,12 @@
                             android:contentDescription="Arrow" />
                     </LinearLayout>
 
-                    <View android:layout_width="match_parent" android:layout_height="1dp" android:layout_marginStart="52dp" android:background="#F0F0F0" />
+                    <View
+                        android:id="@+id/viewSeparatorSertifikat"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginStart="52dp"
+                        android:background="#F0F0F0" />
 
                     <LinearLayout
                         android:id="@+id/llSertifikat"
@@ -410,15 +417,16 @@
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- App Version Footer -->
+            <!-- App Version Info at the bottom -->
             <TextView
                 android:id="@+id/tvAppVersion"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="48dp"
-                android:text="Versi 1.0.0"
+                android:text="Versi"
                 android:textColor="#BBBBBB"
                 android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/cvMenu" />
