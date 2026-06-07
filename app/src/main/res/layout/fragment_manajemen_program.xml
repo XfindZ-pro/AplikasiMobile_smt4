@@ -124,7 +124,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
-                            android:text="Rp. 36.000.000"
+                            android:text="Rp. 0"
                             android:textColor="#FFFFFF"
                             android:textSize="28sp"
                             android:textStyle="bold" />
@@ -153,7 +153,7 @@
                                 android:layout_weight="1"
                                 android:gravity="center"
                                 android:orientation="vertical">
-                                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="247" android:textColor="#FFFFFF" android:textSize="18sp" android:textStyle="bold" />
+                                <TextView android:id="@+id/tvTotalDonatur" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="0" android:textColor="#FFFFFF" android:textSize="18sp" android:textStyle="bold" />
                                 <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Donatur" android:textColor="#E1BEE7" android:textSize="10sp" />
                             </LinearLayout>
 
@@ -165,7 +165,7 @@
                                 android:layout_weight="1"
                                 android:gravity="center"
                                 android:orientation="vertical">
-                                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="128" android:textColor="#FFFFFF" android:textSize="18sp" android:textStyle="bold" />
+                                <TextView android:id="@+id/tvTotalPenerima" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="0" android:textColor="#FFFFFF" android:textSize="18sp" android:textStyle="bold" />
                                 <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Penerima" android:textColor="#E1BEE7" android:textSize="10sp" />
                             </LinearLayout>
 
@@ -177,8 +177,8 @@
                                 android:layout_weight="1"
                                 android:gravity="center"
                                 android:orientation="vertical">
-                                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="14" android:textColor="#FFFFFF" android:textSize="18sp" android:textStyle="bold" />
-                                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Sisa Hari" android:textColor="#E1BEE7" android:textSize="10sp" />
+                                <TextView android:id="@+id/tvProgramAktifCount" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="0" android:textColor="#FFFFFF" android:textSize="18sp" android:textStyle="bold" />
+                                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Program" android:textColor="#E1BEE7" android:textSize="10sp" />
                             </LinearLayout>
                         </LinearLayout>
                     </LinearLayout>
@@ -195,10 +195,13 @@
                     app:layout_constraintTop_toBottomOf="@id/cardStats">
 
                     <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/btnBuatProgram"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_margin="8dp"
                         android:layout_weight="1"
+                        android:clickable="true"
+                        android:focusable="true"
                         app:cardCornerRadius="16dp"
                         app:cardElevation="2dp">
                         <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:gravity="center" android:orientation="vertical" android:padding="16dp">
@@ -260,110 +263,15 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/llMenu" />
 
-                <!-- Program Card -->
-                <com.google.android.material.card.MaterialCardView
+                <!-- Program RecyclerView -->
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvProgramBerjalan"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="24dp"
                     android:layout_marginTop="16dp"
-                    app:cardCornerRadius="20dp"
-                    app:cardElevation="4dp"
-                    app:layout_constraintTop_toBottomOf="@id/tvSectionTitle">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <FrameLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="160dp">
-
-                            <ImageView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:scaleType="centerCrop"
-                                android:src="@drawable/kazuha_genshin_impact_4k_wallpaper_uhdpaper_com_692_1_h"
-                                android:contentDescription="Program Image" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_margin="12dp"
-                                android:background="@drawable/rounded_icon_background"
-                                android:backgroundTint="#CCFFFFFF"
-                                android:paddingHorizontal="10dp"
-                                android:paddingVertical="4dp"
-                                android:text="🛒 Sosial &amp; Kemanusiaan"
-                                android:textColor="#9C27B0"
-                                android:textSize="10sp"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="bottom|end"
-                                android:layout_margin="12dp"
-                                android:background="@drawable/rounded_icon_background"
-                                android:backgroundTint="#FFF9C4"
-                                android:paddingHorizontal="10dp"
-                                android:paddingVertical="4dp"
-                                android:text="14 hari lagi"
-                                android:textColor="#FBC02D"
-                                android:textSize="10sp"
-                                android:textStyle="bold" />
-                        </FrameLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:padding="16dp">
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="Dana Sembako untuk Keluarga Pra-Sejahtera Surabaya"
-                                android:textColor="#000000"
-                                android:textSize="16sp"
-                                android:textStyle="bold" />
-
-                            <RelativeLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="8dp">
-                                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Rp 36.000.000 terkumpul" android:textColor="#666666" android:textSize="12sp" />
-                                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentEnd="true" android:text="72%" android:textColor="#9C27B0" android:textStyle="bold" />
-                            </RelativeLayout>
-
-                            <com.google.android.material.progressindicator.LinearProgressIndicator
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="8dp"
-                                android:progress="72"
-                                app:indicatorColor="#9C27B0"
-                                app:trackColor="#F3E5F5"
-                                app:trackCornerRadius="4dp"
-                                app:trackThickness="8dp" />
-
-                            <View
-                                android:layout_width="match_parent"
-                                android:layout_height="1dp"
-                                android:layout_marginVertical="12dp"
-                                android:background="#F0F0F0" />
-
-                            <RelativeLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content">
-                                <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:orientation="horizontal">
-                                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="👥 247 donatur" android:textColor="#666666" android:textSize="12sp" />
-                                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginStart="12dp" android:text="🏠 128 keluarga" android:textColor="#666666" android:textSize="12sp" />
-                                </LinearLayout>
-                                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentEnd="true" android:text="Detail →" android:textColor="#9C27B0" android:textStyle="bold" />
-                            </RelativeLayout>
-                        </LinearLayout>
-                    </LinearLayout>
-                </com.google.android.material.card.MaterialCardView>
+                    android:nestedScrollingEnabled="false"
+                    app:layout_constraintTop_toBottomOf="@id/tvSectionTitle" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
@@ -373,14 +281,21 @@
             android:id="@+id/layoutManajemenProgram"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center"
             android:orientation="vertical"
             android:visibility="gone">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Halaman Program Manajemen"
-                android:textSize="18sp" />
+                android:layout_margin="16dp"
+                android:text="Semua Program"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvSemuaProgramMitra"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
         </LinearLayout>
 
         <!-- ================= TAB 3: NOTIFIKASI ================= -->
@@ -399,6 +314,19 @@
         </LinearLayout>
 
     </FrameLayout>
+
+    <!-- Floating Action Button for btnBuatProgramMenu -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btnBuatProgramMenu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="88dp"
+        android:src="@android:drawable/ic_input_add"
+        app:backgroundTint="#9C27B0"
+        app:tint="#FFFFFF"
+        android:contentDescription="Tambah Program" />
 
     <!-- Bottom Navigation View Manajemen -->
     <com.google.android.material.bottomnavigation.BottomNavigationView

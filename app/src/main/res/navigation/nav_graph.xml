@@ -204,7 +204,17 @@
         android:id="@+id/ManajemenProgramFragment"
         android:name="com.aplikasiprojeksmt4.ui.ManajemenProgramFragment"
         android:label="Manajemen Program"
-        tools:layout="@layout/fragment_manajemen_program" />
+        tools:layout="@layout/fragment_manajemen_program">
+        <action
+            android:id="@+id/action_ManajemenProgramFragment_to_TambahProgramFragment"
+            app:destination="@id/TambahProgramFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/TambahProgramFragment"
+        android:name="com.aplikasiprojeksmt4.ui.TambahProgramFragment"
+        android:label="Tambah Program"
+        tools:layout="@layout/fragment_tambah_program" />
 
     <fragment
         android:id="@+id/DataDiriFragment"
@@ -269,12 +279,6 @@
             android:id="@+id/action_HomepageAdminFragment_to_StatistikFragment"
             app:destination="@id/StatistikFragment" />
     </fragment>
-
-    <fragment
-        android:id="@+id/TambahProgramFragment"
-        android:name="com.aplikasiprojeksmt4.ui.TambahProgramFragment"
-        android:label="Tambah Program"
-        tools:layout="@layout/fragment_tambah_program" />
 
     <fragment
         android:id="@+id/VerifikasiAjuanProgramAdminFragment"

@@ -16,6 +16,10 @@
     <color name="orange_progress">#FF9800</color>
     <color name="badge_red">#D32F2F</color>
 
+    <color name="white_translucent">#66FFFFFF</color>
+    <color name="light_gray">#EEEEEE</color>
+    <color name="text_gray">#888888</color>
+
     <!-- Verification Page Colors -->
     <color name="bg_warning">#FFF9C4</color>
     <color name="text_warning">#F57F17</color>
