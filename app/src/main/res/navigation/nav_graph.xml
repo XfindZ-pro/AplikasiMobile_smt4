@@ -253,6 +253,12 @@
         <action
             android:id="@+id/action_HomepageAdminFragment_to_VerifikasiDonasiDanaFragment"
             app:destination="@id/VerifikasiDonasiDanaFragment" />
+        <action
+            android:id="@+id/action_HomepageAdminFragment_to_VerifikasiDonasiBarangFragment"
+            app:destination="@id/VerifikasiDonasiBarangFragment" />
+        <action
+            android:id="@+id/action_HomepageAdminFragment_to_StatistikFragment"
+            app:destination="@id/StatistikFragment" />
     </fragment>
 
     <fragment
@@ -271,6 +277,45 @@
         android:id="@+id/VerifikasiDonasiDanaFragment"
         android:name="com.aplikasiprojeksmt4.ui.VerifikasiDonasiDanaFragment"
         android:label="Verifikasi Donasi Dana"
-        tools:layout="@layout/page_verifdonasidana" />
+        tools:layout="@layout/page_verifdonasidana" >
+        <action
+            android:id="@+id/action_VerifikasiDonasiDanaFragment_to_DetailDonasiFragment"
+            app:destination="@id/DetailDonasiFragment" />
+        <action
+            android:id="@+id/action_VerifikasiDonasiDanaFragment_to_VerifikasiTransferFragment"
+            app:destination="@id/VerifikasiTransferFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/VerifikasiTransferFragment"
+        android:name="com.aplikasiprojeksmt4.ui.VerifikasiTransferFragment"
+        android:label="Verifikasi Transfer"
+        tools:layout="@layout/fragment_verifikasi_transfer" />
+
+    <fragment
+        android:id="@+id/VerifikasiDonasiBarangFragment"
+        android:name="com.aplikasiprojeksmt4.ui.VerifikasiDonasiBarangFragment"
+        android:label="Verifikasi Donasi Barang"
+        tools:layout="@layout/page_verifdonasibarang" >
+        <action
+            android:id="@+id/action_VerifikasiDonasiBarangFragment_to_DetailDonasiBarangFragment"
+            app:destination="@id/DetailDonasiBarangFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/DetailDonasiBarangFragment"
+        android:name="com.aplikasiprojeksmt4.ui.DetailDonasiBarangFragment"
+        android:label="Detail Donasi Barang"
+        tools:layout="@layout/fragment_detail_donasi_barang" />
+
+    <fragment
+        android:id="@+id/StatistikFragment"
+        android:name="com.aplikasiprojeksmt4.ui.StatistikFragment"
+        android:label="Statistik"
+        tools:layout="@layout/page_statistik" >
+        <action
+            android:id="@+id/action_StatistikFragment_to_HomepageAdminFragment"
+            app:destination="@id/HomepageAdminFragment" />
+    </fragment>
 
 </navigation>

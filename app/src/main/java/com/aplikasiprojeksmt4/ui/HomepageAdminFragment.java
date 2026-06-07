@@ -38,13 +38,27 @@ public class HomepageAdminFragment extends Fragment {
             Navigation.findNavController(v).navigate(R.id.action_HomepageAdminFragment_to_VerifikasiDonasiDanaFragment)
         );
 
+        // Navigasi ke Verifikasi Donasi Barang
+        binding.btnDonasiBarang.setOnClickListener(v -> 
+            Navigation.findNavController(v).navigate(R.id.action_HomepageAdminFragment_to_VerifikasiDonasiBarangFragment)
+        );
+
+        // Navigasi ke Statistik via tombol "Lihat Statistik"
+        binding.tvLihatStatistik.setOnClickListener(v -> 
+            Navigation.findNavController(v).navigate(R.id.action_HomepageAdminFragment_to_StatistikFragment)
+        );
+
         // Setup Bottom Navigation
+        binding.bottomNavigation.setSelectedItemId(R.id.nav_beranda);
         binding.bottomNavigation.setOnItemSelectedListener(item -> {
             int id = item.getItemId();
             if (id == R.id.nav_beranda) {
                 return true;
+            } else if (id == R.id.nav_statistik) {
+                Navigation.findNavController(view).navigate(R.id.action_HomepageAdminFragment_to_StatistikFragment);
+                return true;
             }
-            // Tambahkan logika navigasi tab lain di sini
+            // Tambahkan logika navigasi tab lain di sini jika fragmen tujuan sudah dibuat
             return false;
         });
     }

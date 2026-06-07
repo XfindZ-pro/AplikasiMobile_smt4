@@ -4,335 +4,412 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg_light_gray">
+    android:background="#F8F7FF">
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:fillViewport="true"
         app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingBottom="24dp">
 
             <!-- Header Section -->
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="320dp"
-                android:background="@drawable/bg_header_admin"
-                android:padding="20dp">
+                android:layout_height="280dp"
+                android:background="@drawable/bg_gradasi_ungu"
+                android:padding="24dp">
 
                 <TextView
                     android:id="@+id/tv_title_total"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
                     android:text="TOTAL DANA TERKUMPUL - MEI 2026"
-                    android:textColor="@color/white"
-                    android:textSize="14sp"
+                    android:textColor="#E1BEE7"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:layout_marginTop="20dp"/>
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                <ImageView
-                    android:id="@+id/iv_notif"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:src="@android:drawable/ic_popup_reminder"
-                    app:layout_constraintEnd_toStartOf="@+id/iv_profile"
-                    app:layout_constraintTop_toTopOf="@+id/tv_title_total"
-                    android:layout_marginEnd="10dp"
-                    app:tint="@color/white" />
-
-                <ImageView
-                    android:id="@+id/iv_profile"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:src="@android:drawable/ic_menu_myplaces"
+                <LinearLayout
+                    android:id="@+id/notif_profile_container"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/tv_title_total"
-                    app:tint="@color/white" />
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_title_total">
+
+                    <FrameLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/btn_notification"
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            app:cardBackgroundColor="#33FFFFFF"
+                            app:cardCornerRadius="18dp"
+                            app:cardElevation="0dp">
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_gravity="center"
+                                android:src="@android:drawable/ic_popup_reminder"
+                                app:tint="@color/white" />
+                        </com.google.android.material.card.MaterialCardView>
+                        <TextView
+                            android:layout_width="14dp"
+                            android:layout_height="14dp"
+                            android:layout_gravity="top|end"
+                            android:background="@drawable/dot_active"
+                            android:backgroundTint="#9C27B0"
+                            android:gravity="center"
+                            android:text="1"
+                            android:textColor="@color/white"
+                            android:textSize="8sp" />
+                    </FrameLayout>
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/btn_profile"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:layout_marginStart="12dp"
+                        app:cardBackgroundColor="@color/white"
+                        app:cardCornerRadius="18dp"
+                        app:cardElevation="0dp">
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerCrop"
+                            android:src="@android:drawable/ic_menu_myplaces"
+                            app:tint="@color/primary_purple" />
+                    </com.google.android.material.card.MaterialCardView>
+                </LinearLayout>
 
                 <TextView
                     android:id="@+id/tv_total_dana"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
                     android:text="Rp 111.100.000"
                     android:textColor="@color/white"
-                    android:textSize="28sp"
+                    android:textSize="32sp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_title_total"
-                    android:layout_marginTop="8dp"/>
+                    app:layout_constraintTop_toBottomOf="@+id/tv_title_total" />
 
                 <TextView
                     android:id="@+id/tv_transaksi_info"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
                     android:text="12 Transaksi - Surabaya"
-                    android:textColor="@color/white"
+                    android:textColor="#E1BEE7"
                     android:textSize="14sp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_total_dana"
-                    android:layout_marginTop="4dp"/>
+                    app:layout_constraintTop_toBottomOf="@+id/tv_total_dana" />
 
                 <!-- Summary Cards Row -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
                     android:orientation="horizontal"
                     android:weightSum="3"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    android:layout_marginBottom="20dp">
+                    app:layout_constraintBottom_toBottomOf="parent">
 
                     <androidx.cardview.widget.CardView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:layout_margin="4dp"
-                        app:cardCornerRadius="12dp"
+                        android:layout_weight="1"
+                        app:cardBackgroundColor="#E1BEE7"
+                        app:cardCornerRadius="16dp"
                         app:cardElevation="2dp">
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
-                            android:padding="12dp">
+                            android:padding="16dp">
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="5"
-                                android:textStyle="bold"
-                                android:textSize="18sp"
-                                android:textColor="@color/black"/>
+                                android:textColor="@color/black"
+                                android:textSize="20sp"
+                                android:textStyle="bold" />
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Paket Barang"
-                                android:textSize="12sp"
-                                android:textColor="@color/text_secondary"/>
+                                android:textColor="#333333"
+                                android:textSize="10sp" />
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
 
                     <androidx.cardview.widget.CardView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:layout_margin="4dp"
-                        app:cardCornerRadius="12dp"
+                        android:layout_weight="1"
+                        app:cardBackgroundColor="#E1BEE7"
+                        app:cardCornerRadius="16dp"
                         app:cardElevation="2dp">
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
-                            android:padding="12dp">
+                            android:padding="16dp">
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="5"
-                                android:textStyle="bold"
-                                android:textSize="18sp"
-                                android:textColor="@color/black"/>
+                                android:textColor="@color/black"
+                                android:textSize="20sp"
+                                android:textStyle="bold" />
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Donatur"
-                                android:textSize="12sp"
-                                android:textColor="@color/text_secondary"/>
+                                android:textColor="#333333"
+                                android:textSize="10sp" />
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
 
                     <androidx.cardview.widget.CardView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:layout_margin="4dp"
-                        app:cardCornerRadius="12dp"
+                        android:layout_weight="1"
+                        app:cardBackgroundColor="#E1BEE7"
+                        app:cardCornerRadius="16dp"
                         app:cardElevation="2dp">
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
-                            android:padding="12dp">
+                            android:padding="16dp">
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="6"
-                                android:textStyle="bold"
-                                android:textSize="18sp"
-                                android:textColor="@color/black"/>
+                                android:textColor="@color/black"
+                                android:textSize="20sp"
+                                android:textStyle="bold" />
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Program Aktif"
-                                android:textSize="12sp"
-                                android:textColor="@color/text_secondary"/>
+                                android:textColor="#333333"
+                                android:textSize="10sp" />
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
                 </LinearLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <!-- Action Buttons Row -->
+            <!-- Quick Actions Grid -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:weightSum="3"
-                android:padding="10dp">
+                android:paddingHorizontal="12dp"
+                android:paddingTop="16dp"
+                android:weightSum="3">
 
                 <!-- Donasi Dana -->
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/btn_donasi_dana"
+                <FrameLayout
                     android:layout_width="0dp"
-                    android:layout_height="100dp"
-                    android:layout_weight="1"
-                    android:layout_margin="8dp"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:foreground="?android:attr/selectableItemBackground"
-                    app:cardCornerRadius="12dp">
-                    <RelativeLayout
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/btn_donasi_dana"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:padding="8dp">
-                        <ImageView
-                            android:id="@+id/icon_dana"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:layout_centerHorizontal="true"
-                            android:src="@android:drawable/ic_menu_send" />
-                        <TextView
-                            android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="4dp"
+                        app:cardCornerRadius="16dp"
+                        app:cardElevation="2dp">
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_below="@+id/icon_dana"
-                            android:layout_centerHorizontal="true"
-                            android:text="Donasi\nDana"
                             android:gravity="center"
-                            android:textSize="12sp"
-                            android:textColor="@color/text_secondary"
-                            android:layout_marginTop="4dp"/>
-                    </RelativeLayout>
-                </androidx.cardview.widget.CardView>
+                            android:orientation="vertical"
+                            android:padding="12dp">
+                            <ImageView
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:src="@drawable/group_8" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:text="Donasi Dana"
+                                android:textColor="#666666"
+                                android:textSize="10sp" />
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+                    <TextView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_gravity="top|end"
+                        android:layout_margin="4dp"
+                        android:background="@drawable/dot_active"
+                        android:backgroundTint="#9C27B0"
+                        android:gravity="center"
+                        android:text="3"
+                        android:textColor="@color/white"
+                        android:textSize="9sp" />
+                </FrameLayout>
 
                 <!-- Donasi Barang -->
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/btn_donasi_barang"
+                <FrameLayout
                     android:layout_width="0dp"
-                    android:layout_height="100dp"
-                    android:layout_weight="1"
-                    android:layout_margin="8dp"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:foreground="?android:attr/selectableItemBackground"
-                    app:cardCornerRadius="12dp">
-                    <RelativeLayout
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/btn_donasi_barang"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:padding="8dp">
-                        <ImageView
-                            android:id="@+id/icon_barang"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:layout_centerHorizontal="true"
-                            android:src="@android:drawable/ic_input_add" />
-                        <TextView
-                            android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="4dp"
+                        app:cardCornerRadius="16dp"
+                        app:cardElevation="2dp">
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_below="@+id/icon_barang"
-                            android:layout_centerHorizontal="true"
-                            android:text="Donasi\nBarang"
                             android:gravity="center"
-                            android:textSize="12sp"
-                            android:textColor="@color/text_secondary"
-                            android:layout_marginTop="4dp"/>
-                    </RelativeLayout>
-                </androidx.cardview.widget.CardView>
+                            android:orientation="vertical"
+                            android:padding="12dp">
+                            <ImageView
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:src="@drawable/group_14" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:text="Donasi Barang"
+                                android:textColor="#666666"
+                                android:textSize="10sp" />
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+                    <TextView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_gravity="top|end"
+                        android:layout_margin="4dp"
+                        android:background="@drawable/dot_active"
+                        android:backgroundTint="#9C27B0"
+                        android:gravity="center"
+                        android:text="2"
+                        android:textColor="@color/white"
+                        android:textSize="9sp" />
+                </FrameLayout>
 
                 <!-- Verifikasi -->
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/btn_verifikasi"
+                <FrameLayout
                     android:layout_width="0dp"
-                    android:layout_height="100dp"
-                    android:layout_weight="1"
-                    android:layout_margin="8dp"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:foreground="?android:attr/selectableItemBackground"
-                    app:cardCornerRadius="12dp">
-                    <RelativeLayout
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/btn_verifikasi"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:padding="8dp">
-                        <ImageView
-                            android:id="@+id/icon_verif"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:layout_centerHorizontal="true"
-                            android:src="@android:drawable/checkbox_on_background" />
-                        <TextView
-                            android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="4dp"
+                        app:cardCornerRadius="16dp"
+                        app:cardElevation="2dp">
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_below="@+id/icon_verif"
-                            android:layout_centerHorizontal="true"
-                            android:text="Verifikasi"
                             android:gravity="center"
-                            android:textSize="12sp"
-                            android:textColor="@color/text_secondary"
-                            android:layout_marginTop="4dp"/>
-                    </RelativeLayout>
-                </androidx.cardview.widget.CardView>
+                            android:orientation="vertical"
+                            android:padding="12dp">
+                            <ImageView
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:src="@android:drawable/checkbox_on_background"
+                                app:tint="#4CAF50" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:text="Verifikasi"
+                                android:textColor="#666666"
+                                android:textSize="10sp" />
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+                    <TextView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_gravity="top|end"
+                        android:layout_margin="4dp"
+                        android:background="@drawable/dot_active"
+                        android:backgroundTint="#9C27B0"
+                        android:gravity="center"
+                        android:text="3"
+                        android:textColor="@color/white"
+                        android:textSize="9sp" />
+                </FrameLayout>
             </LinearLayout>
 
             <!-- Top Donatur Section -->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                app:cardCornerRadius="16dp">
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="16dp"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="2dp">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="16dp">
+                    android:padding="20dp">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Top Donatur"
-                        android:textStyle="bold"
-                        android:textSize="16sp"
                         android:textColor="@color/black"
-                        android:layout_marginBottom="12dp"/>
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="16dp"/>
 
-                    <!-- Item 1 -->
+                    <!-- Donatur 1 -->
                     <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="12dp">
+                        android:layout_height="wrap_content">
                         <ImageView
-                            android:id="@+id/iv_medal1"
+                            android:id="@+id/medal1"
                             android:layout_width="24dp"
                             android:layout_height="24dp"
                             android:src="@android:drawable/btn_star_big_on"
+                            app:tint="#FFD700"
                             android:layout_centerVertical="true"/>
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
-                            android:layout_toEndOf="@+id/iv_medal1"
+                            android:layout_toEndOf="@id/medal1"
                             android:layout_marginStart="12dp">
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Zulpa Apipah"
+                                android:textColor="@color/black"
                                 android:textStyle="bold"
-                                android:textColor="@color/black"/>
+                                android:textSize="14sp"/>
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="5x transaksi"
-                                android:textSize="12sp"
-                                android:textColor="@color/text_secondary"/>
+                                android:textColor="#888888"
+                                android:textSize="11sp"/>
                         </LinearLayout>
                         <TextView
                             android:layout_width="wrap_content"
@@ -343,36 +420,38 @@
                             android:textColor="@color/primary_purple"
                             android:textStyle="bold"/>
                     </RelativeLayout>
+                    <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#EEEEEE" android:layout_marginVertical="12dp"/>
 
-                    <!-- Item 2 -->
+                    <!-- Donatur 2 -->
                     <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="12dp">
+                        android:layout_height="wrap_content">
                         <ImageView
-                            android:id="@+id/iv_medal2"
+                            android:id="@+id/medal2"
                             android:layout_width="24dp"
                             android:layout_height="24dp"
                             android:src="@android:drawable/btn_star_big_on"
+                            app:tint="#C0C0C0"
                             android:layout_centerVertical="true"/>
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
-                            android:layout_toEndOf="@+id/iv_medal2"
+                            android:layout_toEndOf="@id/medal2"
                             android:layout_marginStart="12dp">
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Sapi Ngiha"
+                                android:textColor="@color/black"
                                 android:textStyle="bold"
-                                android:textColor="@color/black"/>
+                                android:textSize="14sp"/>
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="2x transaksi"
-                                android:textSize="12sp"
-                                android:textColor="@color/text_secondary"/>
+                                android:textColor="#888888"
+                                android:textSize="11sp"/>
                         </LinearLayout>
                         <TextView
                             android:layout_width="wrap_content"
@@ -383,35 +462,38 @@
                             android:textColor="@color/primary_purple"
                             android:textStyle="bold"/>
                     </RelativeLayout>
+                    <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#EEEEEE" android:layout_marginVertical="12dp"/>
 
-                    <!-- Item 3 -->
+                    <!-- Donatur 3 -->
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
                         <ImageView
-                            android:id="@+id/iv_medal3"
+                            android:id="@+id/medal3"
                             android:layout_width="24dp"
                             android:layout_height="24dp"
                             android:src="@android:drawable/btn_star_big_on"
+                            app:tint="#CD7F32"
                             android:layout_centerVertical="true"/>
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
-                            android:layout_toEndOf="@+id/iv_medal3"
+                            android:layout_toEndOf="@id/medal3"
                             android:layout_marginStart="12dp">
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Findow Aja"
+                                android:textColor="@color/black"
                                 android:textStyle="bold"
-                                android:textColor="@color/black"/>
+                                android:textSize="14sp"/>
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="2x transaksi"
-                                android:textSize="12sp"
-                                android:textColor="@color/text_secondary"/>
+                                android:textColor="#888888"
+                                android:textSize="11sp"/>
                         </LinearLayout>
                         <TextView
                             android:layout_width="wrap_content"
@@ -430,130 +512,150 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
-                android:layout_marginBottom="24dp"
-                app:cardCornerRadius="16dp">
+                android:layout_marginTop="16dp"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="2dp">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="16dp">
+                    android:padding="20dp">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Progress Program"
-                        android:textStyle="bold"
-                        android:textSize="16sp"
                         android:textColor="@color/black"
-                        android:layout_marginBottom="12dp"/>
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="16dp"/>
 
                     <!-- Program 1 -->
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Dana Sembako Keluarga Pra-Sejahtera"
-                        android:textSize="13sp"
-                        android:textColor="@color/black"/>
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:layout_marginBottom="12dp">
-                        <ProgressBar
-                            style="?android:attr/progressBarStyleHorizontal"
-                            android:layout_width="match_parent"
-                            android:layout_height="8dp"
-                            android:progress="80"
-                            android:progressTint="@color/primary_purple"
-                            android:layout_toStartOf="@+id/tv_perc1"
-                            android:layout_marginEnd="8dp"
-                            android:layout_centerVertical="true"/>
-                        <TextView
-                            android:id="@+id/tv_perc1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="80%"
-                            android:textSize="12sp"
-                            android:textStyle="bold"
-                            android:textColor="@color/primary_purple"
-                            android:layout_alignParentEnd="true"/>
-                    </RelativeLayout>
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:layout_marginBottom="12dp">
+                        <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content">
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Dana Sembako Keluarga Pra-Sejahtera" android:textColor="@color/black" android:textSize="13sp" />
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentEnd="true" android:text="80%" android:textColor="@color/primary_purple" android:textSize="13sp" android:textStyle="bold" />
+                        </RelativeLayout>
+                        <com.google.android.material.progressindicator.LinearProgressIndicator android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:progress="80" app:indicatorColor="@color/primary_purple" app:trackColor="#F3E5F5" app:trackCornerRadius="4dp" app:trackThickness="6dp" />
+                    </LinearLayout>
 
                     <!-- Program 2 -->
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Beasiswa Anak Dhuafa"
-                        android:textSize="13sp"
-                        android:textColor="@color/black"/>
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:layout_marginBottom="12dp">
-                        <ProgressBar
-                            style="?android:attr/progressBarStyleHorizontal"
-                            android:layout_width="match_parent"
-                            android:layout_height="8dp"
-                            android:progress="73"
-                            android:progressTint="@color/primary_purple"
-                            android:layout_toStartOf="@+id/tv_perc2"
-                            android:layout_marginEnd="8dp"
-                            android:layout_centerVertical="true"/>
-                        <TextView
-                            android:id="@+id/tv_perc2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="73%"
-                            android:textSize="12sp"
-                            android:textStyle="bold"
-                            android:textColor="@color/primary_purple"
-                            android:layout_alignParentEnd="true"/>
-                    </RelativeLayout>
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:layout_marginBottom="12dp">
+                        <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content">
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Beasiswa Anak Dhuafa" android:textColor="@color/black" android:textSize="13sp" />
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentEnd="true" android:text="73%" android:textColor="@color/primary_purple" android:textSize="13sp" android:textStyle="bold" />
+                        </RelativeLayout>
+                        <com.google.android.material.progressindicator.LinearProgressIndicator android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:progress="73" app:indicatorColor="@color/primary_purple" app:trackColor="#F3E5F5" app:trackCornerRadius="4dp" app:trackThickness="6dp" />
+                    </LinearLayout>
 
                     <!-- Program 3 -->
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Klinik 3T Alat Kesehatan"
-                        android:textSize="13sp"
-                        android:textColor="@color/black"/>
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp">
-                        <ProgressBar
-                            style="?android:attr/progressBarStyleHorizontal"
-                            android:layout_width="match_parent"
-                            android:layout_height="8dp"
-                            android:progress="93"
-                            android:progressTint="@color/orange_progress"
-                            android:layout_toStartOf="@+id/tv_perc3"
-                            android:layout_marginEnd="8dp"
-                            android:layout_centerVertical="true"/>
-                        <TextView
-                            android:id="@+id/tv_perc3"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="93%"
-                            android:textSize="12sp"
-                            android:textStyle="bold"
-                            android:textColor="@color/orange_progress"
-                            android:layout_alignParentEnd="true"/>
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical">
+                        <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content">
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Klinik 3T Alat Kesehatan" android:textColor="@color/black" android:textSize="13sp" />
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentEnd="true" android:text="93%" android:textColor="#FF9800" android:textSize="13sp" android:textStyle="bold" />
+                        </RelativeLayout>
+                        <com.google.android.material.progressindicator.LinearProgressIndicator android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:progress="93" app:indicatorColor="#FF9800" app:trackColor="#FFF3E0" app:trackCornerRadius="4dp" app:trackThickness="6dp" />
+                    </LinearLayout>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Transaksi Terbaru Section -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="16dp"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="2dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+                    <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginBottom="16dp">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Transaksi Terbaru" android:textColor="@color/black" android:textSize="16sp" android:textStyle="bold" />
+                        <TextView android:id="@+id/tv_lihat_statistik" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentEnd="true" android:text="Lihat Statistik" android:textColor="@color/primary_purple" android:textSize="12sp" android:textStyle="bold" />
                     </RelativeLayout>
+
+                    <!-- Item Transaksi -->
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical" android:paddingVertical="8dp">
+                        <com.google.android.material.card.MaterialCardView android:layout_width="32dp" android:layout_height="32dp" app:cardBackgroundColor="#F3E5F5" app:cardCornerRadius="16dp" app:cardElevation="0dp">
+                            <TextView android:layout_width="match_parent" android:layout_height="match_parent" android:gravity="center" android:text="ZA" android:textColor="@color/primary_purple" android:textSize="10sp" android:textStyle="bold" />
+                        </com.google.android.material.card.MaterialCardView>
+                        <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:layout_marginStart="12dp" android:orientation="vertical">
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Beasiswa Anak Dhuafa" android:textColor="@color/black" android:textSize="13sp" android:textStyle="bold" />
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Zulpa Apipah" android:textColor="#888888" android:textSize="11sp" />
+                        </LinearLayout>
+                        <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:gravity="end" android:orientation="vertical">
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Rp 200.000" android:textColor="@color/black" android:textSize="13sp" android:textStyle="bold" />
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="11 Mar" android:textColor="#888888" android:textSize="10sp" />
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="✓ Tersalurkan" android:textColor="#4CAF50" android:textSize="9sp" android:textStyle="bold" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Tren Dana Mingguan Section -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="16dp"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="2dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Tren Dana Mingguan"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="24dp"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="120dp"
+                        android:gravity="bottom"
+                        android:orientation="horizontal"
+                        android:weightSum="4">
+                        <LinearLayout android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="bottom|center_horizontal" android:orientation="vertical">
+                            <View android:layout_width="50dp" android:layout_height="60dp" android:background="@drawable/bg_card_purple" android:backgroundTint="@color/primary_purple" />
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="W1" android:textSize="11sp" android:textColor="#888888" android:layout_marginTop="8dp"/>
+                        </LinearLayout>
+                        <LinearLayout android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="bottom|center_horizontal" android:orientation="vertical">
+                            <View android:layout_width="50dp" android:layout_height="90dp" android:background="@drawable/bg_card_purple" android:backgroundTint="@color/primary_purple" />
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="W2" android:textSize="11sp" android:textColor="#888888" android:layout_marginTop="8dp"/>
+                        </LinearLayout>
+                        <LinearLayout android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="bottom|center_horizontal" android:orientation="vertical">
+                            <View android:layout_width="50dp" android:layout_height="40dp" android:background="@drawable/bg_card_purple" android:backgroundTint="@color/primary_purple" />
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="W3" android:textSize="11sp" android:textColor="#888888" android:layout_marginTop="8dp"/>
+                        </LinearLayout>
+                        <LinearLayout android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="bottom|center_horizontal" android:orientation="vertical">
+                            <View android:layout_width="50dp" android:layout_height="60dp" android:background="@drawable/bg_card_purple" android:backgroundTint="@color/primary_purple" />
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="W4" android:textSize="11sp" android:textColor="#888888" android:layout_marginTop="8dp"/>
+                        </LinearLayout>
+                    </LinearLayout>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
         </LinearLayout>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="72dp"
         android:background="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:menu="@menu/admin_bottom_nav_menu"
+        app:elevation="16dp"
+        app:itemIconSize="24dp"
         app:itemIconTint="@color/primary_purple"
-        app:itemTextColor="@color/primary_purple" />
+        app:itemTextColor="@color/primary_purple"
+        app:labelVisibilityMode="labeled"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:menu="@menu/admin_bottom_nav_menu" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -32,7 +32,21 @@ public class VerifikasiDonasiDanaFragment extends Fragment {
 
         binding.btnBack.setOnClickListener(v -> Navigation.findNavController(v).navigateUp());
 
-        // Logika Filter Sederhana (hanya visual untuk desain)
+        // Navigasi ke Detail untuk item yang sudah sukses
+        binding.cardDonation1.setOnClickListener(v -> 
+            Navigation.findNavController(v).navigate(R.id.action_VerifikasiDonasiDanaFragment_to_DetailDonasiFragment));
+        
+        binding.cardDonation2.setOnClickListener(v -> 
+            Navigation.findNavController(v).navigate(R.id.action_VerifikasiDonasiDanaFragment_to_DetailDonasiFragment));
+
+        // Navigasi ke Verifikasi Transfer untuk item yang perlu verifikasi
+        binding.cardDonation3.setOnClickListener(v -> 
+            Navigation.findNavController(v).navigate(R.id.action_VerifikasiDonasiDanaFragment_to_VerifikasiTransferFragment));
+        
+        binding.btnVerifTransferItem.setOnClickListener(v -> 
+            Navigation.findNavController(v).navigate(R.id.action_VerifikasiDonasiDanaFragment_to_VerifikasiTransferFragment));
+
+        // Setup Filter Tabs
         binding.filterSemua.setOnClickListener(this::setActiveFilter);
         binding.filterSukses.setOnClickListener(this::setActiveFilter);
         binding.filterPerluVerifikasi.setOnClickListener(this::setActiveFilter);
@@ -40,7 +54,6 @@ public class VerifikasiDonasiDanaFragment extends Fragment {
     }
 
     private void setActiveFilter(View activeView) {
-        // Reset semua filter ke style normal
         binding.filterSemua.setBackgroundResource(R.drawable.bg_card_white);
         binding.filterSukses.setBackgroundResource(R.drawable.bg_card_white);
         binding.filterPerluVerifikasi.setBackgroundResource(R.drawable.bg_card_white);
@@ -52,8 +65,7 @@ public class VerifikasiDonasiDanaFragment extends Fragment {
         binding.filterPerluVerifikasi.setTextColor(primaryColor);
         binding.filterGagal.setTextColor(primaryColor);
 
-        // Set active style
-        activeView.setBackgroundResource(R.drawable.bg_header_admin); // menggunakan gradasi sebagai background aktif
+        activeView.setBackgroundResource(R.drawable.bg_header_admin);
         if (activeView instanceof TextView) {
             ((TextView) activeView).setTextColor(ContextCompat.getColor(requireContext(), R.color.white));
         }
