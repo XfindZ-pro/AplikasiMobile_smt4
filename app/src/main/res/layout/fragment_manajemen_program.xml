@@ -11,7 +11,7 @@
         android:id="@+id/manajemenTabContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="56dp">
+        android:layout_marginBottom="64dp">
 
         <!-- ================= TAB 1: BERANDA ================= -->
         <androidx.core.widget.NestedScrollView
@@ -404,9 +404,14 @@
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/manajemenBottomNav"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
+        android:layout_height="64dp"
         android:layout_gravity="bottom"
         android:background="#FFFFFF"
+        app:itemIconTint="#9C27B0"
+        app:itemTextColor="#9C27B0"
+        app:itemIconSize="22dp"
+        app:itemIconPadding="4dp"
+        app:labelVisibilityMode="labeled"
         app:menu="@menu/manajemen_nav_menu" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
