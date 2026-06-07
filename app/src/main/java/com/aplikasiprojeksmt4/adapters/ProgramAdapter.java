@@ -1,7 +1,6 @@
 package com.aplikasiprojeksmt4.adapters;
 
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,9 +13,18 @@ import java.util.List;
 public class ProgramAdapter extends RecyclerView.Adapter<ProgramAdapter.ProgramViewHolder> {
 
     private List<Program> programs;
+    private OnItemClickListener listener;
+
+    public interface OnItemClickListener {
+        void onItemClick(Program program);
+    }
 
     public ProgramAdapter(List<Program> programs) {
         this.programs = programs;
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
     }
 
     @NonNull
@@ -41,7 +49,14 @@ public class ProgramAdapter extends RecyclerView.Adapter<ProgramAdapter.ProgramV
         }
         
         holder.binding.progressIndicator.setProgress(progress);
-        holder.binding.tvTerkumpul.setText("Rp " + String.format("%,d", terkumpul).replace(',', '.') + " terkumpul");
+        
+        if ("Dana".equalsIgnoreCase(program.getTipe())) {
+            holder.binding.tvTerkumpul.setText("Rp " + String.format("%,d", terkumpul).replace(',', '.') + " terkumpul");
+        } else {
+            String unit = program.getTargetUnit();
+            holder.binding.tvTerkumpul.setText(terkumpul + " " + unit + " terkumpul");
+        }
+        
         holder.binding.tvPersentaseTarget.setText(progress + "% dari target");
 
         if (program.getImageUrl() != null && !program.getImageUrl().isEmpty()) {
@@ -52,6 +67,12 @@ public class ProgramAdapter extends RecyclerView.Adapter<ProgramAdapter.ProgramV
         } else {
             holder.binding.ivProgramImage.setImageResource(R.drawable.group_2);
         }
+
+        holder.itemView.setOnClickListener(v -> {
+            if (listener != null) {
+                listener.onItemClick(program);
+            }
+        });
     }
 
     @Override

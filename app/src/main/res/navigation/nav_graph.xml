@@ -232,13 +232,21 @@
         android:id="@+id/DonasiUangFragment"
         android:name="com.aplikasiprojeksmt4.ui.DonasiUangFragment"
         android:label="Donasi Uang"
-        tools:layout="@layout/fragment_donasiuang" />
+        tools:layout="@layout/fragment_donasiuang">
+        <action
+            android:id="@+id/action_DonasiUangFragment_to_DetailDonasiFragment"
+            app:destination="@id/DetailDonasiFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/DonasiBarangFragment"
         android:name="com.aplikasiprojeksmt4.ui.DonasiBarangFragment"
         android:label="Donasi Barang"
-        tools:layout="@layout/fragment_donasibarang" />
+        tools:layout="@layout/fragment_donasibarang">
+        <action
+            android:id="@+id/action_DonasiBarangFragment_to_DetailDonasiBarangFragment"
+            app:destination="@id/DetailDonasiBarangFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/DetailDonasiFragment"
@@ -335,7 +343,11 @@
         android:id="@+id/DetailDonasiBarangFragment"
         android:name="com.aplikasiprojeksmt4.ui.DetailDonasiBarangFragment"
         android:label="Detail Donasi Barang"
-        tools:layout="@layout/fragment_detail_donasi_barang" />
+        tools:layout="@layout/fragment_detail_donasi_barang">
+        <argument
+            android:name="programId"
+            app:argType="string" />
+    </fragment>
 
     <fragment
         android:id="@+id/StatistikFragment"
