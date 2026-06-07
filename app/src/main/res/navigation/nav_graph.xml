@@ -278,6 +278,22 @@
         <action
             android:id="@+id/action_HomepageAdminFragment_to_StatistikFragment"
             app:destination="@id/StatistikFragment" />
+        <action
+            android:id="@+id/action_HomepageAdminFragment_to_PageProgramFragment"
+            app:destination="@id/PageProgramFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/PageProgramFragment"
+        android:name="com.aplikasiprojeksmt4.ui.PageProgramFragment"
+        android:label="Program"
+        tools:layout="@layout/page_program" >
+        <action
+            android:id="@+id/action_PageProgramFragment_to_HomepageAdminFragment"
+            app:destination="@id/HomepageAdminFragment" />
+        <action
+            android:id="@+id/action_PageProgramFragment_to_StatistikFragment"
+            app:destination="@id/StatistikFragment" />
     </fragment>
 
     <fragment
@@ -329,6 +345,9 @@
         <action
             android:id="@+id/action_StatistikFragment_to_HomepageAdminFragment"
             app:destination="@id/HomepageAdminFragment" />
+        <action
+            android:id="@+id/action_StatistikFragment_to_PageProgramFragment"
+            app:destination="@id/PageProgramFragment" />
     </fragment>
 
 </navigation>

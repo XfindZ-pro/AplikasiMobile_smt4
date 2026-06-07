@@ -9,7 +9,7 @@ public class Program {
     private String organisasi;
     private String wilayah;
     private String tipe; // Kategori: Dana / Barang
-    private String target; // Target Dana
+    private String target; // Target Dana atau Barang (misal "100 Paket")
     private String batas_waktu; 
     private String deskripsi;
     private String penerima_manfaat;
@@ -87,5 +87,10 @@ public class Program {
         } catch (Exception e) {
             return 0;
         }
+    }
+
+    public String getTargetUnit() {
+        if (target == null) return "";
+        return target.replaceAll("[0-9]", "").trim();
     }
 }

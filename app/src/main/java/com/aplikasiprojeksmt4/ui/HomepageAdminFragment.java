@@ -54,6 +54,9 @@ public class HomepageAdminFragment extends Fragment {
             int id = item.getItemId();
             if (id == R.id.nav_beranda) {
                 return true;
+            } else if (id == R.id.nav_program_admin) {
+                Navigation.findNavController(view).navigate(R.id.action_HomepageAdminFragment_to_PageProgramFragment);
+                return true;
             } else if (id == R.id.nav_statistik) {
                 Navigation.findNavController(view).navigate(R.id.action_HomepageAdminFragment_to_StatistikFragment);
                 return true;
