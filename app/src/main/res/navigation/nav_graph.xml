@@ -185,6 +185,9 @@
         <action
             android:id="@+id/action_ProfileFragment_to_HomepageAdminFragment"
             app:destination="@id/HomepageAdminFragment" />
+        <action
+            android:id="@+id/action_ProfileFragment_to_ManajemenProgramFragment"
+            app:destination="@id/ManajemenProgramFragment" />
     </fragment>
 
     <fragment
@@ -196,6 +199,12 @@
             android:id="@+id/action_AdministratorFragment_to_TambahProgramFragment"
             app:destination="@id/TambahProgramFragment" />
     </fragment>
+
+    <fragment
+        android:id="@+id/ManajemenProgramFragment"
+        android:name="com.aplikasiprojeksmt4.ui.ManajemenProgramFragment"
+        android:label="Manajemen Program"
+        tools:layout="@layout/fragment_manajemen_program" />
 
     <fragment
         android:id="@+id/DataDiriFragment"

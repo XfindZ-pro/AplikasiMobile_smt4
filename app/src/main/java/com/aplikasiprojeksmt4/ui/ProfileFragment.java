@@ -60,6 +60,11 @@ public class ProfileFragment extends Fragment {
             Navigation.findNavController(v).navigate(R.id.action_ProfileFragment_to_HomepageAdminFragment)
         );
 
+        // Menghubungkan ke Manajemen Mitra (Admin & Mitra)
+        binding.llManajemenMitra.setOnClickListener(v -> 
+            Navigation.findNavController(v).navigate(R.id.action_ProfileFragment_to_ManajemenProgramFragment)
+        );
+
         binding.btnLogout.setOnClickListener(v -> {
             sessionManager.logout();
             // Ganti SplashActivity atau LoginPage sesuai alur aplikasi Anda
@@ -93,6 +98,15 @@ public class ProfileFragment extends Fragment {
                 } else {
                     binding.llAdministrator.setVisibility(View.GONE);
                     binding.viewSeparatorAdmin.setVisibility(View.GONE);
+                }
+
+                // Cek Role Admin dan Mitra untuk Manajemen Mitra
+                if ("admin".equals(role) || "mitra".equals(role)) {
+                    binding.llManajemenMitra.setVisibility(View.VISIBLE);
+                    binding.viewSeparatorMitra.setVisibility(View.VISIBLE);
+                } else {
+                    binding.llManajemenMitra.setVisibility(View.GONE);
+                    binding.viewSeparatorMitra.setVisibility(View.GONE);
                 }
 
                 if (photoUrl != null && !photoUrl.isEmpty()) {
