@@ -48,6 +48,12 @@ public class DetailDonasiBarangFragment extends Fragment {
 
         binding.btnBackDetail.setOnClickListener(v -> Navigation.findNavController(v).navigateUp());
 
+        binding.btnDonasiSekarang.setOnClickListener(v -> {
+            Bundle bundle = new Bundle();
+            bundle.putString("programId", programId);
+            Navigation.findNavController(v).navigate(R.id.action_DetailDonasiBarangFragment_to_FormDonasiBarangFragment, bundle);
+        });
+
         setupRecyclerView();
         loadProgramDetail();
         loadDonaturTerbaru();

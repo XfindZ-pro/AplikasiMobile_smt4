@@ -77,6 +77,12 @@
         <action
             android:id="@+id/action_HomeFragment_to_DonasiBarangFragment"
             app:destination="@id/DonasiBarangFragment" />
+        <action
+            android:id="@+id/action_HomeFragment_to_ProgramPageFragment"
+            app:destination="@id/PageProgramFragment" />
+        <action
+            android:id="@+id/action_HomeFragment_to_DetailProgramFragment"
+            app:destination="@id/DetailProgramDonasiUangFragment" />
     </fragment>
 
     <fragment
@@ -440,6 +446,57 @@
         <argument
             android:name="programId"
             app:argType="string" />
+        <action
+            android:id="@+id/action_DetailDonasiBarangFragment_to_FormDonasiBarangFragment"
+            app:destination="@id/FormDonasiBarangFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/FormDonasiBarangFragment"
+        android:name="com.aplikasiprojeksmt4.ui.FormDonasiBarangFragment"
+        android:label="Form Donasi Barang"
+        tools:layout="@layout/fragment_form_donasi_barang">
+        <argument
+            android:name="programId"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_FormDonasiBarangFragment_to_DropPointFragment"
+            app:destination="@id/DropPointFragment" />
+        <action
+            android:id="@+id/action_FormDonasiBarangFragment_to_AlamatPenjemputanFragment"
+            app:destination="@id/AlamatPenjemputanFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/DropPointFragment"
+        android:name="com.aplikasiprojeksmt4.ui.DropPointFragment"
+        android:label="Drop Point"
+        tools:layout="@layout/fragment_drop_point">
+        <action
+            android:id="@+id/action_DropPointFragment_to_KonfirmasiDonasiBarangFragment"
+            app:destination="@id/KonfirmasiDonasiBarangFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/AlamatPenjemputanFragment"
+        android:name="com.aplikasiprojeksmt4.ui.AlamatPenjemputanFragment"
+        android:label="Alamat Penjemputan"
+        tools:layout="@layout/fragment_alamat_penjemputan">
+        <action
+            android:id="@+id/action_AlamatPenjemputanFragment_to_KonfirmasiDonasiBarangFragment"
+            app:destination="@id/KonfirmasiDonasiBarangFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/KonfirmasiDonasiBarangFragment"
+        android:name="com.aplikasiprojeksmt4.ui.KonfirmasiDonasiBarangFragment"
+        android:label="Konfirmasi Donasi"
+        tools:layout="@layout/fragment_konfirmasi_donasi_barang">
+        <action
+            android:id="@+id/action_KonfirmasiDonasiBarangFragment_to_HomeFragment"
+            app:destination="@id/HomeFragment"
+            app:popUpTo="@id/nav_graph"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment
