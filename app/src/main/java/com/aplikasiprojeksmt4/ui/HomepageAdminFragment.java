@@ -28,6 +28,11 @@ public class HomepageAdminFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        // Navigasi ke Profil Admin
+        binding.btnProfile.setOnClickListener(v -> 
+            Navigation.findNavController(v).navigate(R.id.action_HomepageAdminFragment_to_ProfileAdminFragment)
+        );
+
         // Navigasi ke Verifikasi Ajuan Program
         binding.btnVerifikasi.setOnClickListener(v -> 
             Navigation.findNavController(v).navigate(R.id.action_HomepageAdminFragment_to_VerifikasiAjuanProgramAdminFragment)

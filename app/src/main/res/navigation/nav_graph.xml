@@ -398,7 +398,16 @@
         <action
             android:id="@+id/action_HomepageAdminFragment_to_DonaturAdminFragment"
             app:destination="@id/DonaturAdminFragment" />
+        <action
+            android:id="@+id/action_HomepageAdminFragment_to_ProfileAdminFragment"
+            app:destination="@id/ProfileAdminFragment" />
     </fragment>
+
+    <fragment
+        android:id="@+id/ProfileAdminFragment"
+        android:name="com.aplikasiprojeksmt4.ui.ProfileAdminFragment"
+        android:label="Profil Admin"
+        tools:layout="@layout/fragment_profile_admin" />
 
     <fragment
         android:id="@+id/PageProgramFragment"
