@@ -57,7 +57,7 @@ public class DonasiUangFragment extends Fragment {
             Bundle bundle = new Bundle();
             bundle.putString("programId", program.getId());
             Navigation.findNavController(requireView()).navigate(
-                    R.id.action_DonasiUangFragment_to_DetailDonasiFragment,
+                    R.id.action_DonasiUangFragment_to_DetailProgramDonasiUangFragment,
                     bundle
             );
         });
@@ -76,7 +76,6 @@ public class DonasiUangFragment extends Fragment {
                         for (QueryDocumentSnapshot doc : value) {
                             Program p = doc.toObject(Program.class);
                             if (p != null) {
-                                // Filter manual: tipe "Dana" (Dana/dana)
                                 if (p.getTipe() != null && p.getTipe().equalsIgnoreCase("Dana")) {
                                     if (p.getStatus() == null || !p.getStatus().equalsIgnoreCase("Selesai")) {
                                         p.setId(doc.getId());
@@ -86,10 +85,6 @@ public class DonasiUangFragment extends Fragment {
                             }
                         }
                         adapter.notifyDataSetChanged();
-                        
-                        if (programList.isEmpty() && isAdded()) {
-                            Log.d("DonasiUang", "Data kosong untuk tipe Dana");
-                        }
                     }
                 });
     }

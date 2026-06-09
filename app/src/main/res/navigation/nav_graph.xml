@@ -234,8 +234,78 @@
         android:label="Donasi Uang"
         tools:layout="@layout/fragment_donasiuang">
         <action
-            android:id="@+id/action_DonasiUangFragment_to_DetailDonasiFragment"
-            app:destination="@id/DetailDonasiFragment" />
+            android:id="@+id/action_DonasiUangFragment_to_DetailProgramDonasiUangFragment"
+            app:destination="@id/DetailProgramDonasiUangFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/DetailProgramDonasiUangFragment"
+        android:name="com.aplikasiprojeksmt4.ui.DetailProgramDonasiUangFragment"
+        android:label="Detail Program Donasi Uang"
+        tools:layout="@layout/fragment_detail_program_donasiuang">
+        <action
+            android:id="@+id/action_DetailProgramDonasiUangFragment_to_DonasiDanaFragment"
+            app:destination="@id/DonasiDanaFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/DonasiDanaFragment"
+        android:name="com.aplikasiprojeksmt4.ui.DonasiDanaFragment"
+        android:label="Pilih Nominal"
+        tools:layout="@layout/fragment_donasi_dana">
+        <action
+            android:id="@+id/action_DonasiDanaFragment_to_PilihBankFragment"
+            app:destination="@id/PilihBankFragment" />
+        <action
+            android:id="@+id/action_DonasiDanaFragment_to_PembayaranFragment"
+            app:destination="@id/PembayaranFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/PilihBankFragment"
+        android:name="com.aplikasiprojeksmt4.ui.PilihBankFragment"
+        android:label="Pilih Bank"
+        tools:layout="@layout/fragment_pilih_bank">
+        <action
+            android:id="@+id/action_PilihBankFragment_to_PembayaranFragment"
+            app:destination="@id/PembayaranFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/PembayaranFragment"
+        android:name="com.aplikasiprojeksmt4.ui.PembayaranFragment"
+        android:label="Pembayaran"
+        tools:layout="@layout/fragment_pembayaran">
+        <action
+            android:id="@+id/action_PembayaranFragment_to_StatusPembayaranFragment"
+            app:destination="@id/StatusPembayaranFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/StatusPembayaranFragment"
+        android:name="com.aplikasiprojeksmt4.ui.StatusPembayaranFragment"
+        android:label="Status Pembayaran"
+        tools:layout="@layout/fragment_status_pembayaran">
+        <action
+            android:id="@+id/action_StatusPembayaranFragment_to_HomeFragment"
+            app:destination="@id/HomeFragment"
+            app:popUpTo="@id/nav_graph"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_StatusPembayaranFragment_to_BuktiDonasiFragment"
+            app:destination="@id/BuktiDonasiFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/BuktiDonasiFragment"
+        android:name="com.aplikasiprojeksmt4.ui.BuktiDonasiFragment"
+        android:label="Bukti Donasi"
+        tools:layout="@layout/fragment_bukti_donasi">
+        <action
+            android:id="@+id/action_BuktiDonasiFragment_to_HomeFragment"
+            app:destination="@id/HomeFragment"
+            app:popUpTo="@id/nav_graph"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment
@@ -252,7 +322,11 @@
         android:id="@+id/DetailDonasiFragment"
         android:name="com.aplikasiprojeksmt4.ui.DetailDonasiFragment"
         android:label="Detail Donasi"
-        tools:layout="@layout/fragment_detaildonasi" />
+        tools:layout="@layout/fragment_detaildonasi">
+        <action
+            android:id="@+id/action_DetailDonasiFragment_to_SertifDonasiFragment"
+            app:destination="@id/SertifDonasiFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/LaporanRealTimeFragment"
@@ -385,6 +459,19 @@
         <action
             android:id="@+id/action_DonaturAdminFragment_to_StatistikFragment"
             app:destination="@id/StatistikFragment" />
+        <action
+            android:id="@+id/action_DonaturAdminFragment_to_DetailDonaturAdminFragment"
+            app:destination="@id/DetailDonaturAdminFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/DetailDonaturAdminFragment"
+        android:name="com.aplikasiprojeksmt4.ui.DetailDonaturAdminFragment"
+        android:label="Detail Donatur"
+        tools:layout="@layout/detail_donatur_admin">
+        <action
+            android:id="@+id/action_DetailDonaturAdminFragment_to_DonaturAdminFragment"
+            app:destination="@id/DonaturAdminFragment" />
     </fragment>
 
 </navigation>

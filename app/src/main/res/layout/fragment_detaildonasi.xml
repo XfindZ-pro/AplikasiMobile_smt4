@@ -303,6 +303,7 @@
                             app:cardCornerRadius="12dp"
                             app:cardElevation="0dp">
                             <TextView
+                                android:id="@+id/tvStatus"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:paddingHorizontal="12dp"
@@ -318,9 +319,12 @@
 
             <!-- Bukti Penyaluran Section -->
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/btnUploadProof"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
+                android:clickable="true"
+                android:focusable="true"
                 app:cardBackgroundColor="#FFFFFF"
                 app:cardCornerRadius="20dp"
                 app:cardElevation="2dp"
@@ -341,6 +345,7 @@
                         app:cardCornerRadius="24dp"
                         app:cardElevation="0dp">
                         <ImageView
+                            android:id="@+id/ivProofPreview"
                             android:layout_width="24dp"
                             android:layout_height="24dp"
                             android:layout_gravity="center"
@@ -350,6 +355,7 @@
                     </com.google.android.material.card.MaterialCardView>
 
                     <TextView
+                        android:id="@+id/tvProofLabel"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
@@ -358,6 +364,7 @@
                         android:textStyle="bold" />
 
                     <TextView
+                        android:id="@+id/tvProofStatus"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/label_foto_belum_tersedia"

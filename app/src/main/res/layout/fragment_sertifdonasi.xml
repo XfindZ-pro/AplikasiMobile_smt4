@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#F8F7FF">
@@ -14,37 +15,37 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="16dp">
+            android:paddingBottom="16dp"
+            android:background="#9C27B0">
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnBack"
                 style="@style/Widget.MaterialComponents.Button.Icon"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="32dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
                 android:insetLeft="0dp"
                 android:insetTop="0dp"
                 android:insetRight="0dp"
                 android:insetBottom="0dp"
-                app:backgroundTint="#F3E5F5"
-                app:cornerRadius="24dp"
+                app:backgroundTint="#FFFFFF"
+                app:cornerRadius="20dp"
                 app:icon="@android:drawable/ic_menu_revert"
                 app:iconGravity="textStart"
                 app:iconPadding="0dp"
-                app:iconSize="24dp"
+                app:iconSize="20dp"
                 app:iconTint="#9C27B0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:contentDescription="@string/desc_back" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/tvTitleCert"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:text="@string/notif_sertifikat_baru"
-                android:textColor="#333333"
+                android:text="Detail Sertifikat"
+                android:textColor="#FFFFFF"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/btnBack"
@@ -68,24 +69,25 @@
 
             <!-- Certificate Card -->
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardCertificate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardBackgroundColor="#E1BEE7"
+                app:cardBackgroundColor="#BA68C8"
                 app:cardCornerRadius="24dp"
                 app:cardElevation="8dp"
-                app:strokeColor="#FFFFFF"
-                app:strokeWidth="2dp">
+                app:strokeColor="#CE93D8"
+                app:strokeWidth="4dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:orientation="vertical"
-                    android:padding="32dp">
+                    android:padding="24dp">
 
                     <ImageView
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
                         android:src="@android:drawable/btn_star_big_on"
                         app:tint="#FBC02D"
                         android:contentDescription="Trophy" />
@@ -93,66 +95,79 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
+                        android:layout_marginTop="12dp"
                         android:text="Sertifikat Donasi"
-                        android:textColor="#9C27B0"
-                        android:textSize="24sp"
+                        android:textColor="#FFFFFF"
+                        android:textSize="22sp"
                         android:textStyle="bold" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="DonasiKu - Tersertifikasi Resmi"
-                        android:textColor="#555555"
-                        android:textSize="12sp" />
+                        android:textColor="#E1BEE7"
+                        android:textSize="11sp" />
 
-                    <View
-                        android:layout_width="100dp"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="24dp"
-                        android:background="#9C27B0" />
+                    <!-- Recipient Section -->
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        app:cardBackgroundColor="#80E1BEE7"
+                        app:cardCornerRadius="16dp"
+                        app:cardElevation="0dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:padding="16dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Diberikan kepada"
+                                android:textColor="#F3E5F5"
+                                android:textSize="13sp" />
+
+                            <TextView
+                                android:id="@+id/tvRecipientName"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Zulpa Apipah"
+                                android:textColor="#FFFFFF"
+                                android:textSize="24sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
 
                     <TextView
+                        android:id="@+id/tvLabelContribution"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="24dp"
-                        android:text="Diberikan kepada"
-                        android:textColor="#555555"
-                        android:textSize="14sp" />
-
-                    <TextView
-                        android:id="@+id/tvRecipientName"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Zulpa Apipah"
-                        android:textColor="#000000"
-                        android:textSize="28sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="24dp"
-                        android:gravity="center"
-                        android:text="Atas kontribusi donasi sebesar"
-                        android:textColor="#555555"
-                        android:textSize="14sp" />
+                        android:layout_marginTop="20dp"
+                        android:text="Atas kontribusi donasi sebanyak"
+                        android:textColor="#F3E5F5"
+                        android:textSize="13sp" />
 
                     <TextView
                         android:id="@+id/tvAmountCert"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Rp 100.000"
-                        android:textColor="#9C27B0"
-                        android:textSize="32sp"
+                        android:text="10 box"
+                        android:textColor="#FFFFFF"
+                        android:textSize="36sp"
+                        android:fontFamily="serif"
                         android:textStyle="bold" />
 
                     <TextView
+                        android:id="@+id/tvProgramName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="untuk Bantuan Dana Pangan"
-                        android:textColor="#555555"
-                        android:textSize="14sp" />
+                        android:text="untuk Paket Sembako"
+                        android:textColor="#F3E5F5"
+                        android:textSize="13sp" />
 
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>

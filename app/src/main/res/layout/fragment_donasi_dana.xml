@@ -1,0 +1,397 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F8F7FF">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        app:elevation="0dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="16dp"
+            android:background="#9C27B0">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnBack"
+                style="@style/Widget.MaterialComponents.Button.Icon"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                app:backgroundTint="#FFFFFF"
+                app:cornerRadius="20dp"
+                app:icon="@android:drawable/ic_menu_revert"
+                app:iconGravity="textStart"
+                app:iconPadding="0dp"
+                app:iconSize="20dp"
+                app:iconTint="#9C27B0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:insetLeft="0dp"
+                android:insetTop="0dp"
+                android:insetRight="0dp"
+                android:insetBottom="0dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="Donasi Dana"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/btnBack"
+                app:layout_constraintStart_toEndOf="@+id/btnBack"
+                app:layout_constraintTop_toTopOf="@+id/btnBack" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Metode Pembayaran"
+                android:textColor="#E1BEE7"
+                android:textSize="12sp"
+                app:layout_constraintStart_toStartOf="@+id/btnBack"
+                app:layout_constraintTop_toBottomOf="@+id/btnBack"
+                android:layout_marginTop="12dp" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="2dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="PILIH NOMINAL"
+                        android:textColor="#000000"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+
+                    <GridLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:columnCount="3">
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnNominal10"
+                            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_columnWeight="1"
+                            android:layout_margin="4dp"
+                            android:text="Rp 10k"
+                            android:textColor="#000000"
+                            android:textSize="12sp"
+                            app:cornerRadius="8dp"
+                            app:strokeColor="#E0E0E0" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnNominal20"
+                            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_columnWeight="1"
+                            android:layout_margin="4dp"
+                            android:text="Rp 20k"
+                            android:textColor="#000000"
+                            android:textSize="12sp"
+                            app:cornerRadius="8dp"
+                            app:strokeColor="#E0E0E0" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnNominal50"
+                            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_columnWeight="1"
+                            android:layout_margin="4dp"
+                            android:text="Rp 50k"
+                            android:textColor="#000000"
+                            android:textSize="12sp"
+                            app:cornerRadius="8dp"
+                            app:strokeColor="#E0E0E0" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnNominal100"
+                            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_columnWeight="1"
+                            android:layout_margin="4dp"
+                            android:text="Rp 100k"
+                            android:textColor="#000000"
+                            android:textSize="12sp"
+                            app:cornerRadius="8dp"
+                            app:strokeColor="#E0E0E0" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnNominal200"
+                            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_columnWeight="1"
+                            android:layout_margin="4dp"
+                            android:text="Rp 200k"
+                            android:textColor="#000000"
+                            android:textSize="12sp"
+                            app:cornerRadius="8dp"
+                            app:strokeColor="#E0E0E0" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnNominalLainnya"
+                            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_columnWeight="1"
+                            android:layout_margin="4dp"
+                            android:text="Lainnya"
+                            android:textColor="#000000"
+                            android:textSize="12sp"
+                            app:cornerRadius="8dp"
+                            app:strokeColor="#E0E0E0" />
+                    </GridLayout>
+
+                    <EditText
+                        android:id="@+id/etCustomNominal"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="12dp"
+                        android:background="@drawable/bg_edittext_rounded"
+                        android:hint="Rp 50.000"
+                        android:inputType="number"
+                        android:paddingHorizontal="16dp"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="METODE PEMBAYARAN"
+                android:textColor="#000000"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="2dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:id="@+id/btnMethodTransfer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:padding="16dp">
+
+                        <ImageView
+                            android:id="@+id/ivBankIcon"
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:src="@android:drawable/ic_menu_agenda"
+                            app:tint="#9C27B0" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="16dp"
+                            android:layout_toEndOf="@id/ivBankIcon"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Transfer Bank"
+                                android:textColor="#000000"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/tvSelectedBank"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="BCA, BNI, BRI"
+                                android:textColor="#888888"
+                                android:textSize="11sp" />
+                        </LinearLayout>
+
+                        <RadioButton
+                            android:id="@+id/rbTransfer"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:checked="true"
+                            android:buttonTint="#9C27B0" />
+                    </RelativeLayout>
+
+                    <!-- Bank Selection Sub-list -->
+                    <LinearLayout
+                        android:id="@+id/llBankList"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:paddingHorizontal="16dp"
+                        android:paddingBottom="16dp"
+                        android:visibility="gone">
+
+                        <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#F0F0F0" android:layout_marginBottom="8dp"/>
+
+                        <RadioGroup
+                            android:id="@+id/rgBanks"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <RadioButton
+                                android:id="@+id/rbBCA"
+                                android:layout_width="match_parent"
+                                android:layout_height="48dp"
+                                android:text="BCA"
+                                android:buttonTint="#9C27B0"/>
+                            <RadioButton
+                                android:id="@+id/rbBNI"
+                                android:layout_width="match_parent"
+                                android:layout_height="48dp"
+                                android:text="BNI"
+                                android:buttonTint="#9C27B0"/>
+                            <RadioButton
+                                android:id="@+id/rbBRI"
+                                android:layout_width="match_parent"
+                                android:layout_height="48dp"
+                                android:text="BRI"
+                                android:buttonTint="#9C27B0"/>
+                        </RadioGroup>
+                    </LinearLayout>
+
+                    <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#F0F0F0"/>
+
+                    <RelativeLayout
+                        android:id="@+id/btnMethodQRIS"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:padding="16dp">
+
+                        <ImageView
+                            android:id="@+id/ivQrisIcon"
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:src="@android:drawable/ic_menu_camera"
+                            app:tint="#9C27B0" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="16dp"
+                            android:layout_toEndOf="@id/ivQrisIcon"
+                            android:text="QRIS"
+                            android:textColor="#000000"
+                            android:textStyle="bold" />
+
+                        <RadioButton
+                            android:id="@+id/rbQRIS"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:buttonTint="#9C27B0" />
+                    </RelativeLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="PESAN (OPSIONAL)"
+                android:textColor="#000000"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/etMessage"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/bg_edittext_rounded"
+                android:gravity="top"
+                android:hint="Tuliskan pesanmu..."
+                android:padding="16dp"
+                android:textSize="14sp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Donasi sebagai Anonim"
+                    android:textColor="#444444"
+                    android:layout_centerVertical="true"/>
+                <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:id="@+id/switchAnonymous"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    app:thumbTint="#FFFFFF"
+                    app:trackTint="#9C27B0" />
+            </RelativeLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnPayNow"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginBottom="24dp"
+                android:text="Bayar Sekarang"
+                android:textAllCaps="false"
+                android:textStyle="bold"
+                app:backgroundTint="#9C27B0"
+                app:cornerRadius="16dp" />
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
