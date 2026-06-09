@@ -1,9 +1,10 @@
 package com.aplikasiprojeksmt4.models;
 
 import com.google.firebase.firestore.ServerTimestamp;
+import java.io.Serializable;
 import java.util.Date;
 
-public class Program {
+public class Program implements Serializable {
     private String id;
     private String nama; // Judul Program
     private String organisasi;
@@ -20,6 +21,11 @@ public class Program {
     private String status; // Default: "Menunggu Review"
     private long terkumpul;
     private String dibuat_oleh;
+    private String dibuat_oleh_nama; // Nama Mitra/Organisasi
+    private int donatur_count;
+    private int penerima_count;
+    private long siap_tarik;
+    
     @ServerTimestamp
     private Date created_at;
 
@@ -75,6 +81,18 @@ public class Program {
 
     public String getDibuat_oleh() { return dibuat_oleh; }
     public void setDibuat_oleh(String dibuat_oleh) { this.dibuat_oleh = dibuat_oleh; }
+
+    public String getDibuat_oleh_nama() { return dibuat_oleh_nama; }
+    public void setDibuat_oleh_nama(String dibuat_oleh_nama) { this.dibuat_oleh_nama = dibuat_oleh_nama; }
+
+    public int getDonatur_count() { return donatur_count; }
+    public void setDonatur_count(int donatur_count) { this.donatur_count = donatur_count; }
+
+    public int getPenerima_count() { return penerima_count; }
+    public void setPenerima_count(int penerima_count) { this.penerima_count = penerima_count; }
+
+    public long getSiap_tarik() { return siap_tarik; }
+    public void setSiap_tarik(long siap_tarik) { this.siap_tarik = siap_tarik; }
 
     public Date getCreated_at() { return created_at; }
     public void setCreated_at(Date created_at) { this.created_at = created_at; }

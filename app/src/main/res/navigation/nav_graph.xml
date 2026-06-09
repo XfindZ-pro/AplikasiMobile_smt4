@@ -208,6 +208,9 @@
         <action
             android:id="@+id/action_ManajemenProgramFragment_to_TambahProgramFragment"
             app:destination="@id/TambahProgramFragment" />
+        <action
+            android:id="@+id/action_ManajemenProgramFragment_to_DetailDonasiMitraFragment"
+            app:destination="@id/DetailDonasiMitraFragment" />
     </fragment>
 
     <fragment
@@ -215,6 +218,16 @@
         android:name="com.aplikasiprojeksmt4.ui.TambahProgramFragment"
         android:label="Tambah Program"
         tools:layout="@layout/fragment_tambah_program" />
+
+    <fragment
+        android:id="@+id/DetailDonasiMitraFragment"
+        android:name="com.aplikasiprojeksmt4.ui.DetailDonasiMitraFragment"
+        android:label="Detail Donasi Mitra"
+        tools:layout="@layout/fragment_detail_donasi_mitra">
+        <argument
+            android:name="program"
+            app:argType="com.aplikasiprojeksmt4.models.Program" />
+    </fragment>
 
     <fragment
         android:id="@+id/DataDiriFragment"
