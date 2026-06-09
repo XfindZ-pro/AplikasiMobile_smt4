@@ -289,6 +289,9 @@
         <action
             android:id="@+id/action_HomepageAdminFragment_to_PageProgramFragment"
             app:destination="@id/PageProgramFragment" />
+        <action
+            android:id="@+id/action_HomepageAdminFragment_to_DonaturAdminFragment"
+            app:destination="@id/DonaturAdminFragment" />
     </fragment>
 
     <fragment
@@ -302,6 +305,9 @@
         <action
             android:id="@+id/action_PageProgramFragment_to_StatistikFragment"
             app:destination="@id/StatistikFragment" />
+        <action
+            android:id="@+id/action_PageProgramFragment_to_DonaturAdminFragment"
+            app:destination="@id/DonaturAdminFragment" />
     </fragment>
 
     <fragment
@@ -360,6 +366,25 @@
         <action
             android:id="@+id/action_StatistikFragment_to_PageProgramFragment"
             app:destination="@id/PageProgramFragment" />
+        <action
+            android:id="@+id/action_StatistikFragment_to_DonaturAdminFragment"
+            app:destination="@id/DonaturAdminFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/DonaturAdminFragment"
+        android:name="com.aplikasiprojeksmt4.ui.DonaturAdminFragment"
+        android:label="Donatur"
+        tools:layout="@layout/donatur_admin">
+        <action
+            android:id="@+id/action_DonaturAdminFragment_to_HomepageAdminFragment"
+            app:destination="@id/HomepageAdminFragment" />
+        <action
+            android:id="@+id/action_DonaturAdminFragment_to_PageProgramFragment"
+            app:destination="@id/PageProgramFragment" />
+        <action
+            android:id="@+id/action_DonaturAdminFragment_to_StatistikFragment"
+            app:destination="@id/StatistikFragment" />
     </fragment>
 
 </navigation>

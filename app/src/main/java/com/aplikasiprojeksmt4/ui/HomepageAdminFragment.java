@@ -60,8 +60,10 @@ public class HomepageAdminFragment extends Fragment {
             } else if (id == R.id.nav_statistik) {
                 Navigation.findNavController(view).navigate(R.id.action_HomepageAdminFragment_to_StatistikFragment);
                 return true;
+            } else if (id == R.id.nav_donatur) {
+                Navigation.findNavController(view).navigate(R.id.action_HomepageAdminFragment_to_DonaturAdminFragment);
+                return true;
             }
-            // Tambahkan logika navigasi tab lain di sini jika fragmen tujuan sudah dibuat
             return false;
         });
     }
