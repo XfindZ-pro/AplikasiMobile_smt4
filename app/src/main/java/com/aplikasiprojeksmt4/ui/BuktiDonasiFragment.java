@@ -34,8 +34,16 @@ public class BuktiDonasiFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        if (binding == null) return;
+
         binding.btnBack.setOnClickListener(v -> Navigation.findNavController(v).navigateUp());
-        binding.btnClose.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.action_BuktiDonasiFragment_to_HomeFragment));
+        binding.btnClose.setOnClickListener(v -> {
+            try {
+                Navigation.findNavController(v).navigate(R.id.action_BuktiDonasiFragment_to_HomeFragment);
+            } catch (Exception e) {
+                Navigation.findNavController(v).navigateUp();
+            }
+        });
 
         displayData();
 
@@ -45,26 +53,55 @@ public class BuktiDonasiFragment extends Fragment {
     }
 
     private void displayData() {
+        if (binding == null) return;
+
         if (getArguments() != null) {
             String amount = getArguments().getString("amount");
+            String amountFormatted = getArguments().getString("amount_formatted");
             String method = getArguments().getString("method");
             String bank = getArguments().getString("bank");
-            boolean isAnonymous = getArguments().getBoolean("isAnonymous");
+            boolean isAnonymous = getArguments().getBoolean("isAnonymous", false);
+            String programName = getArguments().getString("programName");
 
-            if (amount != null) {
-                long val = Long.parseLong(amount);
-                NumberFormat formatter = NumberFormat.getCurrencyInstance(new Locale("id", "ID"));
-                formatter.setMaximumFractionDigits(0);
-                binding.tvAmount.setText(formatter.format(val));
+            // Display amount safely
+            if (amountFormatted != null) {
+                binding.tvAmount.setText(amountFormatted);
+            } else if (amount != null) {
+                try {
+                    long val = Long.parseLong(amount);
+                    NumberFormat formatter = NumberFormat.getCurrencyInstance(new Locale("id", "ID"));
+                    formatter.setMaximumFractionDigits(0);
+                    binding.tvAmount.setText(formatter.format(val));
+                } catch (NumberFormatException e) {
+                    binding.tvAmount.setText("Rp " + amount);
+                }
             }
 
-            binding.tvMethod.setText(method + (bank != null && !bank.isEmpty() ? " " + bank : ""));
+            // Display method safely
+            String methodText = (method != null ? method : "");
+            if (bank != null && !bank.isEmpty()) {
+                methodText += " " + bank;
+            }
+            binding.tvMethod.setText(methodText.isEmpty() ? "-" : methodText);
+
+            // Display donor name
             binding.tvDonorName.setText(isAnonymous ? "Anonim" : "Donatur");
+            
+            // Display program name if available
+            if (programName != null && !programName.isEmpty()) {
+                binding.tvProgramName.setText(programName);
+            }
         }
 
-        SimpleDateFormat sdf = new SimpleDateFormat("dd MMM yyyy, HH:mm", new Locale("id", "ID"));
-        binding.tvDate.setText(sdf.format(new Date()));
+        // Display current date
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("dd MMM yyyy, HH:mm", new Locale("id", "ID"));
+            binding.tvDate.setText(sdf.format(new Date()));
+        } catch (Exception e) {
+            binding.tvDate.setText("-");
+        }
         
+        // Display a transaction ID
         binding.tvTransactionId.setText("DKU-" + System.currentTimeMillis() / 1000);
     }
 

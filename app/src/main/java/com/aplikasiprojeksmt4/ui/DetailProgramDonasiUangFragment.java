@@ -26,6 +26,8 @@ public class DetailProgramDonasiUangFragment extends Fragment {
     private FragmentDetailProgramDonasiuangBinding binding;
     private FirebaseFirestore db;
     private String programId;
+    private String programName;
+    private String orgName;
 
     @Nullable
     @Override
@@ -53,6 +55,8 @@ public class DetailProgramDonasiUangFragment extends Fragment {
         binding.btnDonateNow.setOnClickListener(v -> {
             Bundle bundle = new Bundle();
             bundle.putString("programId", programId);
+            bundle.putString("programName", programName);
+            bundle.putString("orgName", orgName);
             Navigation.findNavController(v).navigate(R.id.action_DetailProgramDonasiUangFragment_to_DonasiDanaFragment, bundle);
         });
         
@@ -75,10 +79,10 @@ public class DetailProgramDonasiUangFragment extends Fragment {
     }
 
     private void displayData(Program p) {
+        this.programName = p.getNama();
         binding.tvProgramTitle.setText(p.getNama());
         
-        // Handling Organisasi / PIC (Ambil dari database)
-        String orgName = p.getOrganisasi();
+        this.orgName = p.getOrganisasi();
         if (orgName == null || orgName.isEmpty()) {
             orgName = p.getNama_pic();
         }
@@ -90,7 +94,6 @@ public class DetailProgramDonasiUangFragment extends Fragment {
         String initial = orgName.length() >= 3 ? orgName.substring(0, 3) : orgName;
         binding.tvOrgInitial.setText(initial.toUpperCase());
 
-        // Format Mata Uang (Rupiah)
         NumberFormat formatter = NumberFormat.getCurrencyInstance(new Locale("id", "ID"));
         formatter.setMaximumFractionDigits(0);
         
@@ -100,7 +103,6 @@ public class DetailProgramDonasiUangFragment extends Fragment {
         binding.tvCurrentFunds.setText(formatter.format(terkumpul));
         binding.tvTargetFunds.setText("Target: " + formatter.format(target));
         
-        // Progress Bar
         if (target > 0) {
             int progress = (int) ((terkumpul * 100) / target);
             binding.progressFunds.setProgress(progress);
@@ -110,10 +112,8 @@ public class DetailProgramDonasiUangFragment extends Fragment {
             binding.tvProgressPercent.setText("0% tercapai");
         }
 
-        // Stats: Donatur (Placeholder jika belum ada field di DB)
         binding.tvDonorsCount.setText("0");
 
-        // Stats: Penerima (Coba ambil angka dari deskripsi penerima manfaat)
         String bene = p.getPenerima_manfaat();
         if (bene != null) {
             String numeric = bene.replaceAll("[^0-9]", "");
@@ -124,11 +124,9 @@ public class DetailProgramDonasiUangFragment extends Fragment {
             }
         }
 
-        // Stats: Sisa Hari (Hitung dari batas_waktu)
         String batasWaktu = p.getBatas_waktu();
         if (batasWaktu != null && !batasWaktu.isEmpty()) {
             try {
-                // Format dari TambahProgramFragment: d / M / yyyy
                 SimpleDateFormat sdf = new SimpleDateFormat("d / M / yyyy", Locale.getDefault());
                 Date expiryDate = sdf.parse(batasWaktu);
                 if (expiryDate != null) {
@@ -141,7 +139,6 @@ public class DetailProgramDonasiUangFragment extends Fragment {
             }
         }
 
-        // Deskripsi Lengkap (Gabungan Deskripsi, Penerima, dan Rencana)
         StringBuilder fullDesc = new StringBuilder();
         fullDesc.append(p.getDeskripsi());
         if (p.getPenerima_manfaat() != null && !p.getPenerima_manfaat().isEmpty()) {
@@ -152,7 +149,6 @@ public class DetailProgramDonasiUangFragment extends Fragment {
         }
         binding.tvProgramDescription.setText(fullDesc.toString());
 
-        // Ambil Gambar (imageUrl dari TambahProgram)
         if (p.getImageUrl() != null && !p.getImageUrl().isEmpty()) {
             Glide.with(this)
                     .load(p.getImageUrl())

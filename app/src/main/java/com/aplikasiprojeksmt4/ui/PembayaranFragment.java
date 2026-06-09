@@ -58,23 +58,38 @@ public class PembayaranFragment extends Fragment {
 
         binding.btnCheckStatus.setOnClickListener(v -> {
             Bundle bundle = new Bundle();
-            bundle.putString("amount", amount);
-            bundle.putString("programId", getArguments().getString("programId"));
+            if (getArguments() != null) {
+                bundle.putAll(getArguments());
+                // Add formatted amount for display in status page
+                if (amount != null) {
+                    try {
+                        long val = Long.parseLong(amount);
+                        NumberFormat formatter = NumberFormat.getCurrencyInstance(new Locale("id", "ID"));
+                        formatter.setMaximumFractionDigits(0);
+                        bundle.putString("amount_formatted", formatter.format(val));
+                    } catch (Exception e) {
+                        bundle.putString("amount_formatted", "Rp " + amount);
+                    }
+                }
+            }
             Navigation.findNavController(v).navigate(R.id.action_PembayaranFragment_to_StatusPembayaranFragment, bundle);
         });
     }
 
     private void displayData() {
         if (amount != null) {
-            long val = Long.parseLong(amount);
-            NumberFormat formatter = NumberFormat.getCurrencyInstance(new Locale("id", "ID"));
-            formatter.setMaximumFractionDigits(0);
-            binding.tvTotalAmount.setText(formatter.format(val));
+            try {
+                long val = Long.parseLong(amount);
+                NumberFormat formatter = NumberFormat.getCurrencyInstance(new Locale("id", "ID"));
+                formatter.setMaximumFractionDigits(0);
+                binding.tvTotalAmount.setText(formatter.format(val));
+            } catch (Exception e) {
+                binding.tvTotalAmount.setText("Rp " + amount);
+            }
         }
 
-        binding.tvBankName.setText("Bank " + bank);
+        binding.tvBankName.setText("Bank " + (bank != null ? bank : ""));
         
-        // Pseudo-random VA generation for demo
         String va = "123 0858 " + (int)(Math.random() * 9000 + 1000) + " " + (int)(Math.random() * 9000 + 1000);
         binding.tvVaNumber.setText(va);
     }

@@ -25,6 +25,7 @@ public class DonasiDanaFragment extends Fragment {
     private String selectedMethod = "Transfer Bank";
     private String selectedBank = "BCA";
     private long currentAmount = 0;
+    private String programName;
 
     @Nullable
     @Override
@@ -36,6 +37,10 @@ public class DonasiDanaFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        if (getArguments() != null) {
+            programName = getArguments().getString("programName");
+        }
 
         binding.btnBack.setOnClickListener(v -> Navigation.findNavController(v).navigateUp());
 
@@ -54,6 +59,7 @@ public class DonasiDanaFragment extends Fragment {
             bundle.putString("method", selectedMethod);
             bundle.putString("bank", selectedBank);
             bundle.putString("programId", getArguments() != null ? getArguments().getString("programId") : "");
+            bundle.putString("programName", programName);
             bundle.putString("message", binding.etMessage.getText().toString());
             bundle.putBoolean("isAnonymous", binding.switchAnonymous.isChecked());
 

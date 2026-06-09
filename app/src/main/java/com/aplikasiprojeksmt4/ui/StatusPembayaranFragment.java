@@ -10,7 +10,6 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import com.aplikasiprojeksmt4.R;
 import com.aplikasiprojeksmt4.databinding.FragmentStatusPembayaranBinding;
-import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -38,13 +37,21 @@ public class StatusPembayaranFragment extends Fragment {
         String transId = "DKU-" + System.currentTimeMillis() / 1000;
         binding.tvTransactionId.setText(transId);
 
+        if (getArguments() != null) {
+            binding.tvAmount.setText(getArguments().getString("amount_formatted", "Rp 0"));
+            binding.tvMethod.setText(getArguments().getString("method", "-"));
+        }
+
         binding.btnBackHome.setOnClickListener(v -> 
             Navigation.findNavController(v).navigate(R.id.action_StatusPembayaranFragment_to_HomeFragment)
         );
 
         binding.btnViewReceipt.setOnClickListener(v -> {
-            // Logic to show receipt or navigate to history
-            Navigation.findNavController(v).navigate(R.id.action_StatusPembayaranFragment_to_HomeFragment);
+            Bundle bundle = new Bundle();
+            if (getArguments() != null) {
+                bundle.putAll(getArguments());
+            }
+            Navigation.findNavController(v).navigate(R.id.action_StatusPembayaranFragment_to_BuktiDonasiFragment, bundle);
         });
     }
 
