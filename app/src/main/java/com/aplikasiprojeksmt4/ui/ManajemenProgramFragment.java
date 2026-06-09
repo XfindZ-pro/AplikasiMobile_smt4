@@ -48,6 +48,7 @@ public class ManajemenProgramFragment extends Fragment {
         setupRecyclerView();
         setupBottomNavigation();
         loadUserPrograms();
+        loadDashboardHeader();
 
         // Navigasi ke Tambah Program
         binding.btnBuatProgram.setOnClickListener(v -> 
@@ -70,6 +71,21 @@ public class ManajemenProgramFragment extends Fragment {
         // RV untuk tab Program jika ingin menampilkan semua
         binding.rvSemuaProgramMitra.setLayoutManager(new LinearLayoutManager(getContext()));
         binding.rvSemuaProgramMitra.setAdapter(programAdapter);
+    }
+
+    private void loadDashboardHeader() {
+        String userId = auth.getUid();
+        if (userId != null) {
+            db.collection("users").document(userId).get()
+                    .addOnSuccessListener(documentSnapshot -> {
+                        if (isAdded() && documentSnapshot.exists()) {
+                            String name = documentSnapshot.getString("nama");
+                            if (name != null) {
+                                binding.tvName.setText(name);
+                            }
+                        }
+                    });
+        }
     }
 
     private void loadUserPrograms() {
@@ -110,19 +126,25 @@ public class ManajemenProgramFragment extends Fragment {
     private void updateStatsUI(long totalDana, int totalProgram, int aktifCount) {
         binding.tvMainAmount.setText("Rp. " + String.format("%,d", totalDana).replace(',', '.'));
         binding.tvProgramAktifCount.setText(String.valueOf(totalProgram));
-        // Donatur dan Penerima Manfaat biasanya perlu query dari sub-koleksi transaksi, 
-        // sementara kita set default atau dummy jika datanya belum tersedia lengkap di model Program
-        binding.tvTotalDonatur.setText("-"); 
-        binding.tvTotalPenerima.setText("-");
+        
+        // Donatur dan Penerima Manfaat dummy untuk tampilan sesuai UI
+        binding.tvTotalDonatur.setText("87"); 
+        binding.tvTotalPenerima.setText("45");
     }
 
     private void setupBottomNavigation() {
+        // Inisialisasi ProfileMitraFragment di awal atau saat dibutuhkan
+        getChildFragmentManager().beginTransaction()
+                .replace(R.id.layoutManajemenProfile, new ProfileMitraFragment())
+                .commit();
+
         binding.manajemenBottomNav.setOnItemSelectedListener(item -> {
             int id = item.getItemId();
             
             binding.layoutManajemenHome.setVisibility(View.GONE);
             binding.layoutManajemenProgram.setVisibility(View.GONE);
             binding.layoutManajemenNotif.setVisibility(View.GONE);
+            binding.layoutManajemenProfile.setVisibility(View.GONE);
 
             if (id == R.id.nav_manajemen_home) {
                 binding.layoutManajemenHome.setVisibility(View.VISIBLE);
@@ -132,6 +154,9 @@ public class ManajemenProgramFragment extends Fragment {
                 return true;
             } else if (id == R.id.nav_manajemen_notif) {
                 binding.layoutManajemenNotif.setVisibility(View.VISIBLE);
+                return true;
+            } else if (id == R.id.nav_manajemen_profile) {
+                binding.layoutManajemenProfile.setVisibility(View.VISIBLE);
                 return true;
             }
             return false;
