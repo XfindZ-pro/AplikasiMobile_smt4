@@ -65,6 +65,14 @@ public class ManajemenProgramFragment extends Fragment {
 
     private void setupRecyclerView() {
         programAdapter = new ProgramAdapter(programList);
+        
+        // Handle klik Lihat Detail
+        programAdapter.setOnItemClickListener(program -> {
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("program", program);
+            Navigation.findNavController(requireView()).navigate(R.id.action_ManajemenProgramFragment_to_DetailDonasiMitraFragment, bundle);
+        });
+
         binding.rvProgramBerjalan.setLayoutManager(new LinearLayoutManager(getContext()));
         binding.rvProgramBerjalan.setAdapter(programAdapter);
         

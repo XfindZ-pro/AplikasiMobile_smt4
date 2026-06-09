@@ -73,5 +73,15 @@
                 android:textSize="12sp" />
         </RelativeLayout>
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnLihatDetail"
+            style="@style/Widget.Material3.Button.TonalButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Lihat Detail"
+            android:textAllCaps="false"
+            app:cornerRadius="8dp" />
+
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>

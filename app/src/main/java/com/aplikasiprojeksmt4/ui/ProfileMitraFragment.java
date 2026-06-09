@@ -44,46 +44,53 @@ public class ProfileMitraFragment extends Fragment {
         FirebaseUser currentUser = auth.getCurrentUser();
         if (currentUser == null) return;
 
-        // 1. Set data dasar dari Firebase Auth
+        // 1. Tampilkan data awal dari Auth (sebagai placeholder)
         binding.tvProfileEmail.setText(currentUser.getEmail());
         if (currentUser.getDisplayName() != null) {
             binding.tvProfileName.setText(currentUser.getDisplayName());
         }
-        if (currentUser.getPhotoUrl() != null) {
-            Glide.with(this)
-                    .load(currentUser.getPhotoUrl())
-                    .placeholder(android.R.drawable.ic_menu_report_image)
-                    .into(binding.ivProfileAvatar);
-        }
 
-        // 2. Ambil data profil dari koleksi 'users' untuk Nama Lengkap/Display Name yang tersinkron
+        // 2. Ambil data utama dari tabel 'users' di Firestore (Prioritas Foto Profil & Nama)
         db.collection("users").document(currentUser.getUid()).get()
                 .addOnSuccessListener(documentSnapshot -> {
                     if (isAdded() && documentSnapshot.exists()) {
                         String name = documentSnapshot.getString("nama");
-                        String foto = documentSnapshot.getString("fotoUrl");
-                        if (name != null) binding.tvProfileName.setText(name);
-                        if (foto != null && currentUser.getPhotoUrl() == null) {
-                            Glide.with(this).load(foto).into(binding.ivProfileAvatar);
+                        String fotoUrl = documentSnapshot.getString("fotoUrl");
+
+                        // Update Nama dari tabel users
+                        if (name != null) {
+                            binding.tvProfileName.setText(name);
+                        }
+
+                        // Update Foto Profil dari tabel users (Prioritas Utama)
+                        if (fotoUrl != null && !fotoUrl.isEmpty()) {
+                            Glide.with(this)
+                                    .load(fotoUrl)
+                                    .circleCrop() // Memastikan foto melingkar
+                                    .placeholder(android.R.drawable.ic_menu_report_image)
+                                    .into(binding.ivProfileAvatar);
+                        } else if (currentUser.getPhotoUrl() != null) {
+                            // Fallback ke foto dari Auth jika di tabel users kosong
+                            Glide.with(this)
+                                    .load(currentUser.getPhotoUrl())
+                                    .circleCrop()
+                                    .into(binding.ivProfileAvatar);
                         }
                     }
-                });
+                })
+                .addOnFailureListener(e -> Log.e("ProfileMitra", "Gagal memuat data users", e));
 
-        // 3. Ambil data spesifik mitra dari koleksi 'daftar_mitra'
+        // 3. Ambil data pendukung dari tabel 'daftar_mitra' (Rekening, Alamat, dll)
         db.collection("daftar_mitra").document(currentUser.getUid()).get()
                 .addOnSuccessListener(documentSnapshot -> {
                     if (isAdded() && documentSnapshot.exists()) {
                         Mitra mitra = documentSnapshot.toObject(Mitra.class);
                         if (mitra != null) {
-                            // Data mitra berhasil dimuat (rekening, alamat, dokumen ada di objek mitra)
-                            Log.d("ProfileMitra", "Data Mitra: " + mitra.getNamaBank() + " - " + mitra.getNomorRekening());
+                            // Data tambahan mitra bisa diproses di sini
+                            Log.d("ProfileMitra", "Data Rekening: " + mitra.getNamaBank());
                         }
-                    } else {
-                        // Jika data belum ada, kita bisa inisialisasi dokumen baru
-                        Log.d("ProfileMitra", "Dokumen daftar_mitra belum tersedia untuk user ini");
                     }
-                })
-                .addOnFailureListener(e -> Log.e("ProfileMitra", "Error loading daftar_mitra", e));
+                });
     }
 
     private void setupClickListeners() {
@@ -92,7 +99,6 @@ public class ProfileMitraFragment extends Fragment {
         });
 
         binding.btnRekening.setOnClickListener(v -> {
-            // Tampilkan dialog atau navigasi ke detail rekening bank mitra
             Toast.makeText(getContext(), "Kelola Rekening Bank", Toast.LENGTH_SHORT).show();
         });
 
@@ -101,7 +107,6 @@ public class ProfileMitraFragment extends Fragment {
         });
 
         binding.btnLegal.setOnClickListener(v -> {
-            // Tampilkan daftar dokumen legal dari koleksi daftar_mitra
             Toast.makeText(getContext(), "Lihat Dokumen Legal", Toast.LENGTH_SHORT).show();
         });
 

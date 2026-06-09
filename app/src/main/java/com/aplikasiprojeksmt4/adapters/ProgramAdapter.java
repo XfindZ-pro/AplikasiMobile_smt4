@@ -68,6 +68,13 @@ public class ProgramAdapter extends RecyclerView.Adapter<ProgramAdapter.ProgramV
             holder.binding.ivProgramImage.setImageResource(R.drawable.group_2);
         }
 
+        // Tombol Lihat Detail sesuai permintaan user
+        holder.binding.btnLihatDetail.setOnClickListener(v -> {
+            if (listener != null) {
+                listener.onItemClick(program);
+            }
+        });
+
         holder.itemView.setOnClickListener(v -> {
             if (listener != null) {
                 listener.onItemClick(program);
