@@ -1,5 +1,6 @@
 package com.aplikasiprojeksmt4.ui;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,11 +16,13 @@ import com.aplikasiprojeksmt4.R;
 import com.aplikasiprojeksmt4.databinding.FragmentDetailDonasiMitraBinding;
 import com.aplikasiprojeksmt4.models.Program;
 import com.bumptech.glide.Glide;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class DetailDonasiMitraFragment extends Fragment {
 
     private FragmentDetailDonasiMitraBinding binding;
     private Program program;
+    private FirebaseFirestore db;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -27,6 +30,7 @@ public class DetailDonasiMitraFragment extends Fragment {
         if (getArguments() != null) {
             program = (Program) getArguments().getSerializable("program");
         }
+        db = FirebaseFirestore.getInstance();
     }
 
     @Nullable
@@ -59,8 +63,36 @@ public class DetailDonasiMitraFragment extends Fragment {
         });
 
         binding.btnHapusProgram.setOnClickListener(v -> {
-            Toast.makeText(getContext(), "Fitur Hapus Program", Toast.LENGTH_SHORT).show();
+            if (program != null) {
+                showDeleteConfirmation();
+            }
         });
+    }
+
+    private void showDeleteConfirmation() {
+        new AlertDialog.Builder(requireContext())
+                .setTitle("Hapus Program")
+                .setMessage("Apakah Anda yakin ingin menghapus program ini?")
+                .setPositiveButton("Hapus", (dialog, which) -> deleteProgram())
+                .setNegativeButton("Batal", null)
+                .show();
+    }
+
+    private void deleteProgram() {
+        if (program.getId() == null) {
+            Toast.makeText(getContext(), "ID Program tidak ditemukan", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        db.collection("programs").document(program.getId())
+                .delete()
+                .addOnSuccessListener(aVoid -> {
+                    Toast.makeText(getContext(), "Program berhasil dihapus", Toast.LENGTH_SHORT).show();
+                    Navigation.findNavController(requireView()).navigateUp();
+                })
+                .addOnFailureListener(e -> {
+                    Toast.makeText(getContext(), "Gagal menghapus program: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                });
     }
 
     private void displayProgramDetails() {
