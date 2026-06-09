@@ -51,7 +51,11 @@ public class DetailDonasiMitraFragment extends Fragment {
         });
 
         binding.btnEditProgram.setOnClickListener(v -> {
-            Toast.makeText(getContext(), "Fitur Edit Program", Toast.LENGTH_SHORT).show();
+            if (program != null) {
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("program", program);
+                Navigation.findNavController(v).navigate(R.id.action_DetailDonasiMitraFragment_to_EditProgramFragment, bundle);
+            }
         });
 
         binding.btnHapusProgram.setOnClickListener(v -> {

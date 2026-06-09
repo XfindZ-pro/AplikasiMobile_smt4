@@ -233,6 +233,19 @@
         <argument
             android:name="program"
             app:argType="com.aplikasiprojeksmt4.models.Program" />
+        <action
+            android:id="@+id/action_DetailDonasiMitraFragment_to_EditProgramFragment"
+            app:destination="@id/EditProgramFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/EditProgramFragment"
+        android:name="com.aplikasiprojeksmt4.ui.EditProgramFragment"
+        android:label="Edit Program"
+        tools:layout="@layout/fragment_edit_program">
+        <argument
+            android:name="program"
+            app:argType="com.aplikasiprojeksmt4.models.Program" />
     </fragment>
 
     <fragment

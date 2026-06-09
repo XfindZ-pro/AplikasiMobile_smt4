@@ -16,6 +16,7 @@ import com.aplikasiprojeksmt4.R;
 import com.aplikasiprojeksmt4.adapters.ProgramAdapter;
 import com.aplikasiprojeksmt4.databinding.FragmentManajemenProgramBinding;
 import com.aplikasiprojeksmt4.models.Program;
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
@@ -55,7 +56,6 @@ public class ManajemenProgramFragment extends Fragment {
             Navigation.findNavController(v).navigate(R.id.action_ManajemenProgramFragment_to_TambahProgramFragment)
         );
         
-        // Juga handle button di menu grid jika ada (btnBuatProgramMenu)
         if (binding.btnBuatProgramMenu != null) {
             binding.btnBuatProgramMenu.setOnClickListener(v -> 
                 Navigation.findNavController(v).navigate(R.id.action_ManajemenProgramFragment_to_TambahProgramFragment)
@@ -65,8 +65,6 @@ public class ManajemenProgramFragment extends Fragment {
 
     private void setupRecyclerView() {
         programAdapter = new ProgramAdapter(programList);
-        
-        // Handle klik Lihat Detail
         programAdapter.setOnItemClickListener(program -> {
             Bundle bundle = new Bundle();
             bundle.putSerializable("program", program);
@@ -76,24 +74,46 @@ public class ManajemenProgramFragment extends Fragment {
         binding.rvProgramBerjalan.setLayoutManager(new LinearLayoutManager(getContext()));
         binding.rvProgramBerjalan.setAdapter(programAdapter);
         
-        // RV untuk tab Program jika ingin menampilkan semua
         binding.rvSemuaProgramMitra.setLayoutManager(new LinearLayoutManager(getContext()));
         binding.rvSemuaProgramMitra.setAdapter(programAdapter);
     }
 
     private void loadDashboardHeader() {
         String userId = auth.getUid();
-        if (userId != null) {
-            db.collection("users").document(userId).get()
-                    .addOnSuccessListener(documentSnapshot -> {
-                        if (isAdded() && documentSnapshot.exists()) {
-                            String name = documentSnapshot.getString("nama");
-                            if (name != null) {
-                                binding.tvName.setText(name);
-                            }
+        if (userId == null) return;
+
+        // Langsung ambil data dari koleksi 'users' agar sinkron dengan Profile
+        db.collection("users").document(userId).get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (isAdded() && documentSnapshot.exists()) {
+                        String name = documentSnapshot.getString("nama");
+                        String fotoUrl = documentSnapshot.getString("fotoUrl");
+                        if (fotoUrl == null) fotoUrl = documentSnapshot.getString("foto");
+
+                        if (name != null && !name.isEmpty()) {
+                            binding.tvName.setText(name);
                         }
-                    });
-        }
+
+                        if (fotoUrl != null && !fotoUrl.isEmpty()) {
+                            loadProfileImage(fotoUrl);
+                        } else if (auth.getCurrentUser() != null && auth.getCurrentUser().getPhotoUrl() != null) {
+                            loadProfileImage(auth.getCurrentUser().getPhotoUrl().toString());
+                        } else {
+                            binding.ivProfileImage.setImageResource(R.drawable.logo);
+                        }
+                    }
+                })
+                .addOnFailureListener(e -> Log.e("ManajemenFragment", "Gagal load header dari users", e));
+    }
+
+    private void loadProfileImage(String url) {
+        if (!isAdded()) return;
+        Glide.with(this)
+                .load(url)
+                .circleCrop()
+                .placeholder(R.drawable.logo)
+                .error(R.drawable.logo)
+                .into(binding.ivProfileImage);
     }
 
     private void loadUserPrograms() {
@@ -135,13 +155,11 @@ public class ManajemenProgramFragment extends Fragment {
         binding.tvMainAmount.setText("Rp. " + String.format("%,d", totalDana).replace(',', '.'));
         binding.tvProgramAktifCount.setText(String.valueOf(totalProgram));
         
-        // Donatur dan Penerima Manfaat dummy untuk tampilan sesuai UI
         binding.tvTotalDonatur.setText("87"); 
         binding.tvTotalPenerima.setText("45");
     }
 
     private void setupBottomNavigation() {
-        // Inisialisasi ProfileMitraFragment di awal atau saat dibutuhkan
         getChildFragmentManager().beginTransaction()
                 .replace(R.id.layoutManajemenProfile, new ProfileMitraFragment())
                 .commit();

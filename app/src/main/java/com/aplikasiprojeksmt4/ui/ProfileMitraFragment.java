@@ -11,8 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.aplikasiprojeksmt4.R;
 import com.aplikasiprojeksmt4.databinding.FragmentProfileMitraBinding;
-import com.aplikasiprojeksmt4.models.Mitra;
 import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -44,75 +44,67 @@ public class ProfileMitraFragment extends Fragment {
         FirebaseUser currentUser = auth.getCurrentUser();
         if (currentUser == null) return;
 
-        // 1. Tampilkan data awal dari Auth (sebagai placeholder)
-        binding.tvProfileEmail.setText(currentUser.getEmail());
-        if (currentUser.getDisplayName() != null) {
-            binding.tvProfileName.setText(currentUser.getDisplayName());
-        }
-
-        // 2. Ambil data utama dari tabel 'users' di Firestore (Prioritas Foto Profil & Nama)
+        // Ambil data dari koleksi 'users' sesuai permintaan
         db.collection("users").document(currentUser.getUid()).get()
                 .addOnSuccessListener(documentSnapshot -> {
                     if (isAdded() && documentSnapshot.exists()) {
                         String name = documentSnapshot.getString("nama");
+                        String email = documentSnapshot.getString("email");
                         String fotoUrl = documentSnapshot.getString("fotoUrl");
+                        if (fotoUrl == null) fotoUrl = documentSnapshot.getString("foto");
 
-                        // Update Nama dari tabel users
-                        if (name != null) {
+                        if (name != null && !name.isEmpty()) {
                             binding.tvProfileName.setText(name);
                         }
 
-                        // Update Foto Profil dari tabel users (Prioritas Utama)
+                        if (email != null && !email.isEmpty()) {
+                            binding.tvProfileEmail.setText(email);
+                        } else {
+                            binding.tvProfileEmail.setText(currentUser.getEmail());
+                        }
+
                         if (fotoUrl != null && !fotoUrl.isEmpty()) {
-                            Glide.with(this)
-                                    .load(fotoUrl)
-                                    .circleCrop() // Memastikan foto melingkar
-                                    .placeholder(android.R.drawable.ic_menu_report_image)
-                                    .into(binding.ivProfileAvatar);
+                            updateProfileImage(fotoUrl);
                         } else if (currentUser.getPhotoUrl() != null) {
-                            // Fallback ke foto dari Auth jika di tabel users kosong
-                            Glide.with(this)
-                                    .load(currentUser.getPhotoUrl())
-                                    .circleCrop()
-                                    .into(binding.ivProfileAvatar);
+                            updateProfileImage(currentUser.getPhotoUrl().toString());
+                        } else {
+                            binding.ivProfileAvatar.setImageResource(R.drawable.logo);
                         }
                     }
                 })
-                .addOnFailureListener(e -> Log.e("ProfileMitra", "Gagal memuat data users", e));
+                .addOnFailureListener(e -> Log.e("ProfileMitra", "Gagal load data users", e));
+    }
 
-        // 3. Ambil data pendukung dari tabel 'daftar_mitra' (Rekening, Alamat, dll)
-        db.collection("daftar_mitra").document(currentUser.getUid()).get()
-                .addOnSuccessListener(documentSnapshot -> {
-                    if (isAdded() && documentSnapshot.exists()) {
-                        Mitra mitra = documentSnapshot.toObject(Mitra.class);
-                        if (mitra != null) {
-                            // Data tambahan mitra bisa diproses di sini
-                            Log.d("ProfileMitra", "Data Rekening: " + mitra.getNamaBank());
-                        }
-                    }
-                });
+    private void updateProfileImage(String url) {
+        if (!isAdded()) return;
+        Glide.with(this)
+                .load(url)
+                .circleCrop()
+                .placeholder(R.drawable.logo)
+                .error(R.drawable.logo)
+                .into(binding.ivProfileAvatar);
     }
 
     private void setupClickListeners() {
-        binding.btnEditProfile.setOnClickListener(v -> {
-            Toast.makeText(getContext(), "Fitur Edit Profil segera hadir", Toast.LENGTH_SHORT).show();
-        });
+        binding.btnEditProfile.setOnClickListener(v -> 
+            Toast.makeText(getContext(), "Edit Profil", Toast.LENGTH_SHORT).show()
+        );
 
-        binding.btnRekening.setOnClickListener(v -> {
-            Toast.makeText(getContext(), "Kelola Rekening Bank", Toast.LENGTH_SHORT).show();
-        });
+        binding.btnRekening.setOnClickListener(v -> 
+            Toast.makeText(getContext(), "Rekening Bank", Toast.LENGTH_SHORT).show()
+        );
 
-        binding.btnNotif.setOnClickListener(v -> {
-            Toast.makeText(getContext(), "Pengaturan Notifikasi", Toast.LENGTH_SHORT).show();
-        });
+        binding.btnNotif.setOnClickListener(v -> 
+            Toast.makeText(getContext(), "Notifikasi", Toast.LENGTH_SHORT).show()
+        );
 
-        binding.btnLegal.setOnClickListener(v -> {
-            Toast.makeText(getContext(), "Lihat Dokumen Legal", Toast.LENGTH_SHORT).show();
-        });
+        binding.btnLegal.setOnClickListener(v -> 
+            Toast.makeText(getContext(), "Dokumen Legal", Toast.LENGTH_SHORT).show()
+        );
 
-        binding.btnHelp.setOnClickListener(v -> {
-            Toast.makeText(getContext(), "Pusat Bantuan", Toast.LENGTH_SHORT).show();
-        });
+        binding.btnHelp.setOnClickListener(v -> 
+            Toast.makeText(getContext(), "Bantuan", Toast.LENGTH_SHORT).show()
+        );
     }
 
     @Override
