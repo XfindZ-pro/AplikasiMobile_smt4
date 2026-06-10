@@ -1,5 +1,7 @@
 package com.aplikasiprojeksmt4.ui;
 
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -10,11 +12,13 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import com.aplikasiprojeksmt4.R;
 import com.aplikasiprojeksmt4.databinding.FragmentDonasiDanaBinding;
+import com.google.android.material.button.MaterialButton;
 
 import java.text.NumberFormat;
 import java.util.Locale;
@@ -68,15 +72,51 @@ public class DonasiDanaFragment extends Fragment {
     }
 
     private void setupNominalButtons() {
-        binding.btnNominal10.setOnClickListener(v -> updateAmount(10000));
-        binding.btnNominal20.setOnClickListener(v -> updateAmount(20000));
-        binding.btnNominal50.setOnClickListener(v -> updateAmount(50000));
-        binding.btnNominal100.setOnClickListener(v -> updateAmount(100000));
-        binding.btnNominal200.setOnClickListener(v -> updateAmount(200000));
+        binding.btnNominal25k.setOnClickListener(v -> {
+            updateAmount(25000);
+            updateNominalSelection(binding.btnNominal25k);
+        });
+        binding.btnNominal50k.setOnClickListener(v -> {
+            updateAmount(50000);
+            updateNominalSelection(binding.btnNominal50k);
+        });
+        binding.btnNominal100k.setOnClickListener(v -> {
+            updateAmount(100000);
+            updateNominalSelection(binding.btnNominal100k);
+        });
+        binding.btnNominal200k.setOnClickListener(v -> {
+            updateAmount(200000);
+            updateNominalSelection(binding.btnNominal200k);
+        });
+        binding.btnNominal500k.setOnClickListener(v -> {
+            updateAmount(500000);
+            updateNominalSelection(binding.btnNominal500k);
+        });
         binding.btnNominalLainnya.setOnClickListener(v -> {
+            updateNominalSelection(binding.btnNominalLainnya);
             binding.etCustomNominal.setText("");
             binding.etCustomNominal.requestFocus();
         });
+    }
+
+    private void updateNominalSelection(MaterialButton selectedBtn) {
+        MaterialButton[] buttons = {
+            binding.btnNominal25k, binding.btnNominal50k, binding.btnNominal100k,
+            binding.btnNominal200k, binding.btnNominal500k, binding.btnNominalLainnya
+        };
+
+        for (MaterialButton btn : buttons) {
+            if (btn == selectedBtn) {
+                btn.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.primary_purple)));
+                btn.setTextColor(Color.WHITE);
+                btn.setStrokeWidth(0);
+            } else {
+                btn.setBackgroundTintList(ColorStateList.valueOf(Color.WHITE));
+                btn.setTextColor(Color.BLACK);
+                btn.setStrokeColor(ColorStateList.valueOf(Color.parseColor("#E0E0E0")));
+                btn.setStrokeWidth(2);
+            }
+        }
     }
 
     private void updateAmount(long amount) {
@@ -100,10 +140,13 @@ public class DonasiDanaFragment extends Fragment {
                     if (!cleanString.isEmpty()) {
                         long parsed = Long.parseLong(cleanString);
                         currentAmount = parsed;
-                        String formatted = NumberFormat.getNumberInstance(new Locale("id", "ID")).format(parsed);
+                        // Use space as thousands separator as seen in screenshot "10 000"
+                        String formatted = NumberFormat.getNumberInstance(Locale.US).format(parsed).replace(",", " ");
                         current = formatted;
                         binding.etCustomNominal.setText(formatted);
                         binding.etCustomNominal.setSelection(formatted.length());
+                        
+                        checkAndResetNominalButtons(parsed);
                     } else {
                         currentAmount = 0;
                         current = "";
@@ -119,6 +162,15 @@ public class DonasiDanaFragment extends Fragment {
         });
     }
 
+    private void checkAndResetNominalButtons(long amount) {
+        if (amount == 25000) updateNominalSelection(binding.btnNominal25k);
+        else if (amount == 50000) updateNominalSelection(binding.btnNominal50k);
+        else if (amount == 100000) updateNominalSelection(binding.btnNominal100k);
+        else if (amount == 200000) updateNominalSelection(binding.btnNominal200k);
+        else if (amount == 500000) updateNominalSelection(binding.btnNominal500k);
+        else updateNominalSelection(binding.btnNominalLainnya);
+    }
+
     private void setupPaymentMethodSelection() {
         binding.rgBanks.setOnCheckedChangeListener((group, checkedId) -> updateSelectedBank());
 
@@ -128,6 +180,9 @@ public class DonasiDanaFragment extends Fragment {
             binding.llBankList.setVisibility(View.VISIBLE);
             selectedMethod = "Transfer Bank";
             updateSelectedBank();
+            
+            binding.btnMethodTransfer.setStrokeColor(ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.primary_purple)));
+            binding.btnMethodQRIS.setStrokeColor(ColorStateList.valueOf(Color.TRANSPARENT));
         });
 
         binding.btnMethodQRIS.setOnClickListener(v -> {
@@ -135,7 +190,11 @@ public class DonasiDanaFragment extends Fragment {
             binding.rbTransfer.setChecked(false);
             binding.llBankList.setVisibility(View.GONE);
             selectedMethod = "QRIS";
-            selectedBank = "";
+            selectedBank = "QRIS";
+            binding.tvSelectedBank.setText("");
+            
+            binding.btnMethodQRIS.setStrokeColor(ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.primary_purple)));
+            binding.btnMethodTransfer.setStrokeColor(ColorStateList.valueOf(Color.TRANSPARENT));
         });
 
         binding.rbTransfer.setOnClickListener(v -> binding.btnMethodTransfer.performClick());
@@ -143,17 +202,20 @@ public class DonasiDanaFragment extends Fragment {
 
         // Default selection
         binding.rbBCA.setChecked(true);
-        updateSelectedBank();
+        binding.btnMethodTransfer.performClick();
     }
 
     private void updateSelectedBank() {
         int checkedId = binding.rgBanks.getCheckedRadioButtonId();
         if (checkedId == R.id.rbBCA) {
             selectedBank = "BCA";
+            binding.ivSelectedBankIcon.setImageResource(R.drawable.ic_bca);
         } else if (checkedId == R.id.rbBNI) {
             selectedBank = "BNI";
+            binding.ivSelectedBankIcon.setImageResource(R.drawable.ic_bni);
         } else if (checkedId == R.id.rbBRI) {
             selectedBank = "BRI";
+            binding.ivSelectedBankIcon.setImageResource(R.drawable.ic_bri);
         }
         binding.tvSelectedBank.setText(selectedBank);
     }

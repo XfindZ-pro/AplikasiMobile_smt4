@@ -423,6 +423,9 @@
         <action
             android:id="@+id/action_PageProgramFragment_to_DonaturAdminFragment"
             app:destination="@id/DonaturAdminFragment" />
+        <action
+            android:id="@+id/action_PageProgramFragment_to_DetailDonasiMitraFragment"
+            app:destination="@id/DetailDonasiMitraFragment" />
     </fragment>
 
     <fragment

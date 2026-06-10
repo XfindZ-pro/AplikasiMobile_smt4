@@ -17,6 +17,11 @@ import androidx.navigation.Navigation;
 
 import com.aplikasiprojeksmt4.R;
 import com.aplikasiprojeksmt4.databinding.FragmentPembayaranBinding;
+import com.aplikasiprojeksmt4.models.DonaturDana;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FieldValue;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.WriteBatch;
 
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
@@ -27,23 +32,29 @@ import java.util.Locale;
 public class PembayaranFragment extends Fragment {
 
     private FragmentPembayaranBinding binding;
+    private FirebaseFirestore db;
     private String amount;
     private String method;
     private String bank;
+    private String programId;
     private String programName;
-    private String donorName;
+    private String donorName = "Memuat...";
+    private String message;
+    private boolean isAnonymous;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentPembayaranBinding.inflate(inflater, container, false);
+        db = FirebaseFirestore.getInstance();
         if (getArguments() != null) {
             amount = getArguments().getString("amount");
             method = getArguments().getString("method");
             bank = getArguments().getString("bank");
+            programId = getArguments().getString("programId");
             programName = getArguments().getString("programName");
-            boolean isAnonymous = getArguments().getBoolean("isAnonymous", false);
-            donorName = isAnonymous ? "Anonim" : "Zulpa Apipah"; // Default name for demo
+            message = getArguments().getString("message");
+            isAnonymous = getArguments().getBoolean("isAnonymous", false);
         }
         return binding.getRoot();
     }
@@ -54,6 +65,7 @@ public class PembayaranFragment extends Fragment {
 
         binding.btnBack.setOnClickListener(v -> Navigation.findNavController(v).navigateUp());
 
+        fetchUserData();
         displayData();
         setupLayoutByMethod();
         startTimer();
@@ -72,6 +84,95 @@ public class PembayaranFragment extends Fragment {
         });
 
         binding.btnCheckStatus.setOnClickListener(v -> {
+            saveDonationToDatabase(v);
+        });
+
+        binding.btnCancel.setOnClickListener(v -> Navigation.findNavController(v).navigateUp());
+    }
+
+    private void fetchUserData() {
+        if (isAnonymous) {
+            donorName = "Anonim";
+            binding.tvDonorName.setText(donorName);
+            return;
+        }
+
+        String userId = FirebaseAuth.getInstance().getUid();
+        if (userId != null) {
+            db.collection("users").document(userId).get()
+                    .addOnSuccessListener(documentSnapshot -> {
+                        if (documentSnapshot.exists()) {
+                            donorName = documentSnapshot.getString("nama");
+                            if (donorName == null || donorName.isEmpty()) {
+                                donorName = "User Tanpa Nama";
+                            }
+                        } else {
+                            donorName = "User Tidak Dikenal";
+                        }
+                        if (binding != null) {
+                            binding.tvDonorName.setText(donorName);
+                        }
+                    })
+                    .addOnFailureListener(e -> {
+                        donorName = "Gagal Memuat";
+                        if (binding != null) {
+                            binding.tvDonorName.setText(donorName);
+                        }
+                    });
+        } else {
+            donorName = "Tamu";
+            binding.tvDonorName.setText(donorName);
+        }
+    }
+
+    private void saveDonationToDatabase(View view) {
+        if (programId == null || programId.isEmpty()) {
+            Toast.makeText(getContext(), "Error: ID Program tidak ditemukan", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        binding.btnCheckStatus.setEnabled(false);
+        binding.btnCheckStatus.setText("Memproses...");
+
+        long nominal = 0;
+        try {
+            nominal = Long.parseLong(amount);
+        } catch (Exception e) {
+            nominal = 0;
+        }
+
+        String userId = FirebaseAuth.getInstance().getUid();
+        
+        // Create donation record
+        DonaturDana donasi = new DonaturDana();
+        donasi.setUserId(userId);
+        donasi.setNamaDonatur(donorName);
+        donasi.setNominal(nominal);
+        donasi.setPesan(message);
+        donasi.setProgramId(programId);
+        donasi.setProgramNama(programName); // Save program name for history display
+        donasi.setStatus("Berhasil");
+        donasi.setMetodePengiriman(method + (bank != null && !bank.isEmpty() ? " - " + bank : ""));
+        
+        SimpleDateFormat sdf = new SimpleDateFormat("dd MMM yyyy, HH:mm", new Locale("id", "ID"));
+        donasi.setTanggalDonasi(sdf.format(new Date()));
+
+        // Use batch to update program and save donation atomically
+        WriteBatch batch = db.batch();
+        
+        // 1. Add to donatur_dana collection
+        String newDonasiId = db.collection("donatur_dana").document().getId();
+        donasi.setId(newDonasiId);
+        batch.set(db.collection("donatur_dana").document(newDonasiId), donasi);
+
+        // 2. Update program terkumpul and donatur_count
+        batch.update(db.collection("programs").document(programId),
+                "terkumpul", FieldValue.increment(nominal),
+                "donatur_count", FieldValue.increment(1));
+
+        batch.commit().addOnSuccessListener(aVoid -> {
+            if (getContext() == null) return;
+            
             Bundle bundle = new Bundle();
             if (getArguments() != null) {
                 bundle.putAll(getArguments());
@@ -86,14 +187,15 @@ public class PembayaranFragment extends Fragment {
                     }
                 }
             }
-            try {
-                Navigation.findNavController(v).navigate(R.id.action_PembayaranFragment_to_StatusPembayaranFragment, bundle);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            
+            Navigation.findNavController(view).navigate(R.id.action_PembayaranFragment_to_StatusPembayaranFragment, bundle);
+            
+        }).addOnFailureListener(e -> {
+            if (getContext() == null) return;
+            binding.btnCheckStatus.setEnabled(true);
+            binding.btnCheckStatus.setText("Saya Sudah Bayar");
+            Toast.makeText(getContext(), "Gagal menyimpan donasi: " + e.getMessage(), Toast.LENGTH_SHORT).show();
         });
-
-        binding.btnCancel.setOnClickListener(v -> Navigation.findNavController(v).navigateUp());
     }
 
     private void setupLayoutByMethod() {
@@ -101,11 +203,23 @@ public class PembayaranFragment extends Fragment {
             binding.tvHeaderTitle.setText("Pembayaran QRIS");
             binding.cardQRIS.setVisibility(View.VISIBLE);
             binding.cardBank.setVisibility(View.GONE);
+            binding.ivQRCode.setImageResource(R.drawable.ic_qris); // Set placeholder or actual QR
         } else {
             binding.tvHeaderTitle.setText("Pembayaran");
             binding.cardQRIS.setVisibility(View.GONE);
             binding.cardBank.setVisibility(View.VISIBLE);
-            binding.tvBankName.setText("Bank " + (bank != null && !bank.isEmpty() ? bank : "BCA"));
+            String bankName = (bank != null && !bank.isEmpty() ? bank : "BCA");
+            binding.tvBankName.setText("Bank " + bankName);
+            
+            // Set Bank Logo
+            if (bankName.equalsIgnoreCase("BCA")) {
+                binding.ivBankLogo.setImageResource(R.drawable.ic_bca);
+            } else if (bankName.equalsIgnoreCase("BNI")) {
+                binding.ivBankLogo.setImageResource(R.drawable.ic_bni);
+            } else if (bankName.equalsIgnoreCase("BRI")) {
+                binding.ivBankLogo.setImageResource(R.drawable.ic_bri);
+            }
+            binding.ivBankLogo.setImageTintList(null); // Remove tint to show original logo colors
         }
     }
 
@@ -129,7 +243,14 @@ public class PembayaranFragment extends Fragment {
         SimpleDateFormat sdf = new SimpleDateFormat("dd MMM yyyy, HH:mm", new Locale("id", "ID"));
         binding.tvDeadline.setText(sdf.format(cal.getTime()));
         
-        String va = "123 0858 " + (int)(Math.random() * 9000 + 1000) + " " + (int)(Math.random() * 9000 + 1000);
+        String vaPrefix = "1230";
+        if (bank != null) {
+            if (bank.equalsIgnoreCase("BCA")) vaPrefix = "8000";
+            else if (bank.equalsIgnoreCase("BNI")) vaPrefix = "8800";
+            else if (bank.equalsIgnoreCase("BRI")) vaPrefix = "1230";
+        }
+        
+        String va = vaPrefix + " 0858 " + (int)(Math.random() * 9000 + 1000) + " " + (int)(Math.random() * 9000 + 1000);
         binding.tvVaNumber.setText(va);
     }
 

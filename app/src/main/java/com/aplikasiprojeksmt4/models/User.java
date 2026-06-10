@@ -1,20 +1,19 @@
 package com.aplikasiprojeksmt4.models;
 
-public class User {
+import java.io.Serializable;
+
+public class User implements Serializable {
     private String id;
     private String nama;
     private String email;
-    private String fotoUrl;
+    private String profile_photo;
+    private String no_telepon;
+    private String alamat;
+    private String role;
+    private boolean emailVerified;
 
     public User() {
         // Required for Firestore
-    }
-
-    public User(String id, String nama, String email, String fotoUrl) {
-        this.id = id;
-        this.nama = nama;
-        this.email = email;
-        this.fotoUrl = fotoUrl;
     }
 
     public String getId() { return id; }
@@ -26,6 +25,18 @@ public class User {
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email; }
 
-    public String getFotoUrl() { return fotoUrl; }
-    public void setFotoUrl(String fotoUrl) { this.fotoUrl = fotoUrl; }
+    public String getProfile_photo() { return profile_photo; }
+    public void setProfile_photo(String profile_photo) { this.profile_photo = profile_photo; }
+
+    public String getNo_telepon() { return no_telepon; }
+    public void setNo_telepon(String no_telepon) { this.no_telepon = no_telepon; }
+
+    public String getAlamat() { return alamat; }
+    public void setAlamat(String alamat) { this.alamat = alamat; }
+
+    public String getRole() { return role; }
+    public void setRole(String role) { this.role = role; }
+
+    public boolean isEmailVerified() { return emailVerified; }
+    public void setEmailVerified(boolean emailVerified) { this.emailVerified = emailVerified; }
 }

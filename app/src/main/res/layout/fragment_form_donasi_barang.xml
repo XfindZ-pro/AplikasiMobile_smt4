@@ -172,38 +172,51 @@
                         android:textSize="12sp"
                         android:textStyle="bold" />
 
-                    <LinearLayout
+                    <FrameLayout
                         android:id="@+id/btnUploadFoto"
                         android:layout_width="match_parent"
-                        android:layout_height="120dp"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
-                        android:background="@drawable/bg_dashed_upload"
-                        android:gravity="center"
-                        android:orientation="vertical"
                         android:clickable="true"
                         android:focusable="true">
 
+                        <LinearLayout
+                            android:id="@+id/layoutPlaceholderFoto"
+                            android:layout_width="match_parent"
+                            android:layout_height="120dp"
+                            android:background="@drawable/bg_dashed_upload"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:src="@android:drawable/ic_menu_camera"
+                                app:tint="@color/primary_purple" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:text="Tap untuk foto atau upload dari galeri"
+                                android:textColor="@color/primary_purple"
+                                android:textSize="12sp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Maks. 3 foto • JPG/PNG"
+                                android:textColor="@color/text_secondary"
+                                android:textSize="10sp" />
+                        </LinearLayout>
+
                         <ImageView
-                            android:layout_width="32dp"
-                            android:layout_height="32dp"
-                            android:src="@android:drawable/ic_menu_camera"
-                            app:tint="@color/primary_purple" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:text="Tap untuk foto atau upload dari galeri"
-                            android:textColor="@color/primary_purple"
-                            android:textSize="12sp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Maks. 3 foto • JPG/PNG"
-                            android:textColor="@color/text_secondary"
-                            android:textSize="10sp" />
-                    </LinearLayout>
+                            android:id="@+id/ivPreviewFoto"
+                            android:layout_width="match_parent"
+                            android:layout_height="200dp"
+                            android:scaleType="centerCrop"
+                            android:visibility="gone" />
+                    </FrameLayout>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -229,22 +242,26 @@
                         android:textSize="12sp"
                         android:textStyle="bold" />
 
-                    <RadioGroup
-                        android:id="@+id/rgMetodePengiriman"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp">
+                        android:layout_marginTop="12dp"
+                        android:orientation="vertical">
 
                         <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/cardDropPoint"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="12dp"
+                            android:clickable="true"
+                            android:focusable="true"
                             app:cardCornerRadius="12dp"
                             app:cardElevation="0dp"
                             app:strokeColor="@color/light_gray"
                             app:strokeWidth="1dp">
 
                             <RelativeLayout
+                                android:id="@+id/rlDropPoint"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:padding="12dp">
@@ -282,19 +299,24 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_alignParentEnd="true"
-                                    android:layout_centerVertical="true" />
+                                    android:layout_centerVertical="true"
+                                    android:clickable="false" />
                             </RelativeLayout>
                         </com.google.android.material.card.MaterialCardView>
 
                         <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/cardEkspedisi"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:clickable="true"
+                            android:focusable="true"
                             app:cardCornerRadius="12dp"
                             app:cardElevation="0dp"
                             app:strokeColor="@color/primary_purple"
                             app:strokeWidth="1dp">
 
                             <RelativeLayout
+                                android:id="@+id/rlEkspedisi"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:padding="12dp"
@@ -334,258 +356,13 @@
                                     android:layout_height="wrap_content"
                                     android:layout_alignParentEnd="true"
                                     android:layout_centerVertical="true"
+                                    android:clickable="false"
                                     android:checked="true" />
                             </RelativeLayout>
                         </com.google.android.material.card.MaterialCardView>
-                    </RadioGroup>
+                    </LinearLayout>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
-
-            <!-- Detail Alamat Penjemputan (Tampil jika Ekspedisi dipilih) -->
-            <LinearLayout
-                android:id="@+id/layoutDetailEkspedisi"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginTop="16dp">
-
-                <!-- Kontak Pengirim -->
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="👤 Kontak Pengirim"
-                    android:textColor="@color/primary_purple"
-                    android:textStyle="bold"
-                    android:textSize="14sp" />
-
-                <com.google.android.material.card.MaterialCardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    app:cardCornerRadius="16dp"
-                    app:cardElevation="2dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:padding="16dp">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Nama Lengkap"
-                            android:textSize="12sp" />
-
-                        <EditText
-                            android:id="@+id/etNamaLengkap"
-                            android:layout_width="match_parent"
-                            android:layout_height="48dp"
-                            android:layout_marginTop="4dp"
-                            android:background="@drawable/bg_edittext_bordered"
-                            android:hint="Masukkan nama lengkap"
-                            android:paddingHorizontal="12dp"
-                            android:textSize="14sp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="12dp"
-                            android:text="Nomor WhatsApp"
-                            android:textSize="12sp" />
-
-                        <EditText
-                            android:id="@+id/etNomorWhatsapp"
-                            android:layout_width="match_parent"
-                            android:layout_height="48dp"
-                            android:layout_marginTop="4dp"
-                            android:background="@drawable/bg_edittext_bordered"
-                            android:hint="08xx xxxx xxxx"
-                            android:inputType="phone"
-                            android:paddingHorizontal="12dp"
-                            android:textSize="14sp" />
-                    </LinearLayout>
-                </com.google.android.material.card.MaterialCardView>
-
-                <!-- Alamat Pengambilan -->
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:text="📍 Alamat Pengambilan"
-                    android:textColor="@color/primary_purple"
-                    android:textStyle="bold"
-                    android:textSize="14sp" />
-
-                <com.google.android.material.card.MaterialCardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    app:cardCornerRadius="16dp"
-                    app:cardElevation="2dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:padding="16dp">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Alamat Lengkap"
-                            android:textSize="12sp" />
-
-                        <EditText
-                            android:id="@+id/etAlamatLengkap"
-                            android:layout_width="match_parent"
-                            android:layout_height="48dp"
-                            android:layout_marginTop="4dp"
-                            android:background="@drawable/bg_edittext_bordered"
-                            android:hint="Jl. Contoh No. 12, RT 01/02"
-                            android:paddingHorizontal="12dp"
-                            android:textSize="14sp" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="12dp"
-                            android:orientation="horizontal">
-
-                            <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:orientation="vertical">
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="Kota / Kabupaten"
-                                    android:textSize="12sp" />
-                                <EditText
-                                    android:id="@+id/etKota"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="48dp"
-                                    android:layout_marginTop="4dp"
-                                    android:background="@drawable/bg_edittext_bordered"
-                                    android:hint="Surabaya Barat"
-                                    android:paddingHorizontal="12dp"
-                                    android:textSize="14sp" />
-                            </LinearLayout>
-
-                            <View android:layout_width="12dp" android:layout_height="1dp" />
-
-                            <LinearLayout
-                                android:layout_width="80dp"
-                                android:layout_height="wrap_content"
-                                android:orientation="vertical">
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="Kode Pos"
-                                    android:textSize="12sp" />
-                                <EditText
-                                    android:id="@+id/etKodePos"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="48dp"
-                                    android:layout_marginTop="4dp"
-                                    android:background="@drawable/bg_edittext_bordered"
-                                    android:hint="12345"
-                                    android:inputType="number"
-                                    android:paddingHorizontal="12dp"
-                                    android:textSize="14sp" />
-                            </LinearLayout>
-                        </LinearLayout>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="12dp"
-                            android:text="Ekspedisi"
-                            android:textSize="12sp" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:orientation="horizontal">
-
-                            <com.google.android.material.button.MaterialButton
-                                android:id="@+id/btnJNE"
-                                style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:text="JNE"
-                                android:textAllCaps="false"
-                                app:backgroundTint="@color/primary_purple"
-                                app:cornerRadius="12dp" />
-
-                            <com.google.android.material.button.MaterialButton
-                                android:id="@+id/btnJNT"
-                                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:layout_marginStart="8dp"
-                                android:text="J&amp;T"
-                                android:textAllCaps="false"
-                                android:textColor="@color/text_secondary"
-                                app:cornerRadius="12dp"
-                                app:strokeColor="@color/light_gray" />
-
-                            <com.google.android.material.button.MaterialButton
-                                android:id="@+id/btnSiCepat"
-                                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1.2"
-                                android:layout_marginStart="8dp"
-                                android:text="SiCepat"
-                                android:textAllCaps="false"
-                                android:textColor="@color/text_secondary"
-                                app:cornerRadius="12dp"
-                                app:strokeColor="@color/light_gray" />
-                        </LinearLayout>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="12dp"
-                            android:text="Ongkos Kirim"
-                            android:textSize="12sp" />
-
-                        <EditText
-                            android:id="@+id/etOngkosKirim"
-                            android:layout_width="150dp"
-                            android:layout_height="48dp"
-                            android:layout_marginTop="4dp"
-                            android:background="@drawable/bg_edittext_bordered"
-                            android:hint="Rp ..."
-                            android:enabled="false"
-                            android:paddingHorizontal="12dp"
-                            android:textSize="14sp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="12dp"
-                            android:text="Catatan untuk Kurir"
-                            android:textSize="12sp" />
-
-                        <EditText
-                            android:id="@+id/etCatatanKurir"
-                            android:layout_width="match_parent"
-                            android:layout_height="80dp"
-                            android:layout_marginTop="4dp"
-                            android:background="@drawable/bg_edittext_bordered"
-                            android:gravity="top"
-                            android:hint="Cth: Paket ada di depan pintu, pagar besi hitam..."
-                            android:padding="12dp"
-                            android:textSize="14sp" />
-                    </LinearLayout>
-                </com.google.android.material.card.MaterialCardView>
-            </LinearLayout>
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

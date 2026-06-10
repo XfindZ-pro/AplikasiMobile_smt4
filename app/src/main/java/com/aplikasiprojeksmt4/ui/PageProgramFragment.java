@@ -83,7 +83,6 @@ public class PageProgramFragment extends Fragment {
     }
 
     private void updateTabUI() {
-        // Reset all tabs to inactive
         int inactiveBg = R.drawable.bg_tab_inactive;
         int activeBg = R.drawable.bg_tab_active;
         int inactiveText = ContextCompat.getColor(requireContext(), R.color.primary_purple);
@@ -96,7 +95,6 @@ public class PageProgramFragment extends Fragment {
         binding.tabSelesai.setBackgroundResource(inactiveBg);
         binding.tabSelesai.setTextColor(inactiveText);
 
-        // Set active tab
         if (currentFilter.equals("Dana")) {
             binding.tabDana.setBackgroundResource(activeBg);
             binding.tabDana.setTextColor(activeText);
@@ -111,6 +109,11 @@ public class PageProgramFragment extends Fragment {
 
     private void setupRecyclerView() {
         adapter = new ProgramAdapter(programList);
+        adapter.setOnItemClickListener(program -> {
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("program", program);
+            Navigation.findNavController(requireView()).navigate(R.id.action_PageProgramFragment_to_DetailDonasiMitraFragment, bundle);
+        });
         binding.rvProgram.setLayoutManager(new LinearLayoutManager(getContext()));
         binding.rvProgram.setAdapter(adapter);
     }
@@ -130,19 +133,19 @@ public class PageProgramFragment extends Fragment {
         }
 
         registration = query.addSnapshotListener((value, error) -> {
-                    if (error != null) return;
-                    if (value != null) {
-                        programList.clear();
-                        for (int i = 0; i < value.getDocuments().size(); i++) {
-                            Program p = value.getDocuments().get(i).toObject(Program.class);
-                            if (p != null) {
-                                p.setId(value.getDocuments().get(i).getId());
-                                programList.add(p);
-                            }
-                        }
-                        adapter.notifyDataSetChanged();
+            if (error != null) return;
+            if (value != null) {
+                programList.clear();
+                for (int i = 0; i < value.getDocuments().size(); i++) {
+                    Program p = value.getDocuments().get(i).toObject(Program.class);
+                    if (p != null) {
+                        p.setId(value.getDocuments().get(i).getId());
+                        programList.add(p);
                     }
-                });
+                }
+                adapter.notifyDataSetChanged();
+            }
+        });
     }
 
     @Override

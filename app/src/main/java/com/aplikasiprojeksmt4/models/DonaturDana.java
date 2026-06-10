@@ -10,10 +10,11 @@ public class DonaturDana {
     private String tanggalDonasi;
     private long nominal;
     private String pesan;
-    private String fotoBarang; // Sesuai permintaan: bisa berupa bukti transfer
-    private String metodePengiriman; // Sesuai permintaan
+    private String fotoBarang; 
+    private String metodePengiriman; 
     private String status;
     private String programId;
+    private String programNama; // Added for easier history display
     @ServerTimestamp
     private Date timestamp;
 
@@ -39,6 +40,8 @@ public class DonaturDana {
     public void setStatus(String status) { this.status = status; }
     public String getProgramId() { return programId; }
     public void setProgramId(String programId) { this.programId = programId; }
+    public String getProgramNama() { return programNama; }
+    public void setProgramNama(String programNama) { this.programNama = programNama; }
     public Date getTimestamp() { return timestamp; }
     public void setTimestamp(Date timestamp) { this.timestamp = timestamp; }
 }
