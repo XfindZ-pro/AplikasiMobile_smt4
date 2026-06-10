@@ -56,6 +56,11 @@ public class ManajemenProgramFragment extends Fragment {
             Navigation.findNavController(v).navigate(R.id.action_ManajemenProgramFragment_to_TambahProgramFragment)
         );
         
+        // Navigasi ke Tarik Dana dari Menu Grid
+        binding.btnTarikDanaMenu.setOnClickListener(v -> 
+            Navigation.findNavController(v).navigate(R.id.action_ManajemenProgramFragment_to_TarikDanaFragment)
+        );
+        
         if (binding.btnBuatProgramMenu != null) {
             binding.btnBuatProgramMenu.setOnClickListener(v -> 
                 Navigation.findNavController(v).navigate(R.id.action_ManajemenProgramFragment_to_TambahProgramFragment)
@@ -82,7 +87,6 @@ public class ManajemenProgramFragment extends Fragment {
         String userId = auth.getUid();
         if (userId == null) return;
 
-        // Langsung ambil data dari koleksi 'users' agar sinkron dengan Profile
         db.collection("users").document(userId).get()
                 .addOnSuccessListener(documentSnapshot -> {
                     if (isAdded() && documentSnapshot.exists()) {
