@@ -217,6 +217,9 @@
         <action
             android:id="@+id/action_ManajemenProgramFragment_to_DetailDonasiMitraFragment"
             app:destination="@id/DetailDonasiMitraFragment" />
+        <action
+            android:id="@+id/action_ManajemenProgramFragment_to_TarikDanaFragment"
+            app:destination="@id/TarikDanaFragment" />
     </fragment>
 
     <fragment
@@ -236,6 +239,9 @@
         <action
             android:id="@+id/action_DetailDonasiMitraFragment_to_EditProgramFragment"
             app:destination="@id/EditProgramFragment" />
+        <action
+            android:id="@+id/action_DetailDonasiMitraFragment_to_TarikDanaFragment"
+            app:destination="@id/TarikDanaFragment" />
     </fragment>
 
     <fragment
@@ -246,6 +252,18 @@
         <argument
             android:name="program"
             app:argType="com.aplikasiprojeksmt4.models.Program" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/TarikDanaFragment"
+        android:name="com.aplikasiprojeksmt4.ui.TarikDanaFragment"
+        android:label="Tarik Dana"
+        tools:layout="@layout/fragment_tarik_dana">
+        <argument
+            android:name="program"
+            app:argType="com.aplikasiprojeksmt4.models.Program"
+            app:nullable="true"
+            android:defaultValue="@null" />
     </fragment>
 
     <fragment

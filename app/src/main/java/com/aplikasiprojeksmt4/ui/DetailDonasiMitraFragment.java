@@ -51,7 +51,11 @@ public class DetailDonasiMitraFragment extends Fragment {
         binding.btnBackDetail.setOnClickListener(v -> Navigation.findNavController(v).navigateUp());
 
         binding.btnTarikDana.setOnClickListener(v -> {
-            Toast.makeText(getContext(), "Fitur Tarik Dana", Toast.LENGTH_SHORT).show();
+            if (program != null) {
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("program", program);
+                Navigation.findNavController(v).navigate(R.id.action_DetailDonasiMitraFragment_to_TarikDanaFragment, bundle);
+            }
         });
 
         binding.btnEditProgram.setOnClickListener(v -> {
@@ -117,6 +121,9 @@ public class DetailDonasiMitraFragment extends Fragment {
         binding.tvTargetDetail.setText(progress + "% tercapai - Target Rp " + String.format("%,d", target).replace(',', '.'));
         
         binding.tvTentangProgram.setText(program.getDeskripsi());
+        
+        // Update stats summary icons if needed
+        binding.tvSiapTarikDetail.setText(String.valueOf(program.getSiap_tarik() / 1000000) + "jt");
 
         if (program.getImageUrl() != null && !program.getImageUrl().isEmpty()) {
             Glide.with(this).load(program.getImageUrl()).into(binding.ivProgramDetail);
